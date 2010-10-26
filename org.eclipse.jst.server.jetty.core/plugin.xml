@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ Copyright (c) 2010 Angelo Zerr and others.
+ All rights reserved. This program and the accompanying materials
+ are made available under the terms of the Eclipse Public License v1.0
+ which accompanies this distribution, and is available at
+ http://www.eclipse.org/legal/epl-v10.html
+
+ Contributors:
+     Angelo Zerr <angelo.zerr@gmail.com> - Initial API and implementation 
+-->
+<?eclipse version="3.0"?>
+<plugin>
+  
+  <!-- WST Runtimes Types -->
+  <extension point="org.eclipse.wst.server.core.runtimeTypes">
+  
+    <runtimeType
+       id="org.eclipse.jst.server.jetty.runtime.70"
+       name="%runtimeTypeJetty70Label"
+       description="%runtimeTypeJetty70Description"
+       vendor="%jetty"
+       version="7.0"
+       class="org.eclipse.jst.server.jetty.core.internal.JettyRuntime">
+       <moduleType
+         types="jst.web"
+         versions="2.2, 2.3, 2.4, 2.5"/>
+       <moduleType
+         types="jst.utility"
+         versions="1.0"/>
+    </runtimeType>
+    
+    <runtimeType
+       id="org.eclipse.jst.server.jetty.runtime.80"
+       name="%runtimeTypeJetty80Label"
+       description="%runtimeTypeJetty80Description"
+       vendor="%jetty"
+       version="8.0"
+       class="org.eclipse.jst.server.jetty.core.internal.JettyRuntime">
+       <moduleType
+         types="jst.web"
+         versions="2.2, 2.3, 2.4, 2.5, 3.0"/>
+       <moduleType
+         types="jst.utility"
+         versions="1.0"/>
+    </runtimeType>
+    
+  </extension>
+        
+  <extension point="org.eclipse.wst.server.core.runtimeLocators">
+    <runtimeLocator
+       id="org.eclipse.jst.server.jetty.runtime.locator"
+       typeIds="org.eclipse.jst.server.jetty.runtime.*"
+       class="org.eclipse.jst.server.jetty.core.internal.JettyRuntimeLocator"/>
+  </extension>
+        
+  <extension point="org.eclipse.jst.server.core.runtimeClasspathProviders">
+     <runtimeClasspathProvider
+        id="org.eclipse.jst.server.jetty.runtimeTarget"
+        runtimeTypeIds="org.eclipse.jst.server.jetty.runtime.*"
+        class="org.eclipse.jst.server.jetty.core.internal.JettyRuntimeClasspathProvider"/>
+  </extension>
+           
+  <!-- WST Server Types -->
+             
+  <extension point="org.eclipse.wst.server.core.serverTypes">
+     <serverType
+       id="org.eclipse.jst.server.jetty.70"
+       name="%jetty70ServerType"
+       description="%jetty70ServerDescription"
+       supportsRemoteHosts="false"
+       runtime="true"
+       startTimeout="30000"
+       stopTimeout="15000"
+       initialState="stopped"
+       hasConfiguration="true"
+       launchConfigId="org.eclipse.jst.server.jetty.core.launchConfigurationType"
+       runtimeTypeId="org.eclipse.jst.server.jetty.runtime.70"
+       class="org.eclipse.jst.server.jetty.core.internal.JettyServer"
+       behaviourClass="org.eclipse.jst.server.jetty.core.internal.JettyServerBehaviour">
+     </serverType>
+     
+     <serverType
+       id="org.eclipse.jst.server.jetty.80"
+       name="%jetty80ServerType"
+       description="%jetty80ServerDescription"
+       supportsRemoteHosts="false"
+       runtime="true"
+       startTimeout="30000"
+       stopTimeout="15000"
+       initialState="stopped"
+       hasConfiguration="true"
+       launchConfigId="org.eclipse.jst.server.jetty.core.launchConfigurationType"
+       runtimeTypeId="org.eclipse.jst.server.jetty.runtime.80"
+       class="org.eclipse.jst.server.jetty.core.internal.JettyServer"
+       behaviourClass="org.eclipse.jst.server.jetty.core.internal.JettyServerBehaviour">
+     </serverType>     
+  </extension>
+        
+  <extension point="org.eclipse.wst.server.core.serverLocators">
+    <serverLocator
+       id="org.eclipse.jst.server.jetty.server.locator"
+       supportsRemoteHosts="false"
+       typeIds="org.eclipse.jst.server.jetty.*"
+       class="org.eclipse.jst.server.jetty.core.internal.JettyServerLocator"/>
+  </extension>
+
+  <extension point="org.eclipse.wst.server.core.launchableAdapters">
+     <launchableAdapter
+        class="org.eclipse.jst.server.jetty.core.internal.JettyLaunchableAdapterDelegate"
+        id="org.eclipse.jst.server.jetty.web"/>
+  </extension>
+
+  <extension point="org.eclipse.debug.core.sourcePathComputers">
+     <sourcePathComputer
+        id="org.eclipse.jst.server.jetty.core.sourcePathComputer"
+        class="org.eclipse.jst.server.jetty.core.internal.JettySourcePathComputerDelegate"/>
+  </extension>
+          
+  <extension point="org.eclipse.debug.core.launchConfigurationTypes">
+     <launchConfigurationType
+        id="org.eclipse.jst.server.jetty.core.launchConfigurationType"
+        name="%jettyLaunchConfigurationType"
+        delegate="org.eclipse.jst.server.jetty.core.internal.JettyLaunchConfigurationDelegate"
+        modes="run, debug, profile"
+        sourceLocatorId="org.eclipse.jdt.launching.sourceLocator.JavaSourceLookupDirector"
+        sourcePathComputerId="org.eclipse.jst.server.jetty.core.sourcePathComputer"/>
+  </extension>
+      
+  <extension point="org.eclipse.wst.server.core.publishTasks">
+     <publishTask
+        id="org.eclipse.jst.server.jetty.core.publishTask"
+        typeIds="org.eclipse.jst.server.jetty.*"
+        class="org.eclipse.jst.server.jetty.core.internal.PublishTask"/>
+  </extension>
+        
+  <extension point="org.eclipse.wst.common.project.facet.core.runtimes">
+    <runtime-component-type
+       id="org.eclipse.jst.server.jetty"/>
+
+    <runtime-component-version
+       type="org.eclipse.jst.server.jetty"
+       version="7.0"/>
+
+    <runtime-component-version
+       type="org.eclipse.jst.server.jetty"
+       version="8.0"/>
+
+    <adapter>
+      <runtime-component
+         id="org.eclipse.jst.server.jetty"/>
+      <factory
+         class="org.eclipse.jst.server.core.internal.RuntimeClasspathProvider$Factory"/>
+      <type
+         class="org.eclipse.jst.common.project.facet.core.IClasspathProvider"/>
+    </adapter>
+
+    <supported>
+      <runtime-component
+         id="org.eclipse.jst.server.jetty"
+         version="7.0"/>
+      <facet
+         id="jst.web"
+         version="2.2,2.3,2.4,2.5"/>
+      <facet
+         id="jst.utility"
+         version="1.0"/>
+    </supported>
+
+    <supported>
+      <runtime-component
+         id="org.eclipse.jst.server.jetty"
+         version="8.0"/>
+      <facet
+         id="jst.web"
+         version="2.2,2.3,2.4,2.5,3.0"/>
+      <facet
+         id="jst.webfragment"
+         version="3.0"/>
+      <facet
+         id="jst.utility"
+         version="1.0"/>
+    </supported>
+  </extension>
+  
+  <extension point="org.eclipse.wst.common.project.facet.core.defaultFacets">
+    <default-facets>
+      <runtime-component id="org.eclipse.jst.server.jetty"/>
+      <facet id="wst.jsdt.web" version="1.0"/>
+    </default-facets>
+  </extension>
+  
+  <extension point="org.eclipse.jst.server.core.runtimeFacetMappings">
+    <runtimeFacetMapping
+      runtimeTypeId="org.eclipse.jst.server.jetty.runtime.70"
+      runtime-component="org.eclipse.jst.server.jetty"
+      version="7.0"/>
+    <runtimeFacetMapping
+      runtimeTypeId="org.eclipse.jst.server.jetty.runtime.80"
+      runtime-component="org.eclipse.jst.server.jetty"
+      version="8.0"/>
+  </extension>
+          
+  <extension point="org.eclipse.wst.server.core.installableRuntimes">
+    <runtime
+      id="org.eclipse.jst.server.jetty.runtime.70"
+      licenseUrl="http://www.apache.org/licenses/LICENSE-2.0"
+      archiveUrl="http://download.eclipse.org/jetty/stable-7/dist/jetty-distribution-7.2.0.v20101020.zip"
+      archivePath="jetty-distribution-7.1.6.v20100715" />
+	<runtime
+      id="org.eclipse.jst.server.jetty.runtime.80"
+      licenseUrl="http://www.apache.org/licenses/LICENSE-2.0"
+      archiveUrl="http://download.eclipse.org/jetty/8.0.0.M1/dist/jetty-distribution-8.0.0.M1.zip"
+      archivePath="jetty-distribution-8.0.0.M1" />      
+  </extension>          
+          
+</plugin>    
