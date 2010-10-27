@@ -10,5 +10,6 @@
   <groupId>org.eclipse.jst.server.jetty.ui</groupId>
   <artifactId>org.eclipse.jst.server.jetty.ui</artifactId>
   <version>1.0.0-SNAPSHOT</version>
+  <name>Jetty WTP Adaptor :: UI</name>
   <packaging>eclipse-plugin</packaging>
 </project>

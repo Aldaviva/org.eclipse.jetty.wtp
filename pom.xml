@@ -6,10 +6,13 @@
   <artifactId>jetty-wtp</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
+  <name>Jetty WTP Adaptor :: Parent</name>
   <modules>
     <module>org.eclipse.jst.server.jetty.core</module>
     <module>org.eclipse.jst.server.jetty.ui</module>
     <module>org.eclipse.jst.server.jetty.ui.websocket</module>
+    <module>org.eclipse.jst.server.jetty.feature</module>
+    <module>org.eclipse.jst.server.jetty.site</module>
   </modules>
   <properties>
     <tycho-version>0.10.0</tycho-version>
@@ -23,6 +26,21 @@
         <artifactId>tycho-maven-plugin</artifactId>
         <version>${tycho-version}</version>
         <extensions>true</extensions>
+      </plugin>
+      <plugin>
+        <inherited>true</inherited>
+        <groupId>org.sonatype.tycho</groupId>
+        <artifactId>maven-osgi-source-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <executions>
+          <execution>
+          <id>attach-sources</id>
+          <phase>process-classes</phase>
+          <goals>
+            <goal>plugin-source</goal>
+          </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.sonatype.tycho</groupId>
@@ -73,6 +91,26 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+			        <plugin>
+              <groupId>org.sonatype.tycho</groupId>
+              <artifactId>tycho-p2-publisher-director</artifactId>
+              <version>${tycho-version}</version>
+              <configuration>
+                <compress>true</compress>
+                <statsURI>http://download.eclipse.org/releases/stats/helios/</statsURI>
+        <statsTrackedArtifacts>javax.servlet.jsp.glassfish,org.eclipse.jetty.core,org.eclipse.jetty.starterkit,org.eclipse.jetty.starterkit.sdk,org.eclipse.jetty.sdk,org.eclipse.jetty.tooling,org.eclipse.pde.junit.runtime,org.eclipse.pde.junit.runtime.standalone,org.eclipse.pde.junit.runtime.addon</statsTrackedArtifacts>
+<!--          <environmentsToArchive>os=win32;ws=win32;arch=x86*
+                        os=linux;ws=gtk;arch=x86*
+                        os=macosx;ws=cocoa;arch=x86*
+                      </environmentsToArchive> -->
+                        <!-- mac fails at the moment? -->
+          <environmentsToArchive>os=win32;ws=win32;arch=x86*
+                        os=linux;ws=gtk;arch=x86*
+          </environmentsToArchive>
+              <productsToArchive>*EclipseRT*</productsToArchive>
+              </configuration>
+        </plugin>
+			
 		</plugins>
 	</pluginManagement>
   </build>

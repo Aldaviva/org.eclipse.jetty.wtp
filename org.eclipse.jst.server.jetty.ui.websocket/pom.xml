@@ -10,5 +10,6 @@
   <groupId>org.eclipse.jst.server.jetty.ui.websocket</groupId>
   <artifactId>org.eclipse.jst.server.jetty.ui.websocket</artifactId>
   <version>1.0.0-SNAPSHOT</version>
+  <name>Jetty WTP Adaptor :: Websocket UI</name>
   <packaging>eclipse-plugin</packaging>
 </project>

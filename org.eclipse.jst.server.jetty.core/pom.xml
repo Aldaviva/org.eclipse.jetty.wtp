@@ -10,5 +10,6 @@
   <groupId>org.eclipse.jst.server.jetty.core</groupId>
   <artifactId>org.eclipse.jst.server.jetty.core</artifactId>
   <version>1.0.0-SNAPSHOT</version>
+  <name>Jetty WTP Adaptor :: Core</name>
   <packaging>eclipse-plugin</packaging>
 </project>
