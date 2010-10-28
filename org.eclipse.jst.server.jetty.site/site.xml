@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <description>
-     Jetty WTP Adaptor
+   <description name="Jetty WTP Adaptor" url="http://download.eclipse.org/jetty/updates/jetty-wtp">
+      Jetty WTP Adaptor
    </description>
    <feature url="features/org.eclipse.jst.server.jetty.feature_1.0.0.qualifier.jar" id="org.eclipse.jst.server.jetty.feature" version="1.0.0.qualifier">
       <category name="jst-server-jetty"/>
    </feature>
-   <category-def name="jst-server-jetty" label="jst-server-jetty"/>
+   <category-def name="jst-server-jetty" label="Jetty WTP Adaptor"/>
 </site>

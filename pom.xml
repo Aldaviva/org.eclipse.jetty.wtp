@@ -29,14 +29,12 @@
         <extensions>true</extensions>
       </plugin>
       <plugin>
-        <inherited>true</inherited>
         <groupId>org.sonatype.tycho</groupId>
         <artifactId>maven-osgi-source-plugin</artifactId>
         <version>${tycho-version}</version>
         <executions>
           <execution>
             <id>attach-sources</id>
-            <phase>process-classes</phase>
             <goals>
               <goal>plugin-source</goal>
             </goals>
@@ -106,7 +104,7 @@
             <encoding>UTF-8</encoding>
           </configuration>
         </plugin>
-        <plugin>
+        <!-- plugin>
           <groupId>org.sonatype.tycho</groupId>
           <artifactId>tycho-p2-publisher-director</artifactId>
           <version>${tycho-version}</version>
@@ -114,16 +112,13 @@
             <compress>true</compress>
             <statsURI>http://download.eclipse.org/releases/stats/helios/</statsURI>
             <statsTrackedArtifacts>org.eclipse.jst.server.jetty.core,org.eclipse.jst.server.jetty.ui,org.eclipse.jst.server.jetty.websocket.ui</statsTrackedArtifacts>
-            <!-- <environmentsToArchive>os=win32;ws=win32;arch=x86* os=linux;ws=gtk;arch=x86* 
-              os=macosx;ws=cocoa;arch=x86* </environmentsToArchive> -->
-            <!-- mac fails at the moment? -->
             <environmentsToArchive>
               os=win32;ws=win32;arch=x86*
               os=linux;ws=gtk;arch=x86*
             </environmentsToArchive>
-            <productsToArchive>*EclipseRT*</productsToArchive>
+            <productsToArchive>*site*</productsToArchive>
           </configuration>
-        </plugin>
+        </plugin-->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-pmd-plugin</artifactId>
