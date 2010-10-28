@@ -11,28 +11,6 @@
   <artifactId>org.eclipse.jst.server.jetty.site</artifactId>
   <packaging>eclipse-update-site</packaging>
   <name>Jetty WTP Adaptor :: Site</name>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration>
-          <descriptors>
-            <descriptor>src/main/assembly/assembly.xml</descriptor>
-          </descriptors>
-          <tarLongFileMode>gnu</tarLongFileMode>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
   <profiles>
     <profile>
       <id>build-server</id>
