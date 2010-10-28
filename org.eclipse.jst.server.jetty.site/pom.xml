@@ -49,8 +49,8 @@
                 </goals>
                 <configuration>
                   <tasks>
-                    <delete includeemptydirs="true">
-                      <fileset dir="/home/data/httpd/download.eclipse.org/jetty/updates/jetty-wtp/development">
+                    <delete includeemptydirs="false">
+                      <fileset dir="/home/data/httpd/download.eclipse.org/jetty/updates/jetty-wtp/development/">
                         <include name="**"/>
                       </fileset>
                     </delete>
