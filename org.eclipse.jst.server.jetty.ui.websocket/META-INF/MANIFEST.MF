@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
-Bundle-Vendor: %providerName
 Bundle-SymbolicName: org.eclipse.jst.server.jetty.ui.websocket;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.eclipse.jst.server.jetty.ui.websocket.JettyUIWebSocketPlugin
+Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jst.servlet.ui,
@@ -22,5 +22,5 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jst.jee.ui;bundle-version="[1.0.100,1.1.0)",
  org.eclipse.wst.common.modulecore;bundle-version="[1.2.0,2.0.0)",
  org.eclipse.jst.j2ee;bundle-version="[1.1.0,1.2.0)"
-Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy

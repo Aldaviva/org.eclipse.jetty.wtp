@@ -74,6 +74,11 @@ public class WebModule implements IJettyWebModule {
 		return reloadable;
 	}
 	
+	public int hashCode() 
+	{
+       return getDocumentBase().hashCode() + getPath().hashCode() + getMemento().hashCode();
+    }
+	
 	/**
 	 * @see Object#equals(Object)
 	 */

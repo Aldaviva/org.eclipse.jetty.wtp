@@ -43,8 +43,7 @@ import org.eclipse.wst.server.core.model.RuntimeDelegate;
  * Jetty Runtime.
  *
  */
-public class JettyRuntime extends RuntimeDelegate implements IJettyRuntime,
-		IJettyRuntimeWorkingCopy {
+public class JettyRuntime extends RuntimeDelegate implements IJettyRuntime, IJettyRuntimeWorkingCopy {
 
 	//private static final String TOOLS_JAR_PATH = "lib" + File.separator + "tools.jar";
 	private static final String JAVAC_MAIN = "com.sun.tools.javac.Main";
@@ -53,7 +52,7 @@ public class JettyRuntime extends RuntimeDelegate implements IJettyRuntime,
 	protected static final String PROP_VM_INSTALL_TYPE_ID = "vm-install-type-id";
 	protected static final String PROP_VM_INSTALL_ID = "vm-install-id";
 
-	protected static Map<File, Boolean> sdkMap = new HashMap<File, Boolean>(2);
+	protected final static Map<File, Boolean> sdkMap = new HashMap<File, Boolean>(2);
 	private static Map<String, Integer> javaVersionMap = new ConcurrentHashMap<String, Integer>();
 
 	public JettyRuntime() {
@@ -300,7 +299,7 @@ public class JettyRuntime extends RuntimeDelegate implements IJettyRuntime,
 						if (StringUtils.isTrue(text))
 							found = true;
 
-						sdkMap.put(javaHome, new Boolean(found));
+						sdkMap.put(javaHome, Boolean.valueOf(found));
 						return found;
 					}
 				}
@@ -336,7 +335,7 @@ public class JettyRuntime extends RuntimeDelegate implements IJettyRuntime,
 					if (index2 > 0) {
 						int minor = Integer.parseInt(javaVersion.substring(
 								index, index2));
-						version = new Integer(major + minor);
+						version = Integer.valueOf(major + minor);
 						javaVersionMap.put(javaVersion, version);
 					}
 				} catch (NumberFormatException e) {
