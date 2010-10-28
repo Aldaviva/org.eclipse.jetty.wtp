@@ -99,17 +99,17 @@
           <configuration>
             <compress>true</compress>
             <statsURI>http://download.eclipse.org/releases/stats/helios/</statsURI>
-            <statsTrackedArtifacts>javax.servlet.jsp.glassfish,org.eclipse.jetty.core,org.eclipse.jetty.starterkit,org.eclipse.jetty.starterkit.sdk,org.eclipse.jetty.sdk,org.eclipse.jetty.tooling,org.eclipse.pde.junit.runtime,org.eclipse.pde.junit.runtime.standalone,org.eclipse.pde.junit.runtime.addon</statsTrackedArtifacts>
+            <statsTrackedArtifacts>org.eclipse.jst.server.jetty.core,org.eclipse.jst.server.jetty.ui,org.eclipse.jst.server.jetty.websocket.ui</statsTrackedArtifacts>
             <!-- <environmentsToArchive>os=win32;ws=win32;arch=x86* os=linux;ws=gtk;arch=x86* 
               os=macosx;ws=cocoa;arch=x86* </environmentsToArchive> -->
             <!-- mac fails at the moment? -->
-            <environmentsToArchive>os=win32;ws=win32;arch=x86*
+            <environmentsToArchive>
+              os=win32;ws=win32;arch=x86*
               os=linux;ws=gtk;arch=x86*
-          </environmentsToArchive>
+            </environmentsToArchive>
             <productsToArchive>*EclipseRT*</productsToArchive>
           </configuration>
         </plugin>
-
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-pmd-plugin</artifactId>
