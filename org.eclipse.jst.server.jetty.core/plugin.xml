@@ -205,9 +205,9 @@
     <runtime
       id="org.eclipse.jst.server.jetty.runtime.70"
       licenseUrl="http://www.apache.org/licenses/LICENSE-2.0"
-      archiveUrl="http://download.eclipse.org/jetty/stable-7/dist/jetty-distribution-7.2.0.v20101020.zip"
-      archivePath="jetty-distribution-7.1.6.v20100715" />
-	<runtime
+      archiveUrl="http://download.eclipse.org/jetty/7.2.0.v20101020/dist/jetty-distribution-7.2.0.v20101020.zip"
+      archivePath="jetty-distribution-7.2.0.v20101020" />
+	  <runtime
       id="org.eclipse.jst.server.jetty.runtime.80"
       licenseUrl="http://www.apache.org/licenses/LICENSE-2.0"
       archiveUrl="http://download.eclipse.org/jetty/8.0.0.M1/dist/jetty-distribution-8.0.0.M1.zip"
