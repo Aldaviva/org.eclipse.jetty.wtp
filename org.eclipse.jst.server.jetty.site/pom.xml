@@ -50,11 +50,11 @@
                 <configuration>
                   <tasks>
                     <delete includeemptydirs="false">
-                      <fileset dir="target/development/">
+                      <fileset dir="/home/data/httpd/download.eclipse.org/jetty/updates/jetty-wtp/development">
                         <include name="**"/>
                       </fileset>
                     </delete>
-                    <copy includeemptydirs="false" todir="target/development">
+                    <copy includeemptydirs="false" todir="/home/data/httpd/download.eclipse.org/jetty/updates/jetty-wtp/development">
                       <fileset dir="target/site">
                         <include name="**" />
                       </fileset>
