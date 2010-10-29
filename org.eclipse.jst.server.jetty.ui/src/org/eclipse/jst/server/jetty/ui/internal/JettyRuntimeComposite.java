@@ -74,7 +74,7 @@ public class JettyRuntimeComposite extends Composite
     protected Text installDir;
     protected Text name;
     protected Combo combo;
-    protected List installedJREs;
+    protected List<IVMInstall> installedJREs;
     protected String[] jreNames;
     protected IInstallableRuntime ir;
     protected Job installRuntimeJob;
@@ -356,7 +356,7 @@ public class JettyRuntimeComposite extends Composite
     protected void updateJREs()
     {
         // get all installed JVMs
-        installedJREs = new ArrayList();
+        installedJREs = new ArrayList<IVMInstall>();
         IVMInstallType[] vmInstallTypes = JavaRuntime.getVMInstallTypes();
         int size = vmInstallTypes.length;
         for (int i = 0; i < size; i++)

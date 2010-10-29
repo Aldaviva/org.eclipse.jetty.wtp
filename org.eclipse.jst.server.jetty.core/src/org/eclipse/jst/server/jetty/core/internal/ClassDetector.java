@@ -10,22 +10,28 @@
  *     Angelo Zerr <angelo.zerr@gmail.com> - Jetty packages
  *******************************************************************************/
 package org.eclipse.jst.server.jetty.core.internal;
+
 /**
- * Utility class to check for the existence of a class given as an
- * argument. 
+ * Utility class to check for the existence of a class given as an argument.
  */
-public class ClassDetector {
-	public static void main(String[] args) {
-		if (args == null || args.length != 1) {
-			System.out.println("Usage: ClassDetector [className]");
-			return;
-		}
-		
-		try {
-			Class.forName(args[0]);
-			System.out.println("true");
-		} catch (Exception e) {
-			System.out.println("false");
-		}
-	}
+public class ClassDetector
+{
+    public static void main(String[] args)
+    {
+        if (args == null || args.length != 1)
+        {
+            System.out.println("Usage: ClassDetector [className]");
+            return;
+        }
+
+        try
+        {
+            Class.forName(args[0]);
+            System.out.println("true");
+        }
+        catch (Exception e)
+        {
+            System.out.println("false");
+        }
+    }
 }

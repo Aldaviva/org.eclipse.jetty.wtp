@@ -31,81 +31,90 @@ import org.eclipse.wst.server.core.IServer;
 import org.eclipse.wst.server.core.ServerCore;
 import org.eclipse.wst.server.core.ServerUtil;
 
-public class JettyLaunchConfigurationDelegate extends AbstractJavaLaunchConfigurationDelegate {
+public class JettyLaunchConfigurationDelegate extends AbstractJavaLaunchConfigurationDelegate
+{
 
-	public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {
-		IServer server = ServerUtil.getServer(configuration);
-		if (server == null) {
-			Trace.trace(Trace.FINEST, "Launch configuration could not find server");
-			// throw CoreException();
-			return;
-		}
-		
-		if (server.shouldPublish() && ServerCore.isAutoPublishing())
-			server.publish(IServer.PUBLISH_INCREMENTAL, monitor);
-		
-		JettyServerBehaviour jettyServer = (JettyServerBehaviour) server.loadAdapter(JettyServerBehaviour.class, null);
-		
-		String mainTypeName = jettyServer.getRuntimeClass();
-		
-		IVMInstall vm = verifyVMInstall(configuration);
-		
-		IVMRunner runner = vm.getVMRunner(mode);
-		if (runner == null)
-			runner = vm.getVMRunner(ILaunchManager.RUN_MODE);
-		
-		File workingDir = verifyWorkingDirectory(configuration);
-		String workingDirName = null;
-		if (workingDir != null)
-			workingDirName = workingDir.getAbsolutePath();
-		
-		// Program & VM args
-		String pgmArgs = getProgramArguments(configuration);
-		String vmArgs = getVMArguments(configuration);
-		String[] envp = getEnvironment(configuration);
-		
-		ExecutionArguments execArgs = new ExecutionArguments(vmArgs, pgmArgs);
-		
-		// VM-specific attributes
-		Map vmAttributesMap = getVMSpecificAttributesMap(configuration);
-		
-		// Classpath
-		String[] classpath = getClasspath(configuration);
-		
-		// Create VM config
-		VMRunnerConfiguration runConfig = new VMRunnerConfiguration(mainTypeName, classpath);
-		runConfig.setProgramArguments(execArgs.getProgramArgumentsArray());
-		runConfig.setVMArguments(execArgs.getVMArgumentsArray());
-		runConfig.setWorkingDirectory(workingDirName);
-		runConfig.setEnvironment(envp);
-		runConfig.setVMSpecificAttributesMap(vmAttributesMap);
-		
-		// Bootpath
-		String[] bootpath = getBootpath(configuration);
-		if (bootpath != null && bootpath.length > 0)
-			runConfig.setBootClassPath(bootpath);
-		
-		setDefaultSourceLocator(launch, configuration);
-		
-		if (ILaunchManager.PROFILE_MODE.equals(mode)) {
-			try {
-				ServerProfilerDelegate.configureProfiling(launch, vm, runConfig, monitor);
-			} catch (CoreException ce) {
-				jettyServer.stopImpl();
-				throw ce;
-			}
-		}
-		
-		// Launch the configuration
-		jettyServer.setupLaunch(launch, mode, monitor);
-		try {
-			runner.run(runConfig, launch, monitor);
-			jettyServer.addProcessListener(launch.getProcesses()[0]);
-		} catch (Exception e) {
-			// Ensure we don't continue to think the server is starting
-			jettyServer.stopImpl();
-		}
-	}
+    public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException
+    {
+        IServer server = ServerUtil.getServer(configuration);
+        if (server == null)
+        {
+            Trace.trace(Trace.FINEST,"Launch configuration could not find server");
+            // throw CoreException();
+            return;
+        }
+
+        if (server.shouldPublish() && ServerCore.isAutoPublishing())
+            server.publish(IServer.PUBLISH_INCREMENTAL,monitor);
+
+        JettyServerBehaviour jettyServer = (JettyServerBehaviour)server.loadAdapter(JettyServerBehaviour.class,null);
+
+        String mainTypeName = jettyServer.getRuntimeClass();
+
+        IVMInstall vm = verifyVMInstall(configuration);
+
+        IVMRunner runner = vm.getVMRunner(mode);
+        if (runner == null)
+            runner = vm.getVMRunner(ILaunchManager.RUN_MODE);
+
+        File workingDir = verifyWorkingDirectory(configuration);
+        String workingDirName = null;
+        if (workingDir != null)
+            workingDirName = workingDir.getAbsolutePath();
+
+        // Program & VM args
+        String pgmArgs = getProgramArguments(configuration);
+        String vmArgs = getVMArguments(configuration);
+        String[] envp = getEnvironment(configuration);
+
+        ExecutionArguments execArgs = new ExecutionArguments(vmArgs,pgmArgs);
+
+        // VM-specific attributes
+        Map vmAttributesMap = getVMSpecificAttributesMap(configuration);
+
+        // Classpath
+        String[] classpath = getClasspath(configuration);
+
+        // Create VM config
+        VMRunnerConfiguration runConfig = new VMRunnerConfiguration(mainTypeName,classpath);
+        runConfig.setProgramArguments(execArgs.getProgramArgumentsArray());
+        runConfig.setVMArguments(execArgs.getVMArgumentsArray());
+        runConfig.setWorkingDirectory(workingDirName);
+        runConfig.setEnvironment(envp);
+        runConfig.setVMSpecificAttributesMap(vmAttributesMap);
+
+        // Bootpath
+        String[] bootpath = getBootpath(configuration);
+        if (bootpath != null && bootpath.length > 0)
+            runConfig.setBootClassPath(bootpath);
+
+        setDefaultSourceLocator(launch,configuration);
+
+        if (ILaunchManager.PROFILE_MODE.equals(mode))
+        {
+            try
+            {
+                ServerProfilerDelegate.configureProfiling(launch,vm,runConfig,monitor);
+            }
+            catch (CoreException ce)
+            {
+                jettyServer.stopImpl();
+                throw ce;
+            }
+        }
+
+        // Launch the configuration
+        jettyServer.setupLaunch(launch,mode,monitor);
+        try
+        {
+            runner.run(runConfig,launch,monitor);
+            jettyServer.addProcessListener(launch.getProcesses()[0]);
+        }
+        catch (Exception e)
+        {
+            // Ensure we don't continue to think the server is starting
+            jettyServer.stopImpl();
+        }
+    }
 
 }
-

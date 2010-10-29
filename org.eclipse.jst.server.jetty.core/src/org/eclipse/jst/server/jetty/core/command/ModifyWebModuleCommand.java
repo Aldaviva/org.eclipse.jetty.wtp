@@ -14,32 +14,37 @@ package org.eclipse.jst.server.jetty.core.command;
 import org.eclipse.jst.server.jetty.core.IJettyConfigurationWorkingCopy;
 import org.eclipse.jst.server.jetty.core.WebModule;
 import org.eclipse.jst.server.jetty.core.internal.Messages;
+
 /**
  * Command to change a web module.
  */
-public class ModifyWebModuleCommand extends ConfigurationCommand {
-	protected int index;
-	protected WebModule oldModule;
-	protected WebModule newModule;
+public class ModifyWebModuleCommand extends ConfigurationCommand
+{
+    protected int index;
+    protected WebModule oldModule;
+    protected WebModule newModule;
 
-	public ModifyWebModuleCommand(IJettyConfigurationWorkingCopy configuration, int index, WebModule module) {
-		super(configuration, Messages.configurationEditorActionModifyWebModule);
-		this.index = index;
-		newModule = module;
-	}
+    public ModifyWebModuleCommand(IJettyConfigurationWorkingCopy configuration, int index, WebModule module)
+    {
+        super(configuration,Messages.configurationEditorActionModifyWebModule);
+        this.index = index;
+        newModule = module;
+    }
 
-	/**
-	 * Execute the command.
-	 */
-	public void execute() {
-		oldModule = (WebModule) configuration.getWebModules().get(index);
-		configuration.modifyWebModule(index, newModule.getDocumentBase(), newModule.getPath(), newModule.isReloadable());
-	}
+    /**
+     * Execute the command.
+     */
+    public void execute()
+    {
+        oldModule = (WebModule)configuration.getWebModules().get(index);
+        configuration.modifyWebModule(index,newModule.getDocumentBase(),newModule.getPath(),newModule.isReloadable());
+    }
 
-	/**
-	 * Undo the command.
-	 */
-	public void undo() {
-		configuration.modifyWebModule(index, oldModule.getDocumentBase(), oldModule.getPath(), oldModule.isReloadable());
-	}
+    /**
+     * Undo the command.
+     */
+    public void undo()
+    {
+        configuration.modifyWebModule(index,oldModule.getDocumentBase(),oldModule.getPath(),oldModule.isReloadable());
+    }
 }

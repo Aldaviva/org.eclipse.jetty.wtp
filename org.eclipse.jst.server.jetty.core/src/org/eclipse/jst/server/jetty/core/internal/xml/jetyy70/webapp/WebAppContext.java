@@ -19,84 +19,103 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-public class WebAppContext extends XMLElement {
+public class WebAppContext extends XMLElement
+{
 
-	private File saveFile;
-	private String memento;
-	private String documentBase;
+    private File saveFile;
+    private String memento;
+    private String documentBase;
 
-	public void setContextPath(String contextPath) {
-		Element element = super.findElement("Set", "contextPath");
-		if (contextPath.startsWith("/")) {
-			element.setTextContent(contextPath);
-		} else {
-			element.setTextContent("/" + contextPath);
-		}
+    public void setContextPath(String contextPath)
+    {
+        Element element = super.findElement("Set","contextPath");
+        if (contextPath.startsWith("/"))
+        {
+            element.setTextContent(contextPath);
+        }
+        else
+        {
+            element.setTextContent("/" + contextPath);
+        }
 
-	}
+    }
 
-	public void setWar(String war, boolean isExternal) {
-		Element element = super.findElement("Set", "war");
-		element.setTextContent(war);
-		if (!isExternal) {
-			Document document = element.getOwnerDocument();
-			Element systemProperty = document.createElement("SystemProperty");
-			systemProperty.setAttribute("name", "jetty.home");
-			systemProperty.setAttribute("default", ".");
-			Node firstChild = element.getFirstChild();
-			element.insertBefore(systemProperty, firstChild);
-		}
-	}
+    public void setWar(String war, boolean isExternal)
+    {
+        Element element = super.findElement("Set","war");
+        element.setTextContent(war);
+        if (!isExternal)
+        {
+            Document document = element.getOwnerDocument();
+            Element systemProperty = document.createElement("SystemProperty");
+            systemProperty.setAttribute("name","jetty.home");
+            systemProperty.setAttribute("default",".");
+            Node firstChild = element.getFirstChild();
+            element.insertBefore(systemProperty,firstChild);
+        }
+    }
 
-	public String getContextPath() {
-		Element element = super.findElement("Set", "contextPath");
-		return element.getTextContent();
-	}
+    public String getContextPath()
+    {
+        Element element = super.findElement("Set","contextPath");
+        return element.getTextContent();
+    }
 
-	public String getWar() {
-		Element element = super.findElement("Set", "war");
-		return element.getTextContent();
-	}
+    public String getWar()
+    {
+        Element element = super.findElement("Set","war");
+        return element.getTextContent();
+    }
 
-	public void save() throws IOException {
-		XMLUtil.save(saveFile.getCanonicalPath(), getElementNode()
-				.getOwnerDocument());
-	}
+    public void save() throws IOException
+    {
+        XMLUtil.save(saveFile.getCanonicalPath(),getElementNode().getOwnerDocument());
+    }
 
-	public void setSaveFile(File saveFile) {
-		this.saveFile = saveFile;
-		String war = getWar();
-		File warFile = new File(war);
-		if (war != null && warFile.exists()) {
-			try {
-				this.documentBase = warFile.getCanonicalPath();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} else {
-			this.documentBase = saveFile.getName();
-			int index = documentBase.lastIndexOf('.');
-			if (index != -1) {
-				documentBase = documentBase.substring(0, index);
-			}
-			this.memento = "org.eclipse.jst.jee.server:" + documentBase;
-		}		
-	}
+    public void setSaveFile(File saveFile)
+    {
+        this.saveFile = saveFile;
+        String war = getWar();
+        File warFile = new File(war);
+        if (war != null && warFile.exists())
+        {
+            try
+            {
+                this.documentBase = warFile.getCanonicalPath();
+            }
+            catch (IOException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            this.documentBase = saveFile.getName();
+            int index = documentBase.lastIndexOf('.');
+            if (index != -1)
+            {
+                documentBase = documentBase.substring(0,index);
+            }
+            this.memento = "org.eclipse.jst.jee.server:" + documentBase;
+        }
+    }
 
-	public String getMemento() {
-		return memento;
-	}
+    public String getMemento()
+    {
+        return memento;
+    }
 
-	// public void setMemento(String memento) {
-	// this.memento = memento;
-	// }
+    // public void setMemento(String memento) {
+    // this.memento = memento;
+    // }
 
-	public String getDocumentBase() {
-		return documentBase;
-	}
+    public String getDocumentBase()
+    {
+        return documentBase;
+    }
 
-	// public void setDocumentBase(String documentBase) {
-	// this.documentBase = documentBase;
-	// }
+    // public void setDocumentBase(String documentBase) {
+    // this.documentBase = documentBase;
+    // }
 }

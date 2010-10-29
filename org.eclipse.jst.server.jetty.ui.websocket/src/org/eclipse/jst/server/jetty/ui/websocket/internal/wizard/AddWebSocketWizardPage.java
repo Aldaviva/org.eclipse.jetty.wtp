@@ -114,7 +114,7 @@ public class AddWebSocketWizardPage extends DataModelWizardPage
 
         String text = displayNameText.getText();
         // Set default URL Pattern
-        List input = new ArrayList();
+        List<String[]> input = new ArrayList<String[]>();
         input.add(new String[]
         { "/" + text }); //$NON-NLS-1$
         if (urlSection != null)
@@ -158,7 +158,7 @@ public class AddWebSocketWizardPage extends DataModelWizardPage
             {
                 String text = displayNameText.getText();
                 // Set default URL Pattern
-                List input = new ArrayList();
+                List<String[]> input = new ArrayList<String[]>();
                 input.add(new String[]
                 { "/" + text }); //$NON-NLS-1$
                 if (urlSection != null)
