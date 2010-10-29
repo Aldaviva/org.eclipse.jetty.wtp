@@ -59,138 +59,141 @@ import org.eclipse.wst.common.frameworks.internal.plugin.WTPCommonPlugin;
 /**
  * Servlet Wizard Setting Page
  */
-public class AddWebSocketWizardPage extends DataModelWizardPage {
-	final static String[] JSPEXTENSIONS = {"jsp"}; //$NON-NLS-1$
+public class AddWebSocketWizardPage extends DataModelWizardPage
+{
+    final static String[] JSPEXTENSIONS =
+    { "jsp" }; //$NON-NLS-1$
 
-	private Text displayNameText;
+    private Text displayNameText;
 
-	private StringArrayTableWizardSection urlSection;
+    private StringArrayTableWizardSection urlSection;
 
-	public AddWebSocketWizardPage(IDataModel model, String pageName) {
-		super(model, pageName);
-		setDescription(IWebSocketWizardConstants.ADD_WEBSOCKET_WIZARD_PAGE_DESC);
-		this.setTitle(IWebSocketWizardConstants.ADD_WEBSOCKET_WIZARD_PAGE_TITLE);
-	}
+    public AddWebSocketWizardPage(IDataModel model, String pageName)
+    {
+        super(model,pageName);
+        setDescription(IWebSocketWizardConstants.ADD_WEBSOCKET_WIZARD_PAGE_DESC);
+        this.setTitle(IWebSocketWizardConstants.ADD_WEBSOCKET_WIZARD_PAGE_TITLE);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jem.util.ui.wizard.WTPWizardPage#getValidationPropertyNames()
-	 */
-	@Override
-	protected String[] getValidationPropertyNames() {
-		return new String[] { DISPLAY_NAME, INIT_PARAM, URL_MAPPINGS };
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.jem.util.ui.wizard.WTPWizardPage#getValidationPropertyNames()
+     */
+    @Override
+    protected String[] getValidationPropertyNames()
+    {
+        return new String[]
+        { DISPLAY_NAME, INIT_PARAM, URL_MAPPINGS };
+    }
 
-	@Override
-	protected Composite createTopLevelComposite(Composite parent) {
-		Composite composite = new Composite(parent, SWT.NULL);
-		composite.setLayout(new GridLayout());
-		GridData data = new GridData(GridData.FILL_BOTH);
-		data.widthHint = 300;
-		composite.setLayoutData(data);
+    @Override
+    protected Composite createTopLevelComposite(Composite parent)
+    {
+        Composite composite = new Composite(parent,SWT.NULL);
+        composite.setLayout(new GridLayout());
+        GridData data = new GridData(GridData.FILL_BOTH);
+        data.widthHint = 300;
+        composite.setLayoutData(data);
 
-		createNameDescription(composite);
-		
-		StringArrayTableWizardSectionCallback callback = new StringArrayTableWizardSectionCallback();
-		StringArrayTableWizardSection initSection = new StringArrayTableWizardSection(
-				composite, 
-				INIT_PARAM_LABEL, 
-				INIT_PARAM_TITLE, 
-				ADD_BUTTON_LABEL_A, 
-				EDIT_BUTTON_LABEL_E, 
-				REMOVE_BUTTON_LABEL_R, 
-				new String[] { NAME_TITLE, VALUE_TITLE, DESCRIPTION_TITLE }, 
-				new String[] { NAME_LABEL, VALUE_LABEL, DESCRIPTION_LABEL }, 
-				null,// WebPlugin.getDefault().getImage("initializ_parameter"),
-				model, 
-				INIT_PARAM);
-		initSection.setCallback(callback);
-		urlSection = new StringArrayTableWizardSection(
-				composite, 
-				URL_MAPPINGS_LABEL, 
-				URL_MAPPINGS_TITLE, 
-				ADD_BUTTON_LABEL_D, 
-				EDIT_BUTTON_LABEL_T, 
-				REMOVE_BUTTON_LABEL_V,
-				new String[] { URL_PATTERN_TITLE }, 
-				new String[] { URL_PATTERN_LABEL }, 
-				null,// WebPlugin.getDefault().getImage("url_type"),
-				model, 
-				URL_MAPPINGS);
-		urlSection.setCallback(callback);
-		
-		String text = displayNameText.getText();
-		// Set default URL Pattern
-		List input = new ArrayList();
-		input.add(new String[]{"/" + text}); //$NON-NLS-1$
-		if (urlSection != null)
-			urlSection.setInput(input);
-		displayNameText.setFocus();
+        createNameDescription(composite);
 
-		IStatus projectStatus = validateProjectName();
-		if (!projectStatus.isOK()) {
-			setErrorMessage(projectStatus.getMessage());
-			composite.setEnabled(false);
-		}
-	    Dialog.applyDialogFont(parent);
-		return composite;
-	}
+        StringArrayTableWizardSectionCallback callback = new StringArrayTableWizardSectionCallback();
+        StringArrayTableWizardSection initSection = new StringArrayTableWizardSection(composite,INIT_PARAM_LABEL,INIT_PARAM_TITLE,ADD_BUTTON_LABEL_A,
+                EDIT_BUTTON_LABEL_E,REMOVE_BUTTON_LABEL_R,new String[]
+                { NAME_TITLE, VALUE_TITLE, DESCRIPTION_TITLE },new String[]
+                { NAME_LABEL, VALUE_LABEL, DESCRIPTION_LABEL },null,// WebPlugin.getDefault().getImage("initializ_parameter"),
+                model,INIT_PARAM);
+        initSection.setCallback(callback);
+        urlSection = new StringArrayTableWizardSection(composite,URL_MAPPINGS_LABEL,URL_MAPPINGS_TITLE,ADD_BUTTON_LABEL_D,EDIT_BUTTON_LABEL_T,
+                REMOVE_BUTTON_LABEL_V,new String[]
+                { URL_PATTERN_TITLE },new String[]
+                { URL_PATTERN_LABEL },null,// WebPlugin.getDefault().getImage("url_type"),
+                model,URL_MAPPINGS);
+        urlSection.setCallback(callback);
 
-	protected IStatus validateProjectName() {
-		// check for empty
-		if (model.getStringProperty(PROJECT_NAME) == null || model.getStringProperty(PROJECT_NAME).trim().length() == 0) {
-			return WTPCommonPlugin.createErrorStatus(NO_WEB_PROJECTS);
-		}
-		return WTPCommonPlugin.OK_STATUS;
-	}
+        String text = displayNameText.getText();
+        // Set default URL Pattern
+        List input = new ArrayList();
+        input.add(new String[]
+        { "/" + text }); //$NON-NLS-1$
+        if (urlSection != null)
+            urlSection.setInput(input);
+        displayNameText.setFocus();
 
-	protected void createNameDescription(Composite parent) {
-		Composite composite = new Composite(parent, SWT.NULL);
-		composite.setLayout(new GridLayout(2, false));
-		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
-		// display name
-		Label displayNameLabel = new Label(composite, SWT.LEFT);
-		displayNameLabel.setText(NAME_LABEL);
-		displayNameLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-		displayNameText = new Text(composite, SWT.SINGLE | SWT.BORDER);
-		displayNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		displayNameText.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				String text = displayNameText.getText();
-				// Set default URL Pattern
-				List input = new ArrayList();
-				input.add(new String[]{"/" + text}); //$NON-NLS-1$
-				if (urlSection != null)
-					urlSection.setInput(input);
-			}
+        IStatus projectStatus = validateProjectName();
+        if (!projectStatus.isOK())
+        {
+            setErrorMessage(projectStatus.getMessage());
+            composite.setEnabled(false);
+        }
+        Dialog.applyDialogFont(parent);
+        return composite;
+    }
 
-		});
-		synchHelper.synchText(displayNameText, DISPLAY_NAME, null);
+    protected IStatus validateProjectName()
+    {
+        // check for empty
+        if (model.getStringProperty(PROJECT_NAME) == null || model.getStringProperty(PROJECT_NAME).trim().length() == 0)
+        {
+            return WTPCommonPlugin.createErrorStatus(NO_WEB_PROJECTS);
+        }
+        return WTPCommonPlugin.OK_STATUS;
+    }
 
-		// description
-		Label descLabel = new Label(composite, SWT.LEFT);
-		descLabel.setText(DESCRIPTION_LABEL);
-		descLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
-		Text descText = new Text(composite, SWT.SINGLE | SWT.BORDER);
-		descText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		synchHelper.synchText(descText, DESCRIPTION, null);
-	}
+    protected void createNameDescription(Composite parent)
+    {
+        Composite composite = new Composite(parent,SWT.NULL);
+        composite.setLayout(new GridLayout(2,false));
+        composite.setLayoutData(new GridData(GridData.FILL_BOTH));
+        // display name
+        Label displayNameLabel = new Label(composite,SWT.LEFT);
+        displayNameLabel.setText(NAME_LABEL);
+        displayNameLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
+        displayNameText = new Text(composite,SWT.SINGLE | SWT.BORDER);
+        displayNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        displayNameText.addModifyListener(new ModifyListener()
+        {
+            public void modifyText(ModifyEvent e)
+            {
+                String text = displayNameText.getText();
+                // Set default URL Pattern
+                List input = new ArrayList();
+                input.add(new String[]
+                { "/" + text }); //$NON-NLS-1$
+                if (urlSection != null)
+                    urlSection.setInput(input);
+            }
 
-	public String getDisplayName() {
-		return displayNameText.getText();
-	}
-	
-	@Override
-	public boolean canFlipToNextPage() {
-		if (model.getBooleanProperty(USE_EXISTING_CLASS))
-			return false;
-		return super.canFlipToNextPage();
-	}
-	
-	@Override
-	protected boolean showValidationErrorsOnEnter() {
-		return true;
-	}
-	
+        });
+        synchHelper.synchText(displayNameText,DISPLAY_NAME,null);
+
+        // description
+        Label descLabel = new Label(composite,SWT.LEFT);
+        descLabel.setText(DESCRIPTION_LABEL);
+        descLabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
+        Text descText = new Text(composite,SWT.SINGLE | SWT.BORDER);
+        descText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        synchHelper.synchText(descText,DESCRIPTION,null);
+    }
+
+    public String getDisplayName()
+    {
+        return displayNameText.getText();
+    }
+
+    @Override
+    public boolean canFlipToNextPage()
+    {
+        if (model.getBooleanProperty(USE_EXISTING_CLASS))
+            return false;
+        return super.canFlipToNextPage();
+    }
+
+    @Override
+    protected boolean showValidationErrorsOnEnter()
+    {
+        return true;
+    }
+
 }

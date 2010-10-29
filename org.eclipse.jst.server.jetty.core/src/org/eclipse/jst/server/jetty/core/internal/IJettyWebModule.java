@@ -10,35 +10,37 @@
  *     Angelo Zerr <angelo.zerr@gmail.com> - Jetty packages
  *******************************************************************************/
 package org.eclipse.jst.server.jetty.core.internal;
+
 /**
  * A Web module deployed on Jetty.
  */
-public interface IJettyWebModule {
-	/**
-	 * Get the document base.
-	 *
-	 * @return java.lang.String
-	 */
-	public String getDocumentBase();
+public interface IJettyWebModule
+{
+    /**
+     * Get the document base.
+     * 
+     * @return java.lang.String
+     */
+    public String getDocumentBase();
 
-	/**
-	 * Return the path. (context root)
-	 *
-	 * @return java.lang.String
-	 */
-	public String getPath();
+    /**
+     * Return the path. (context root)
+     * 
+     * @return java.lang.String
+     */
+    public String getPath();
 
-	/**
-	 * Return the memento.
-	 *
-	 * @return java.lang.String
-	 */
-	public String getMemento();
+    /**
+     * Return the memento.
+     * 
+     * @return java.lang.String
+     */
+    public String getMemento();
 
-	/**
-	 * Return true if the web module is auto-reloadable.
-	 *
-	 * @return java.lang.String
-	 */
-	public boolean isReloadable();
+    /**
+     * Return true if the web module is auto-reloadable.
+     * 
+     * @return java.lang.String
+     */
+    public boolean isReloadable();
 }

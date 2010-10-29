@@ -17,89 +17,83 @@ import org.eclipse.wst.common.componentcore.internal.operation.ArtifactEditProvi
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 
 /**
- * The NewServletClassOperation is an IDataModelOperation following the
- * IDataModel wizard and operation framework.
+ * The NewServletClassOperation is an IDataModelOperation following the IDataModel wizard and operation framework.
  * 
  * @see org.eclipse.wst.common.frameworks.datamodel.IDataModelOperation
  * @see org.eclipse.wst.common.frameworks.datamodel.IDataModelProvider
  * 
- * It extends ArtifactEditProviderOperation to provide servlet specific java
- * class generation.
+ *      It extends ArtifactEditProviderOperation to provide servlet specific java class generation.
  * @see org.eclipse.wst.common.componentcore.internal.operation.ArtifactEditProviderOperation
  * 
- * This operation is used by the AddServletOperation to generate either an
- * annotated or non annotated java class for an added servlet. It shares the
- * NewServletClassDataModelProvider with the AddServletOperation to store the
- * appropriate properties required to generate the new servlet.
+ *      This operation is used by the AddServletOperation to generate either an annotated or non annotated java class for an added servlet. It shares the
+ *      NewServletClassDataModelProvider with the AddServletOperation to store the appropriate properties required to generate the new servlet.
  * @see org.eclipse.jst.j2ee.internal.web.operations.AddServletOperation
  * @see org.eclipse.jst.j2ee.internal.web.operations.NewServletClassDataModelProvider
  * 
- * In the annotated case, a WTPJetEmitter servlet template is created and used
- * to generate the servlet java class with the embedded annotated tags.
+ *      In the annotated case, a WTPJetEmitter servlet template is created and used to generate the servlet java class with the embedded annotated tags.
  * @see org.eclipse.jst.j2ee.internal.project.WTPJETEmitter
  * @see org.eclipse.jst.j2ee.internal.web.operations.CreateServletTemplateModel
  * 
- * In the non annotated case, the same emitter is used to create the class with
- * the non annotated servlet template so the annotated tags are omitted.
+ *      In the non annotated case, the same emitter is used to create the class with the non annotated servlet template so the annotated tags are omitted.
  * 
- * Subclasses may extend this operation to provide their own specific servlet
- * java class generation. The execute method may be extended to do so. Also,
- * generateUsingTemplates is exposed.
+ *      Subclasses may extend this operation to provide their own specific servlet java class generation. The execute method may be extended to do so. Also,
+ *      generateUsingTemplates is exposed.
  * 
- * The use of this class is EXPERIMENTAL and is subject to substantial changes.
+ *      The use of this class is EXPERIMENTAL and is subject to substantial changes.
  */
-public class NewWebSocketServletClassOperation extends NewWebClassOperation {
+public class NewWebSocketServletClassOperation extends NewWebClassOperation
+{
 
-	/**
-	 * folder location of the servlet creation templates diretory
-	 */
-	protected static final String TEMPLATE_DIR = "/templates/"; //$NON-NLS-1$
-	
-	/**
-	 * location of the servlet creation template file
-	 */
-	protected static final String TEMPLATE_FILE = "/templates/websocket_servlet.javajet"; //$NON-NLS-1$
+    /**
+     * folder location of the servlet creation templates diretory
+     */
+    protected static final String TEMPLATE_DIR = "/templates/"; //$NON-NLS-1$
 
-	/**
-	 * This is the constructor which should be used when creating a
-	 * NewServletClassOperation. An instance of the NewServletClassDataModel
-	 * should be passed in. This does not accept null parameter. It will not
-	 * return null.
-	 * 
-	 * @see ArtifactEditProviderOperation#ArtifactEditProviderOperation(IDataModel)
-	 * @see NewServletClassDataModel
-	 * 
-	 * @param dataModel
-	 * @return NewServletClassOperation
-	 */
-	public NewWebSocketServletClassOperation(IDataModel dataModel) {
-		super(dataModel);
-	}
+    /**
+     * location of the servlet creation template file
+     */
+    protected static final String TEMPLATE_FILE = "/templates/websocket_servlet.javajet"; //$NON-NLS-1$
 
-	/**
-	 * This method will create an instance of the CreateServletTemplate model to
-	 * be used in conjunction with the WTPJETEmitter. This method will not
-	 * return null.
-	 * 
-	 * @see CreateWebSocketTemplateModel
-	 * @see NewWebSocketServletClassOperation#generateUsingTemplates(IProgressMonitor,
-	 *      IPackageFragment)
-	 * 
-	 * @return CreateServletTemplateModel
-	 */
-	@Override
-	protected CreateWebSocketTemplateModel createTemplateModel() {
-		return new CreateWebSocketTemplateModel(model);
-	}
-	
-	@Override
-	protected String getTemplateFile() {
-		return TEMPLATE_FILE;
-	}
+    /**
+     * This is the constructor which should be used when creating a NewServletClassOperation. An instance of the NewServletClassDataModel should be passed in.
+     * This does not accept null parameter. It will not return null.
+     * 
+     * @see ArtifactEditProviderOperation#ArtifactEditProviderOperation(IDataModel)
+     * @see NewServletClassDataModel
+     * 
+     * @param dataModel
+     * @return NewServletClassOperation
+     */
+    public NewWebSocketServletClassOperation(IDataModel dataModel)
+    {
+        super(dataModel);
+    }
 
-	@Override
-	protected WebSocketServletTemplate getTemplateImplementation() {
-		return WebSocketServletTemplate.create(null);
-	}
-	
+    /**
+     * This method will create an instance of the CreateServletTemplate model to be used in conjunction with the WTPJETEmitter. This method will not return
+     * null.
+     * 
+     * @see CreateWebSocketTemplateModel
+     * @see NewWebSocketServletClassOperation#generateUsingTemplates(IProgressMonitor, IPackageFragment)
+     * 
+     * @return CreateServletTemplateModel
+     */
+    @Override
+    protected CreateWebSocketTemplateModel createTemplateModel()
+    {
+        return new CreateWebSocketTemplateModel(model);
+    }
+
+    @Override
+    protected String getTemplateFile()
+    {
+        return TEMPLATE_FILE;
+    }
+
+    @Override
+    protected WebSocketServletTemplate getTemplateImplementation()
+    {
+        return WebSocketServletTemplate.create(null);
+    }
+
 }

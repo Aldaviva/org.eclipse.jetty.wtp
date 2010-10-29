@@ -12,9 +12,10 @@ package org.eclipse.jst.server.jetty.ui.websocket;
 
 import org.eclipse.jst.server.jetty.ui.websocket.internal.Messages;
 
-public interface IWebSocketWizardConstants {
+public interface IWebSocketWizardConstants
+{
 
-	public final static String ADD_WEBSOCKET_WIZARD_WINDOW_TITLE = Messages.ADD_WEBSOCKET_WIZARD_WINDOW_TITLE;
-	public final static String ADD_WEBSOCKET_WIZARD_PAGE_TITLE = Messages.ADD_WEBSOCKET_WIZARD_PAGE_TITLE;
-	public static final String ADD_WEBSOCKET_WIZARD_PAGE_DESC = Messages.ADD_WEBSOCKET_WIZARD_PAGE_DESC;	
+    public final static String ADD_WEBSOCKET_WIZARD_WINDOW_TITLE = Messages.ADD_WEBSOCKET_WIZARD_WINDOW_TITLE;
+    public final static String ADD_WEBSOCKET_WIZARD_PAGE_TITLE = Messages.ADD_WEBSOCKET_WIZARD_PAGE_TITLE;
+    public static final String ADD_WEBSOCKET_WIZARD_PAGE_DESC = Messages.ADD_WEBSOCKET_WIZARD_PAGE_DESC;
 }

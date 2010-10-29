@@ -19,48 +19,59 @@ import org.eclipse.wst.server.core.IRuntimeWorkingCopy;
 import org.eclipse.wst.server.core.TaskModel;
 import org.eclipse.wst.server.ui.wizard.IWizardHandle;
 import org.eclipse.wst.server.ui.wizard.WizardFragment;
+
 /**
  * 
  */
-public class JettyRuntimeWizardFragment extends WizardFragment {
-	protected JettyRuntimeComposite comp;
+public class JettyRuntimeWizardFragment extends WizardFragment
+{
+    protected JettyRuntimeComposite comp;
 
-	public JettyRuntimeWizardFragment() {
-		// do nothing
-	}
+    public JettyRuntimeWizardFragment()
+    {
+        // do nothing
+    }
 
-	public boolean hasComposite() {
-		return true;
-	}
+    public boolean hasComposite()
+    {
+        return true;
+    }
 
-	public boolean isComplete() {
-		IRuntimeWorkingCopy runtime = (IRuntimeWorkingCopy) getTaskModel().getObject(TaskModel.TASK_RUNTIME);
-		
-		if (runtime == null)
-			return false;
-		IStatus status = runtime.validate(null);
-		return (status == null || status.getSeverity() != IStatus.ERROR);
-	}
+    public boolean isComplete()
+    {
+        IRuntimeWorkingCopy runtime = (IRuntimeWorkingCopy)getTaskModel().getObject(TaskModel.TASK_RUNTIME);
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.wst.server.ui.task.WizardFragment#createComposite()
-	 */
-	public Composite createComposite(Composite parent, IWizardHandle wizard) {
-		comp = new JettyRuntimeComposite(parent, wizard);
-		return comp;
-	}
+        if (runtime == null)
+            return false;
+        IStatus status = runtime.validate(null);
+        return (status == null || status.getSeverity() != IStatus.ERROR);
+    }
 
-	public void enter() {
-		if (comp != null) {
-			IRuntimeWorkingCopy runtime = (IRuntimeWorkingCopy) getTaskModel().getObject(TaskModel.TASK_RUNTIME);
-			comp.setRuntime(runtime);
-		}
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.wst.server.ui.task.WizardFragment#createComposite()
+     */
+    public Composite createComposite(Composite parent, IWizardHandle wizard)
+    {
+        comp = new JettyRuntimeComposite(parent,wizard);
+        return comp;
+    }
 
-	public void exit() {
-		IRuntimeWorkingCopy runtime = (IRuntimeWorkingCopy) getTaskModel().getObject(TaskModel.TASK_RUNTIME);
-		IPath path = runtime.getLocation();
-		if (runtime.validate(null).getSeverity() != IStatus.ERROR)
-			JettyPlugin.setPreference("location" + runtime.getRuntimeType().getId(), path.toString());
-	}
+    public void enter()
+    {
+        if (comp != null)
+        {
+            IRuntimeWorkingCopy runtime = (IRuntimeWorkingCopy)getTaskModel().getObject(TaskModel.TASK_RUNTIME);
+            comp.setRuntime(runtime);
+        }
+    }
+
+    public void exit()
+    {
+        IRuntimeWorkingCopy runtime = (IRuntimeWorkingCopy)getTaskModel().getObject(TaskModel.TASK_RUNTIME);
+        IPath path = runtime.getLocation();
+        if (runtime.validate(null).getSeverity() != IStatus.ERROR)
+            JettyPlugin.setPreference("location" + runtime.getRuntimeType().getId(),path.toString());
+    }
 }

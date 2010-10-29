@@ -12,60 +12,71 @@ package org.eclipse.jst.server.jetty.core;
 
 import org.eclipse.jst.server.jetty.core.internal.IJettyWebModule;
 
-public interface IJettyConfigurationWorkingCopy extends IJettyConfiguration {
-	/**
-	 * Add a web module.
-	 *
-	 * @param index int
-	 * @param module org.eclipse.jst.server.jetty.WebModule
-	 */
-	public void addWebModule(int index, IJettyWebModule module);
-	
-	/**
-	 * Change a web module.
-	 * 
-	 * @param index int
-	 * @param docBase java.lang.String
-	 * @param path java.lang.String
-	 * @param reloadable boolean
-	 */
-	public void modifyWebModule(int index, String docBase, String path, boolean reloadable);
+public interface IJettyConfigurationWorkingCopy extends IJettyConfiguration
+{
+    /**
+     * Add a web module.
+     * 
+     * @param index
+     *            int
+     * @param module
+     *            org.eclipse.jst.server.jetty.WebModule
+     */
+    public void addWebModule(int index, IJettyWebModule module);
 
-	/**
-	 * Remove a web module.
-	 * 
-	 * @param index int
-	 */
-	public void removeWebModule(int index);
+    /**
+     * Change a web module.
+     * 
+     * @param index
+     *            int
+     * @param docBase
+     *            java.lang.String
+     * @param path
+     *            java.lang.String
+     * @param reloadable
+     *            boolean
+     */
+    public void modifyWebModule(int index, String docBase, String path, boolean reloadable);
 
-//	/**
-//	 * Adds a mime mapping.
-//	 *
-//	 * @param index int
-//	 * @param map MimeMapping
-//	 */
-//	public void addMimeMapping(int index, IMimeMapping map);
-//
-//	/**
-//	 * Change a mime mapping.
-//	 * 
-//	 * @param index int
-//	 * @param map MimeMapping
-//	 */
-//	public void modifyMimeMapping(int index, IMimeMapping map);
+    /**
+     * Remove a web module.
+     * 
+     * @param index
+     *            int
+     */
+    public void removeWebModule(int index);
 
-	/**
-	 * Modify the port with the given id.
-	 *
-	 * @param id java.lang.String
-	 * @param port int
-	 */
-	public void modifyServerPort(String id, int port);
+    // /**
+    // * Adds a mime mapping.
+    // *
+    // * @param index int
+    // * @param map MimeMapping
+    // */
+    // public void addMimeMapping(int index, IMimeMapping map);
+    //
+    // /**
+    // * Change a mime mapping.
+    // *
+    // * @param index int
+    // * @param map MimeMapping
+    // */
+    // public void modifyMimeMapping(int index, IMimeMapping map);
 
-	/**
-	 * Remove a mime mapping.
-	 * 
-	 * @param index int
-	 */
-	//public void removeMimeMapping(int index);
+    /**
+     * Modify the port with the given id.
+     * 
+     * @param id
+     *            java.lang.String
+     * @param port
+     *            int
+     */
+    public void modifyServerPort(String id, int port);
+
+    /**
+     * Remove a mime mapping.
+     * 
+     * @param index
+     *            int
+     */
+    // public void removeMimeMapping(int index);
 }

@@ -37,122 +37,126 @@ import org.eclipse.wst.server.core.ServerUtil;
 /**
  * 
  */
-public class JettySourcePathComputerDelegate implements
-		ISourcePathComputerDelegate {
+public class JettySourcePathComputerDelegate implements ISourcePathComputerDelegate
+{
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public ISourceContainer[] computeSourceContainers(
-			ILaunchConfiguration configuration, IProgressMonitor monitor)
-			throws CoreException {
-		IServer server = ServerUtil.getServer(configuration);
+    /**
+     * {@inheritDoc}
+     */
+    public ISourceContainer[] computeSourceContainers(ILaunchConfiguration configuration, IProgressMonitor monitor) throws CoreException
+    {
+        IServer server = ServerUtil.getServer(configuration);
 
-		SourcePathComputerVisitor visitor = new SourcePathComputerVisitor(
-				configuration);
+        SourcePathComputerVisitor visitor = new SourcePathComputerVisitor(configuration);
 
-		IModule[] modules = server.getModules();
-		for (int i = 0; i < modules.length; i++) {
-			ModuleTraverser.traverse(modules[i], visitor, monitor);
-		}
+        IModule[] modules = server.getModules();
+        for (int i = 0; i < modules.length; i++)
+        {
+            ModuleTraverser.traverse(modules[i],visitor,monitor);
+        }
 
-		return visitor.getSourceContainers();
-	}
+        return visitor.getSourceContainers();
+    }
 
-	class SourcePathComputerVisitor implements IModuleVisitor {
+    class SourcePathComputerVisitor implements IModuleVisitor
+    {
 
-		final ILaunchConfiguration configuration;
+        final ILaunchConfiguration configuration;
 
-		/**
-		 * List<IRuntimeClasspathEntry> of unresolved IRuntimeClasspathEntries
-		 */
-		List<IRuntimeClasspathEntry> runtimeClasspath = new ArrayList<IRuntimeClasspathEntry>();
+        /**
+         * List<IRuntimeClasspathEntry> of unresolved IRuntimeClasspathEntries
+         */
+        List<IRuntimeClasspathEntry> runtimeClasspath = new ArrayList<IRuntimeClasspathEntry>();
 
-		SourcePathComputerVisitor(ILaunchConfiguration configuration) {
-			this.configuration = configuration;
-		}
+        SourcePathComputerVisitor(ILaunchConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
 
-		/**
-		 * {@inheritDoc}
-		 */
-		public void visitWebComponent(IVirtualComponent component)
-				throws CoreException {
-			IProject project = component.getProject();
-			if (project.hasNature(JavaCore.NATURE_ID)) {
-				IJavaProject javaProject = JavaCore.create(project);
-				runtimeClasspath.add(JavaRuntime
-						.newDefaultProjectClasspathEntry(javaProject));
-			}
-		}
+        /**
+         * {@inheritDoc}
+         */
+        public void visitWebComponent(IVirtualComponent component) throws CoreException
+        {
+            IProject project = component.getProject();
+            if (project.hasNature(JavaCore.NATURE_ID))
+            {
+                IJavaProject javaProject = JavaCore.create(project);
+                runtimeClasspath.add(JavaRuntime.newDefaultProjectClasspathEntry(javaProject));
+            }
+        }
 
-		/**
-		 * {@inheritDoc}
-		 */
-		public void endVisitWebComponent(IVirtualComponent component)
-				throws CoreException {
-			// do nothing
-		}
+        /**
+         * {@inheritDoc}
+         */
+        public void endVisitWebComponent(IVirtualComponent component) throws CoreException
+        {
+            // do nothing
+        }
 
-		/**
-		 * {@inheritDoc}
-		 */
-		public void visitArchiveComponent(IPath runtimePath, IPath workspacePath) {
-			// do nothing
-		}
+        /**
+         * {@inheritDoc}
+         */
+        public void visitArchiveComponent(IPath runtimePath, IPath workspacePath)
+        {
+            // do nothing
+        }
 
-		/**
-		 * {@inheritDoc}
-		 */
-		public void visitDependentComponent(IPath runtimePath,
-				IPath workspacePath) {
-			// do nothing
-		}
+        /**
+         * {@inheritDoc}
+         */
+        public void visitDependentComponent(IPath runtimePath, IPath workspacePath)
+        {
+            // do nothing
+        }
 
-		/**
-		 * {@inheritDoc}
-		 */
-		public void visitWebResource(IPath runtimePath, IPath workspacePath) {
-			// do nothing
-		}
+        /**
+         * {@inheritDoc}
+         */
+        public void visitWebResource(IPath runtimePath, IPath workspacePath)
+        {
+            // do nothing
+        }
 
-		/**
-		 * {@inheritDoc}
-		 */
-		public void visitDependentContentResource(IPath runtimePath, IPath workspacePath) {
-			// do nothing
-		}
+        /**
+         * {@inheritDoc}
+         */
+        public void visitDependentContentResource(IPath runtimePath, IPath workspacePath)
+        {
+            // do nothing
+        }
 
-		/**
-		 * {@inheritDoc}
-		 */
-		public void visitEarResource(IPath runtimePath, IPath workspacePath) {
-			// do nothing
-		}
+        /**
+         * {@inheritDoc}
+         */
+        public void visitEarResource(IPath runtimePath, IPath workspacePath)
+        {
+            // do nothing
+        }
 
-		/**
-		 * {@inheritDoc}
-		 */
-		public void endVisitEarComponent(IVirtualComponent component)
-				throws CoreException {
-			// do nothing
-		}
+        /**
+         * {@inheritDoc}
+         */
+        public void endVisitEarComponent(IVirtualComponent component) throws CoreException
+        {
+            // do nothing
+        }
 
-		/**
-		 * {@inheritDoc}
-		 */
-		public void visitClasspathEntry(IPath rtFolder, IClasspathEntry entry) {
-			// do nothing
-		}
+        /**
+         * {@inheritDoc}
+         */
+        public void visitClasspathEntry(IPath rtFolder, IClasspathEntry entry)
+        {
+            // do nothing
+        }
 
-		ISourceContainer[] getSourceContainers() throws CoreException {
-			runtimeClasspath.addAll(Arrays.asList(JavaRuntime
-					.computeUnresolvedSourceLookupPath(configuration)));
-			IRuntimeClasspathEntry[] entries = (IRuntimeClasspathEntry[]) runtimeClasspath
-					.toArray(new IRuntimeClasspathEntry[runtimeClasspath.size()]);
-			IRuntimeClasspathEntry[] resolved = JavaRuntime
-					.resolveSourceLookupPath(entries, configuration);
-			return JavaRuntime.getSourceContainers(resolved);
-		}
+        ISourceContainer[] getSourceContainers() throws CoreException
+        {
+            runtimeClasspath.addAll(Arrays.asList(JavaRuntime.computeUnresolvedSourceLookupPath(configuration)));
+            IRuntimeClasspathEntry[] entries = (IRuntimeClasspathEntry[])runtimeClasspath.toArray(new IRuntimeClasspathEntry[runtimeClasspath.size()]);
+            IRuntimeClasspathEntry[] resolved = JavaRuntime.resolveSourceLookupPath(entries,configuration);
+            return JavaRuntime.getSourceContainers(resolved);
+        }
 
-	}
+    }
 }

@@ -19,48 +19,56 @@ import org.eclipse.jst.server.jetty.core.internal.xml.XMLElement;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-public class Server extends XMLElement {
+public class Server extends XMLElement
+{
 
-	private File file;
-	private IPath path;
-	
-	public List<Connector> getConnectors() {
-		List<Connector> connectors = null;
-		NodeList callNodes = getElementNode().getElementsByTagName("Call");
-		int length = callNodes.getLength();
-		Element node = null;
-		for (int i = 0; i < length; i++) {
-			node = (Element)callNodes.item(i);
-			if (hasAttribute(node, "addConnector")) {
-				Element portElement = super.findElement(node, "Set", "port");
-				if (portElement != null) {
-					Connector connector = new Connector(portElement);
-					if (connectors == null) {
-						connectors = new ArrayList<Connector>();
-					}
-					connectors.add(connector);					
-				}
-			}
-		}
-		return connectors;
-	}
+    private File file;
+    private IPath path;
 
-	public void setFile(File jettyXMLFile) {
-		this.file = jettyXMLFile;		
-	}
-	
-	public File getFile() {
-		return file;
-	}
+    public List<Connector> getConnectors()
+    {
+        List<Connector> connectors = null;
+        NodeList callNodes = getElementNode().getElementsByTagName("Call");
+        int length = callNodes.getLength();
+        Element node = null;
+        for (int i = 0; i < length; i++)
+        {
+            node = (Element)callNodes.item(i);
+            if (hasAttribute(node,"addConnector"))
+            {
+                Element portElement = super.findElement(node,"Set","port");
+                if (portElement != null)
+                {
+                    Connector connector = new Connector(portElement);
+                    if (connectors == null)
+                    {
+                        connectors = new ArrayList<Connector>();
+                    }
+                    connectors.add(connector);
+                }
+            }
+        }
+        return connectors;
+    }
 
-	public IPath getPath() {
-		return path;
-	}
+    public void setFile(File jettyXMLFile)
+    {
+        this.file = jettyXMLFile;
+    }
 
-	public void setPath(IPath path) {
-		this.path = path;
-	}
+    public File getFile()
+    {
+        return file;
+    }
 
-	
-	
+    public IPath getPath()
+    {
+        return path;
+    }
+
+    public void setPath(IPath path)
+    {
+        this.path = path;
+    }
+
 }

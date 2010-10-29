@@ -10,12 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jst.server.jetty.ui.websocket;
 
-public interface IWebSocketUIContextIds {
+public interface IWebSocketUIContextIds
+{
 
-	public static final String PLUGIN_WEBSOCKET_UI = "org.eclipse.jst.server.jetty.ui.websocket."; //$NON-NLS-1$
-	
-	public static final String WEBEDITOR_WEBSOCKET_PAGE_ADD_WEBSOCKET_WIZARD_1 = PLUGIN_WEBSOCKET_UI + "srvw1050"; //$NON-NLS-1$
-	public static final String WEBEDITOR_WEBSOCKET_PAGE_ADD_WEBSOCKET_WIZARD_2 = PLUGIN_WEBSOCKET_UI + "srvw1100"; //$NON-NLS-1$
-	public static final String WEBEDITOR_WEBSOCKET_PAGE_ADD_WEBSOCKET_WIZARD_3 = PLUGIN_WEBSOCKET_UI + "srvw1200"; //$NON-NLS-1$
-	
+    public static final String PLUGIN_WEBSOCKET_UI = "org.eclipse.jst.server.jetty.ui.websocket."; //$NON-NLS-1$
+
+    public static final String WEBEDITOR_WEBSOCKET_PAGE_ADD_WEBSOCKET_WIZARD_1 = PLUGIN_WEBSOCKET_UI + "srvw1050"; //$NON-NLS-1$
+    public static final String WEBEDITOR_WEBSOCKET_PAGE_ADD_WEBSOCKET_WIZARD_2 = PLUGIN_WEBSOCKET_UI + "srvw1100"; //$NON-NLS-1$
+    public static final String WEBEDITOR_WEBSOCKET_PAGE_ADD_WEBSOCKET_WIZARD_3 = PLUGIN_WEBSOCKET_UI + "srvw1200"; //$NON-NLS-1$
+
 }

@@ -22,76 +22,78 @@ import org.eclipse.jst.server.jetty.core.internal.Messages;
 import org.eclipse.jst.server.jetty.core.internal.util.JettyVersionHelper;
 import org.eclipse.wst.server.core.IModule;
 
-public class Jetty70Handler extends JettyHandler {
+public class Jetty70Handler extends JettyHandler
+{
 
-	protected static final IStatus startJarRequiredInstallDirStatus = new Status(
-			IStatus.ERROR, JettyPlugin.PLUGIN_ID, 0,
-			Messages.startJarRequiredInstallDirStatus, null);
+    protected static final IStatus startJarRequiredInstallDirStatus = new Status(IStatus.ERROR,JettyPlugin.PLUGIN_ID,0,
+            Messages.startJarRequiredInstallDirStatus,null);
 
-	public IStatus verifyInstallPath(IPath installPath) {
-		IStatus result = JettyVersionHelper.checkJettyVersion(installPath);
-		if (result.getSeverity() == IStatus.CANCEL) {
-			// TODO : search in a folder.
-			return startJarRequiredInstallDirStatus;
-		}
+    public IStatus verifyInstallPath(IPath installPath)
+    {
+        IStatus result = JettyVersionHelper.checkJettyVersion(installPath);
+        if (result.getSeverity() == IStatus.CANCEL)
+        {
+            // TODO : search in a folder.
+            return startJarRequiredInstallDirStatus;
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public IStatus validate(IPath path, IVMInstall vmInstall) {
-		// TODO : validate JVM
-		return null;
-	}
+    public IStatus validate(IPath path, IVMInstall vmInstall)
+    {
+        // TODO : validate JVM
+        return null;
+    }
 
-	/**
-	 * @see IJettyVersionHandler#canAddModule(IModule)
-	 */
-	public IStatus canAddModule(IModule module) {
-		String version = module.getModuleType().getVersion();
-		if ("2.2".equals(version) || "2.3".equals(version)
-				|| "2.4".equals(version) || "2.5".equals(version))
-			return Status.OK_STATUS;
+    /**
+     * @see IJettyVersionHandler#canAddModule(IModule)
+     */
+    public IStatus canAddModule(IModule module)
+    {
+        String version = module.getModuleType().getVersion();
+        if ("2.2".equals(version) || "2.3".equals(version) || "2.4".equals(version) || "2.5".equals(version))
+            return Status.OK_STATUS;
 
-		return new Status(IStatus.ERROR, JettyPlugin.PLUGIN_ID, 0,
-				Messages.errorSpec70, null);
-	}
+        return new Status(IStatus.ERROR,JettyPlugin.PLUGIN_ID,0,Messages.errorSpec70,null);
+    }
 
-	public IPath getRuntimeBaseDirectory(JettyServer server) {
-		return JettyVersionHelper.getStandardBaseDirectory(server);
-	}
+    public IPath getRuntimeBaseDirectory(JettyServer server)
+    {
+        return JettyVersionHelper.getStandardBaseDirectory(server);
+    }
 
-	/**
-	 * @see IJettyVersionHandler#getRuntimeVMArguments(IPath, IPath, IPath,
-	 *      boolean)
-	 */
-	public String[] getRuntimeVMArguments(IPath installPath, IPath configPath,
-			IPath deployPath, boolean isTestEnv) {
-		return JettyVersionHelper.getJettyVMArguments(installPath, configPath,
-				deployPath, getEndorsedDirectories(installPath), isTestEnv);
-	}
+    /**
+     * @see IJettyVersionHandler#getRuntimeVMArguments(IPath, IPath, IPath, boolean)
+     */
+    public String[] getRuntimeVMArguments(IPath installPath, IPath configPath, IPath deployPath, boolean isTestEnv)
+    {
+        return JettyVersionHelper.getJettyVMArguments(installPath,configPath,deployPath,getEndorsedDirectories(installPath),isTestEnv);
+    }
 
-	public String getEndorsedDirectories(IPath installPath) {
-		return installPath.append("endorsed").toOSString();
-	}
+    public String getEndorsedDirectories(IPath installPath)
+    {
+        return installPath.append("endorsed").toOSString();
+    }
 
-	public String getRuntimePolicyFile(IPath configPath) {
-		return configPath.append("lib").append("policy").append("jetty.policy")
-				.toOSString();
-	}
+    public String getRuntimePolicyFile(IPath configPath)
+    {
+        return configPath.append("lib").append("policy").append("jetty.policy").toOSString();
+    }
 
-	public String[] getRuntimeProgramArguments(IPath configPath, boolean debug,
-			boolean starting) {
-		return JettyVersionHelper.getJettyProgramArguments(configPath, debug,
-				starting);
-	}
+    public String[] getRuntimeProgramArguments(IPath configPath, boolean debug, boolean starting)
+    {
+        return JettyVersionHelper.getJettyProgramArguments(configPath,debug,starting);
+    }
 
-	public String[] getExcludedRuntimeProgramArguments(boolean debug,
-			boolean starting) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public String[] getExcludedRuntimeProgramArguments(boolean debug, boolean starting)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	public boolean supportsServeModulesWithoutPublish() {
-		return true;
-	}
+    public boolean supportsServeModulesWithoutPublish()
+    {
+        return true;
+    }
 }

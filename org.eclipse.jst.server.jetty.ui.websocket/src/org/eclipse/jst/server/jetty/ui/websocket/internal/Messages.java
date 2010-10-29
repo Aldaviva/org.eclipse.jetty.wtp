@@ -12,16 +12,18 @@ package org.eclipse.jst.server.jetty.ui.websocket.internal;
 
 import org.eclipse.osgi.util.NLS;
 
-public class Messages extends NLS {
+public class Messages extends NLS
+{
 
-	private static final String BUNDLE_NAME = "org.eclipse.jst.server.jetty.ui.websocket.internal.messages";//$NON-NLS-1$
+    private static final String BUNDLE_NAME = "org.eclipse.jst.server.jetty.ui.websocket.internal.messages";//$NON-NLS-1$
 
-	public static String ADD_WEBSOCKET_WIZARD_WINDOW_TITLE;
-	public static String ADD_WEBSOCKET_WIZARD_PAGE_TITLE;
-	public static String ADD_WEBSOCKET_WIZARD_PAGE_DESC;
+    public static String ADD_WEBSOCKET_WIZARD_WINDOW_TITLE;
+    public static String ADD_WEBSOCKET_WIZARD_PAGE_TITLE;
+    public static String ADD_WEBSOCKET_WIZARD_PAGE_DESC;
 
-	static {
-		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
-	}
+    static
+    {
+        NLS.initializeMessages(BUNDLE_NAME,Messages.class);
+    }
 
 }
