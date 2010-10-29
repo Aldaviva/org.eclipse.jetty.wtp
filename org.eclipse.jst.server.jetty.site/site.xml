@@ -4,7 +4,7 @@
       Jetty WTP Adaptor
    </description>
    <feature url="features/org.eclipse.jst.server.jetty.feature_1.0.0.qualifier.jar" id="org.eclipse.jst.server.jetty.feature" version="1.0.0.qualifier">
-      <category name="jst-server-jetty"/>
+      <category name="org.eclipse.jst.server.jetty.site"/>
    </feature>
-   <category-def name="jst-server-jetty" label="Jetty WTP Adaptor"/>
+   <category-def name="org.eclipse.jst.server.jetty.site" label="Jetty WTP Adaptor Site"/>
 </site>
