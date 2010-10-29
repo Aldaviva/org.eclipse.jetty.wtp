@@ -55,39 +55,37 @@ public class XMLUtil
 
     public static DocumentBuilder getDocumentBuilder()
     {
-        synchronized (documentBuilder)
-        {
-            if (documentBuilder == null)
+        if (documentBuilder == null)
+            try
+            {
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                factory.setValidating(false);
+                factory.setNamespaceAware(false);
+                factory.setExpandEntityReferences(false);
+                // In case we happen to have a Xerces parser, try to set the feature that allows Java encodings to be used
                 try
                 {
-                    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                    factory.setValidating(false);
-                    factory.setNamespaceAware(false);
-                    factory.setExpandEntityReferences(false);
-                    // In case we happen to have a Xerces parser, try to set the feature that allows Java encodings to be used
-                    try
-                    {
-                        factory.setFeature("http://apache.org/xml/features/allow-java-encodings",true);
-                    }
-                    catch (ParserConfigurationException e)
-                    {
-                        // Ignore if feature isn't supported
-                    }
-                    // factory.setAttribute("http://apache.org/xml/features/nonvalidating/load-external-dtd", new Boolean(false));
-                    documentBuilder = factory.newDocumentBuilder();
-                    documentBuilder.setEntityResolver(new EntityResolver()
-                    {
-                        public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException
-                        {
-                            return new InputSource(new ByteArrayInputStream(new byte[0]));
-                        }
-                    });
+                    factory.setFeature("http://apache.org/xml/features/allow-java-encodings",true);
                 }
-                catch (Exception e)
+                catch (ParserConfigurationException e)
                 {
-                    Trace.trace(Trace.SEVERE,"Error creating document builder");
+                    // Ignore if feature isn't supported
                 }
-        }
+                // factory.setAttribute("http://apache.org/xml/features/nonvalidating/load-external-dtd", new Boolean(false));
+                documentBuilder = factory.newDocumentBuilder();
+                documentBuilder.setEntityResolver(new EntityResolver()
+                {
+                    public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException
+                    {
+                        return new InputSource(new ByteArrayInputStream(new byte[0]));
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                Trace.trace(Trace.SEVERE,"Error creating document builder");
+            }
+
         return documentBuilder;
     }
 
