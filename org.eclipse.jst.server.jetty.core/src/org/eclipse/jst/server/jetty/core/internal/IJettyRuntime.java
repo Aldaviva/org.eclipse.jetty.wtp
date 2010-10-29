@@ -19,12 +19,11 @@ import org.eclipse.jst.server.core.IJavaRuntime;
 /**
  * 
  */
-public interface IJettyRuntime extends IJavaRuntime
-{
-    /**
-     * Returns the runtime classpath that is used by this runtime.
-     * 
-     * @return the runtime classpath
-     */
-    public Collection<IRuntimeClasspathEntry> getRuntimeClasspath(IPath configPath);
+public interface IJettyRuntime extends IJavaRuntime {
+	/**
+	 * Returns the runtime classpath that is used by this runtime.
+	 * 
+	 * @return the runtime classpath
+	 */
+	public Collection<IRuntimeClasspathEntry> getRuntimeClasspath(IPath configPath);
 }

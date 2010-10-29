@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.jst.server.jetty.core.internal;
 
+
 import java.net.URL;
 
 import org.eclipse.jst.server.core.IWebModule;
@@ -21,63 +22,53 @@ import org.eclipse.wst.server.core.model.IURLProvider;
 import org.eclipse.wst.server.core.model.LaunchableAdapterDelegate;
 import org.eclipse.wst.server.core.util.HttpLaunchable;
 import org.eclipse.wst.server.core.util.WebResource;
-
 /**
  * Launchable adapter delegate for Web resources in Jetty.
  */
-public class JettyLaunchableAdapterDelegate extends LaunchableAdapterDelegate
-{
+public class JettyLaunchableAdapterDelegate extends LaunchableAdapterDelegate {
+	
+	private static final String SERVLET_PATH = "servlet/";
 
-    private static final String SERVLET_PATH = "servlet/";
-
-    /*
-     * @see LaunchableAdapterDelegate#getLaunchable(IServer, IModuleArtifact)
-     */
-    public Object getLaunchable(IServer server, IModuleArtifact moduleObject)
-    {
-        Trace.trace(Trace.FINER,"JettyLaunchableAdapter " + server + "-" + moduleObject);
-        if (server.getAdapter(JettyServer.class) == null)
-            return null;
-        if (!(moduleObject instanceof Servlet) && !(moduleObject instanceof WebResource))
-            return null;
-        if (moduleObject.getModule().loadAdapter(IWebModule.class,null) == null)
-            return null;
-
-        try
-        {
-            URL url = ((IURLProvider)server.loadAdapter(IURLProvider.class,null)).getModuleRootURL(moduleObject.getModule());
-
-            Trace.trace(Trace.FINER,"root: " + url);
-
-            if (moduleObject instanceof Servlet)
-            {
-                Servlet servlet = (Servlet)moduleObject;
-                if (servlet.getAlias() != null)
-                {
-                    String path = servlet.getAlias();
-                    if (path.startsWith("/"))
-                        path = path.substring(1);
-                    url = new URL(url,path);
-                }
-                else
-                    url = new URL(url,SERVLET_PATH + servlet.getServletClassName());
-            }
-            else if (moduleObject instanceof WebResource)
-            {
-                WebResource resource = (WebResource)moduleObject;
-                String path = resource.getPath().toString();
-                Trace.trace(Trace.FINER,"path: " + path);
-                if (path != null && path.startsWith("/") && path.length() > 0)
-                    path = path.substring(1);
-                if (path != null && path.length() > 0)
-                    url = new URL(url,path);
-            }
-            return new HttpLaunchable(url);
-        }
-        catch (Exception e)
-        {
-            Trace.trace(Trace.SEVERE,"Error getting URL for " + moduleObject,e);
-            return null;
-        }
-    }
+	/*
+	 * @see LaunchableAdapterDelegate#getLaunchable(IServer, IModuleArtifact)
+	 */
+	public Object getLaunchable(IServer server, IModuleArtifact moduleObject) {
+		Trace.trace(Trace.FINER, "JettyLaunchableAdapter " + server + "-" + moduleObject);
+		if (server.getAdapter(JettyServer.class) == null)
+			return null;
+		if (!(moduleObject instanceof Servlet) &&
+			!(moduleObject instanceof WebResource))
+			return null;
+		if (moduleObject.getModule().loadAdapter(IWebModule.class, null) == null)
+			return null;
+		
+		try {
+			URL url = ((IURLProvider) server.loadAdapter(IURLProvider.class, null)).getModuleRootURL(moduleObject.getModule());
+			
+			Trace.trace(Trace.FINER, "root: " + url);
+			
+			if (moduleObject instanceof Servlet) {
+				Servlet servlet = (Servlet) moduleObject;
+				if (servlet.getAlias() != null) {
+					String path = servlet.getAlias();
+					if (path.startsWith("/"))
+						path = path.substring(1);
+					url = new URL(url, path);
+				} else
+					url = new URL(url, SERVLET_PATH + servlet.getServletClassName());
+			} else if (moduleObject instanceof WebResource) {
+				WebResource resource = (WebResource) moduleObject;
+				String path = resource.getPath().toString();
+				Trace.trace(Trace.FINER, "path: " + path);
+				if (path != null && path.startsWith("/") && path.length() > 0)
+					path = path.substring(1);
+				if (path != null && path.length() > 0)
+					url = new URL(url, path);
+			}
+			return new HttpLaunchable(url);
+		} catch (Exception e) {
+			Trace.trace(Trace.SEVERE, "Error getting URL for " + moduleObject, e);
+			return null;
+		}
+	}
 }

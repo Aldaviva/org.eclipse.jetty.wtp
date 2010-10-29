@@ -12,11 +12,9 @@ package org.eclipse.jst.server.jetty.core;
 
 import org.eclipse.jst.server.core.IJavaRuntimeWorkingCopy;
 import org.eclipse.jst.server.jetty.core.internal.IJettyRuntime;
-
 /**
  * 
  */
-public interface IJettyRuntimeWorkingCopy extends IJettyRuntime, IJavaRuntimeWorkingCopy
-{
-    // no new methods
+public interface IJettyRuntimeWorkingCopy extends IJettyRuntime, IJavaRuntimeWorkingCopy {
+	// no new methods
 }

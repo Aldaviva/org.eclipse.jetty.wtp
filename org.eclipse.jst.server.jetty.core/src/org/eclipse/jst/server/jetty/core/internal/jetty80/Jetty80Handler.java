@@ -18,18 +18,19 @@ import org.eclipse.jst.server.jetty.core.internal.Messages;
 import org.eclipse.jst.server.jetty.core.internal.jetty70.Jetty70Handler;
 import org.eclipse.wst.server.core.IModule;
 
-public class Jetty80Handler extends Jetty70Handler
-{
+public class Jetty80Handler extends Jetty70Handler {
 
-    /**
-     * @see IJettyVersionHandler#canAddModule(IModule)
-     */
-    public IStatus canAddModule(IModule module)
-    {
-        String version = module.getModuleType().getVersion();
-        if ("2.2".equals(version) || "2.3".equals(version) || "2.4".equals(version) || "2.5".equals(version) || "3.0".equals(version))
-            return Status.OK_STATUS;
+	/**
+	 * @see IJettyVersionHandler#canAddModule(IModule)
+	 */
+	public IStatus canAddModule(IModule module) {
+		String version = module.getModuleType().getVersion();
+		if ("2.2".equals(version) || "2.3".equals(version)
+				|| "2.4".equals(version) || "2.5".equals(version)
+				|| "3.0".equals(version))
+			return Status.OK_STATUS;
 
-        return new Status(IStatus.ERROR,JettyPlugin.PLUGIN_ID,0,Messages.errorSpec70,null);
-    }
+		return new Status(IStatus.ERROR, JettyPlugin.PLUGIN_ID, 0,
+				Messages.errorSpec70, null);
+	}
 }

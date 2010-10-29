@@ -16,94 +16,83 @@ import org.eclipse.jst.server.jetty.core.internal.IJettyWebModule;
 /**
  * A Web module.
  */
-public class WebModule implements IJettyWebModule
-{
-    private String docBase;
-    private String path;
-    private String memento;
-    private boolean reloadable;
+public class WebModule implements IJettyWebModule {
+	private String docBase;
+	private String path;
+	private String memento;
+	private boolean reloadable;
 
-    /**
-     * WebModule constructor comment.
-     * 
-     * @param path
-     *            a path
-     * @param docBase
-     *            a document base
-     * @param memento
-     *            a memento
-     * @param reloadable
-     *            <code>true</code> if reloadable
-     */
-    public WebModule(String path, String docBase, String memento, boolean reloadable)
-    {
-        super();
-        this.path = path;
-        this.docBase = docBase;
-        this.memento = memento;
-        this.reloadable = reloadable;
+	/**
+	 * WebModule constructor comment.
+	 * 
+	 * @param path a path
+	 * @param docBase a document base
+	 * @param memento a memento
+	 * @param reloadable <code>true</code> if reloadable
+	 */
+	public WebModule(String path, String docBase, String memento, boolean reloadable) {
+		super();
+		this.path = path;
+		this.docBase = docBase;
+		this.memento = memento;
+		this.reloadable = reloadable;
+	}
+
+	/**
+	 * Get the document base.
+	 *
+	 * @return java.lang.String
+	 */
+	public String getDocumentBase() {
+		return docBase;
+	}
+
+	/**
+	 * Return the path. (context root)
+	 *
+	 * @return java.lang.String
+	 */
+	public String getPath() {
+		return path;
+	}
+
+	/**
+	 * Return the memento.
+	 *
+	 * @return java.lang.String
+	 */
+	public String getMemento() {
+		return memento;
+	}
+
+	/**
+	 * Return true if the web module is auto-reloadable.
+	 *
+	 * @return java.lang.String
+	 */
+	public boolean isReloadable() {
+		return reloadable;
+	}
+	
+	public int hashCode() 
+	{
+       return getDocumentBase().hashCode() + getPath().hashCode() + getMemento().hashCode();
     }
-
-    /**
-     * Get the document base.
-     * 
-     * @return java.lang.String
-     */
-    public String getDocumentBase()
-    {
-        return docBase;
-    }
-
-    /**
-     * Return the path. (context root)
-     * 
-     * @return java.lang.String
-     */
-    public String getPath()
-    {
-        return path;
-    }
-
-    /**
-     * Return the memento.
-     * 
-     * @return java.lang.String
-     */
-    public String getMemento()
-    {
-        return memento;
-    }
-
-    /**
-     * Return true if the web module is auto-reloadable.
-     * 
-     * @return java.lang.String
-     */
-    public boolean isReloadable()
-    {
-        return reloadable;
-    }
-
-    public int hashCode()
-    {
-        return getDocumentBase().hashCode() + getPath().hashCode() + getMemento().hashCode();
-    }
-
-    /**
-     * @see Object#equals(Object)
-     */
-    public boolean equals(Object obj)
-    {
-        if (!(obj instanceof WebModule))
-            return false;
-
-        WebModule wm = (WebModule)obj;
-        if (!getDocumentBase().equals(wm.getDocumentBase()))
-            return false;
-        if (!getPath().equals(wm.getPath()))
-            return false;
-        if (!getMemento().equals(wm.getMemento()))
-            return false;
-        return true;
-    }
+	
+	/**
+	 * @see Object#equals(Object)
+	 */
+	public boolean equals(Object obj) {
+		if (!(obj instanceof WebModule))
+			return false;
+		
+		WebModule wm = (WebModule) obj;
+		if (!getDocumentBase().equals(wm.getDocumentBase()))
+			return false;
+		if (!getPath().equals(wm.getPath()))
+			return false;
+		if (!getMemento().equals(wm.getMemento()))
+			return false;
+		return true;
+	}
 }
