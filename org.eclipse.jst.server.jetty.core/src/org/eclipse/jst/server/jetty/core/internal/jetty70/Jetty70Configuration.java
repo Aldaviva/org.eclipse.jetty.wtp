@@ -611,7 +611,7 @@ public class Jetty70Configuration extends JettyConfiguration implements JettyCon
             {
                 serverInstance.setPort(port + "");
                 isServerDirty = true;
-                firePropertyChangeEvent(MODIFY_PORT_PROPERTY,id,new Integer(port));
+                firePropertyChangeEvent(MODIFY_PORT_PROPERTY,id, Integer.valueOf(port));
                 return;
             }
 
@@ -669,7 +669,7 @@ public class Jetty70Configuration extends JettyConfiguration implements JettyCon
                 context.save();
                 isServerDirty = true;
                 WebModule module = new WebModule(path,docBase,null,reloadable);
-                firePropertyChangeEvent(MODIFY_WEB_MODULE_PROPERTY,new Integer(index),module);
+                firePropertyChangeEvent(MODIFY_WEB_MODULE_PROPERTY, Integer.valueOf(index),module);
             }
         }
         catch (Exception e)

@@ -117,7 +117,7 @@ public class NewWebSocketServletClassWizardPage extends NewWebClassWizardPage
                             IPath pBase = root.getFullPath();
                             IPath path = pFull.removeFirstSegments(pBase.segmentCount());
                             qualifiedClassName = path.makeAbsolute().toString();
-                            model.setProperty(IS_SERVLET_TYPE,new Boolean(false));
+                            model.setProperty(IS_SERVLET_TYPE, Boolean.valueOf(false));
                         }
                     }
                 }
