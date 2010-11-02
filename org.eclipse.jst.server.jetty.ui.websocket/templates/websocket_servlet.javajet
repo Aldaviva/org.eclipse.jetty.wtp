@@ -144,6 +144,17 @@
 		public void onDisconnect() {
 			members.remove(this);
 		}
+		
+		/*
+		 * 
+		 * @see org.eclipse.jetty.websocket.WebSocket#onFragment(boolean, byte,
+		 * byte[], int, int)
+		 */
+		public void onFragment(boolean more, byte opcode, byte[] data,
+				int offset, int length) {
+
+		}
+		
 	}
 
 <% if (model.shouldGenDoPut()) { %>
