@@ -151,5 +151,11 @@
       <url>http://snapshots.repository.codehaus.org</url>
       <snapshots><enabled>true</enabled></snapshots>
     </pluginRepository>
+    <pluginRepository>
+      <id>jetty-snapshots</id>
+      <layout>default</layout>
+      <url>https://oss.sonatype.org/content/groups/jetty</url>
+      <snapshots><enabled>true</enabled></snapshots>
+    </pluginRepository>
   </pluginRepositories>
 </project>
