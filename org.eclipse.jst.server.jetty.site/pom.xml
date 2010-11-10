@@ -11,12 +11,8 @@
   <artifactId>org.eclipse.jst.server.jetty.site</artifactId>
   <packaging>eclipse-update-site</packaging>
   <name>Jetty WTP Adaptor :: Site</name>
-  <profiles>
-    <profile>
-      <id>build-server</id>
-      <build>
-        <build>
-          <extensions>
+  <build>
+  <extensions>
             <extension>
               <groupId>org.apache.maven.wagon</groupId>
               <artifactId>wagon-ssh-external</artifactId>
@@ -28,6 +24,12 @@
               <version>1.0-beta-6</version>
             </extension>
           </extensions>
+          </build>
+  <profiles>
+    <profile>
+      <id>build-server</id>
+      <build>
+          
           <plugins>
             <plugin>
               <groupId>org.mortbay.jetty.toolchain</groupId>
