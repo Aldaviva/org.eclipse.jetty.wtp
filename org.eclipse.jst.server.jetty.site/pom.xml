@@ -42,6 +42,7 @@
                   <execute>local</execute>
                   <inputFile>${project.build.directory}/site.zip</inputFile>
                   <pack200>/usr/lib64/jvm/jre/bin</pack200>
+                  <javaExecutable>/usr/local/bin/java</javaExecutable>
                 </configuration>
                 <phase>package</phase>
                 <goals>
@@ -69,6 +70,7 @@
                 <configuration>
                   <execute>local</execute>
                   <pack200>/usr/lib64/jvm/jre/bin</pack200>
+                  <javaExecutable>/usr/local/bin/java</javaExecutable>
                   <inputFile>${project.build.directory}/signed/${project.artifactId}-${project.version}.zip</inputFile>
                 </configuration>
                 <phase>package</phase>
