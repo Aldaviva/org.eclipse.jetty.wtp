@@ -24,6 +24,16 @@
         <version>1.0-beta-6</version>
       </extension>
     </extensions>
+  <plugins>
+    <plugin>
+      <groupId>org.sonatype.tycho</groupId>
+      <artifactId>maven-osgi-packaging-plugin</artifactId>
+      <version>${tycho-version}</version>
+      <configuration>
+       <archiveSite>true</archiveSite>
+      </configuration>
+    </plugin>
+  </plugins> 
   </build>
   <profiles>
     <profile>
@@ -40,9 +50,11 @@
                 <id>pack</id>
                 <configuration>
                   <execute>local</execute>
-                  <inputFile>${project.build.directory}/site.zip</inputFile>
-                  <pack200>/usr/lib64/jvm/jre/bin</pack200>
-                  <javaExecutable>/usr/local/bin/java</javaExecutable>
+                  <inputFile>${project.build.directory}/site-assembly.zip</inputFile>
+                  <!-- pack200>/usr/lib64/jvm/jre/bin</pack200-->
+                  <pack200>/usr/bin</pack200>      
+                  <!-- javaExecutable>/usr/local/bin/java</javaExecutable-->           
+                  <javaExecutable>/usr/lib/jvm/java-6-sun/bin/java</javaExecutable>
                 </configuration>
                 <phase>package</phase>
                 <goals>
@@ -53,11 +65,12 @@
               <execution>
                 <id>sign</id>
                 <configuration>
+                  <execute>local</execute>
                   <wagonProtocol>file://</wagonProtocol>
                   <wagonHost>build.eclipse.org</wagonHost>
                   <wagonPath>/home/data/httpd/download-staging.priv/rt/jetty</wagonPath>
                   <serverId>jetty.eclipse.website</serverId>
-                  <inputFile>${project.build.directory}/packed/site.zip</inputFile>
+                  <inputFile>${project.build.directory}/packed/site-assembly.zip</inputFile>
                 </configuration>
                 <phase>package</phase>
                 <goals>
