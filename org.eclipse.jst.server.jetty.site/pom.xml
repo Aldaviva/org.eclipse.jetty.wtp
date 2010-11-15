@@ -51,10 +51,8 @@
                 <configuration>
                   <execute>local</execute>
                   <inputFile>${project.build.directory}/site_assembly.zip</inputFile>
-                  <!-- pack200>/usr/lib64/jvm/jre/bin</pack200-->
-                  <pack200>/usr/bin</pack200>      
-                  <!-- javaExecutable>/usr/local/bin/java</javaExecutable-->           
-                  <javaExecutable>/usr/lib/jvm/java-6-sun/bin/java</javaExecutable>
+                  <pack200>/usr/lib64/jvm/jre/bin</pack200>
+                  <javaExecutable>/usr/local/bin/java</javaExecutable>           
                 </configuration>
                 <phase>package</phase>
                 <goals>
