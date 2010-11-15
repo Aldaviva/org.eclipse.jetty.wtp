@@ -50,7 +50,7 @@
                 <id>pack</id>
                 <configuration>
                   <execute>local</execute>
-                  <inputFile>${project.build.directory}/site-assembly.zip</inputFile>
+                  <inputFile>${project.build.directory}/site_assembly.zip</inputFile>
                   <!-- pack200>/usr/lib64/jvm/jre/bin</pack200-->
                   <pack200>/usr/bin</pack200>      
                   <!-- javaExecutable>/usr/local/bin/java</javaExecutable-->           
@@ -70,7 +70,7 @@
                   <wagonHost>build.eclipse.org</wagonHost>
                   <wagonPath>/home/data/httpd/download-staging.priv/rt/jetty</wagonPath>
                   <serverId>jetty.eclipse.website</serverId>
-                  <inputFile>${project.build.directory}/packed/site-assembly.zip</inputFile>
+                  <inputFile>${project.build.directory}/packed/site_assembly.zip</inputFile>
                 </configuration>
                 <phase>package</phase>
                 <goals>
@@ -96,7 +96,7 @@
                 <id>fixCheckSums</id>
                 <configuration>
                   <inputFile>${project.build.directory}/packed/${project.artifactId}-${project.version}.zip</inputFile>
-                  <outputFile>${project.build.directory}/fixed/site.zip</outputFile>
+                  <outputFile>${project.build.directory}/fixed/site_assembly.zip</outputFile>
                   <artifactsXml>${project.build.directory}/checksumFix/${project.artifactId}-${project.version}/site/artifacts.xml</artifactsXml>
                 </configuration>
                 <phase>package</phase>
