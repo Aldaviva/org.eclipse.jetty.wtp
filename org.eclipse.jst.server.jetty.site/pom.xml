@@ -39,7 +39,7 @@
                 <configuration>
                   <execute>local</execute>
                   <inputFile>${project.build.directory}/site_assembly.zip</inputFile>
-                  <pack200>/usr/lib64/jvm/jre/bin</pack200>
+                  <pack200>/shared/common/jdk-1.5.0-22.x86_65/bin</pack200>
                   <javaExecutable>/usr/local/bin/java</javaExecutable>           
                 </configuration>
                 <phase>package</phase>
@@ -68,7 +68,7 @@
                 <id>repack</id>
                 <configuration>
                   <execute>local</execute>
-                  <pack200>/usr/lib64/jvm/jre/bin</pack200>
+                  <pack200>/shared/common/jdk-1.5.0-22.x86_64/bin</pack200>
                   <javaExecutable>/usr/local/bin/java</javaExecutable>
                   <inputFile>${project.build.directory}/signed/${project.artifactId}-${project.version}.zip</inputFile>
                 </configuration>
@@ -84,6 +84,7 @@
                   <inputFile>${project.build.directory}/packed/${project.artifactId}-${project.version}.zip</inputFile>
                   <outputFile>${project.build.directory}/fixed/site_assembly.zip</outputFile>
                   <artifactsXml>${project.build.directory}/checksumFix/artifacts.xml</artifactsXml>
+                  <unpackPath>/</unpackPath>
                 </configuration>
                 <phase>package</phase>
                 <goals>
