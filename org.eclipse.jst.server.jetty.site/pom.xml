@@ -39,7 +39,7 @@
                 <configuration>
                   <execute>local</execute>
                   <inputFile>${project.build.directory}/site_assembly.zip</inputFile>
-                  <pack200>/shared/common/jdk-1.5.0-22.x86_65/bin</pack200>
+                  <pack200>/shared/common/jdk-1.5.0-22.x86_64/bin</pack200>
                   <javaExecutable>/usr/local/bin/java</javaExecutable>           
                 </configuration>
                 <phase>package</phase>
