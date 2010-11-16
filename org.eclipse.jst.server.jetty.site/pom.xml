@@ -12,18 +12,6 @@
   <packaging>eclipse-update-site</packaging>
   <name>Jetty WTP Adaptor :: Site</name>
   <build>
-    <extensions>
-      <extension>
-        <groupId>org.apache.maven.wagon</groupId>
-        <artifactId>wagon-ssh-external</artifactId>
-        <version>1.0-beta-6</version>
-      </extension>
-      <extension>
-        <groupId>org.apache.maven.wagon</groupId>
-        <artifactId>wagon-file</artifactId>
-        <version>1.0-beta-6</version>
-      </extension>
-    </extensions>
   <plugins>
     <plugin>
       <groupId>org.sonatype.tycho</groupId>
@@ -95,7 +83,7 @@
                 <configuration>
                   <inputFile>${project.build.directory}/packed/${project.artifactId}-${project.version}.zip</inputFile>
                   <outputFile>${project.build.directory}/fixed/site_assembly.zip</outputFile>
-                  <artifactsXml>${project.build.directory}/checksumFix/${project.artifactId}-${project.version}/site/artifacts.xml</artifactsXml>
+                  <artifactsXml>${project.build.directory}/checksumFix/artifacts.xml</artifactsXml>
                 </configuration>
                 <phase>package</phase>
                 <goals>
@@ -123,7 +111,7 @@
                       </delete>
                       <copy includeemptydirs="false"
                         todir="/home/data/httpd/download.eclipse.org/jetty/updates/jetty-wtp/development">
-                        <fileset dir="target/site">
+                        <fileset dir="target/checksumFix">
                           <include name="**" />
                         </fileset>
                       </copy>
