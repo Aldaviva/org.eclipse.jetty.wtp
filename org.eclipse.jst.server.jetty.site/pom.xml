@@ -36,12 +36,6 @@
               <!-- example of executing locally for pack -->
               <execution>
                 <id>pack</id>
-                <configuration>
-                  <execute>local</execute>
-                  <inputFile>${project.build.directory}/site_assembly.zip</inputFile>
-                  <pack200>/shared/common/jdk-1.5.0-22.x86_64/bin</pack200>
-                  <javaExecutable>/usr/local/bin/java</javaExecutable>           
-                </configuration>
                 <phase>package</phase>
                 <goals>
                   <goal>pack</goal>
@@ -50,14 +44,6 @@
               <!-- the sign remote -->
               <execution>
                 <id>sign</id>
-                <configuration>
-                  <execute>local</execute>
-                  <wagonProtocol>file://</wagonProtocol>
-                  <wagonHost>build.eclipse.org</wagonHost>
-                  <wagonPath>/home/data/httpd/download-staging.priv/rt/jetty</wagonPath>
-                  <serverId>jetty.eclipse.website</serverId>
-                  <inputFile>${project.build.directory}/packed/site_assembly.zip</inputFile>
-                </configuration>
                 <phase>package</phase>
                 <goals>
                   <goal>sign</goal>
@@ -67,10 +53,7 @@
               <execution>
                 <id>repack</id>
                 <configuration>
-                  <execute>local</execute>
-                  <pack200>/shared/common/jdk-1.5.0-22.x86_64/bin</pack200>
-                  <javaExecutable>/usr/local/bin/java</javaExecutable>
-                  <inputFile>${project.build.directory}/signed/${project.artifactId}-${project.version}.zip</inputFile>
+                  <inputFile>${project.build.directory}/signed/site_assembly.zip</inputFile>
                 </configuration>
                 <phase>package</phase>
                 <goals>
@@ -80,12 +63,6 @@
               <!-- signing and pack alters tycho checksums so fix them -->
               <execution>
                 <id>fixCheckSums</id>
-                <configuration>
-                  <inputFile>${project.build.directory}/packed/${project.artifactId}-${project.version}.zip</inputFile>
-                  <outputFile>${project.build.directory}/fixed/site_assembly.zip</outputFile>
-                  <artifactsXml>${project.build.directory}/checksumFix/artifacts.xml</artifactsXml>
-                  <unpackPath>/</unpackPath>
-                </configuration>
                 <phase>package</phase>
                 <goals>
                   <goal>fixCheckSums</goal>
