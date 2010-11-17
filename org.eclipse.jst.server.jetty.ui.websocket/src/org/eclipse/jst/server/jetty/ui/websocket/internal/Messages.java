@@ -15,7 +15,7 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS
 {
 
-    private static final String BUNDLE_NAME = "org.eclipse.jst.server.jetty.ui.websocket.internal.messages";//$NON-NLS-1$
+    private static final String BUNDLE_NAME = "org.eclipse.jst.server.jetty.ui.websocket.internal.Messages";//$NON-NLS-1$
 
     public static String ADD_WEBSOCKET_WIZARD_WINDOW_TITLE;
     public static String ADD_WEBSOCKET_WIZARD_PAGE_TITLE;
