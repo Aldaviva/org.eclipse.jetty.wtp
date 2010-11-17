@@ -204,12 +204,12 @@
   <extension point="org.eclipse.wst.server.core.installableRuntimes">
     <runtime
       id="org.eclipse.jst.server.jetty.runtime.70"
-      licenseUrl="http://www.apache.org/licenses/LICENSE-2.0"
-      archiveUrl="http://download.eclipse.org/jetty/7.2.0.v20101020/dist/jetty-distribution-7.2.0.v20101020.zip"
-      archivePath="jetty-distribution-7.2.0.v20101020" />
+      licenseUrl="http://www.apache.org/licenses/LICENSE-2.0.txt"
+      archiveUrl="http://download.eclipse.org/jetty/7.2.1.v20101111/dist/jetty-distribution-7.2.0.v20101020.zip"
+      archivePath="jetty-distribution-7.2.1.v20101111" />
 	  <runtime
       id="org.eclipse.jst.server.jetty.runtime.80"
-      licenseUrl="http://www.apache.org/licenses/LICENSE-2.0"
+      licenseUrl="http://www.apache.org/licenses/LICENSE-2.0.txt"
       archiveUrl="http://download.eclipse.org/jetty/8.0.0.M1/dist/jetty-distribution-8.0.0.M1.zip"
       archivePath="jetty-distribution-8.0.0.M1" />      
   </extension>          
