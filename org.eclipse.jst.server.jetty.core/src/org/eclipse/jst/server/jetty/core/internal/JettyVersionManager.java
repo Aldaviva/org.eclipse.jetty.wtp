@@ -20,8 +20,8 @@ import java.util.Map;
 
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.jst.server.jetty.core.IJettyConfiguration;
-import org.eclipse.jst.server.jetty.core.internal.jetty70.Jetty70Provider;
-import org.eclipse.jst.server.jetty.core.internal.jetty80.Jetty80Provider;
+import org.eclipse.jst.server.jetty.core.internal.jetty7.Jetty7Provider;
+import org.eclipse.jst.server.jetty.core.internal.jetty8.Jetty8Provider;
 
 public class JettyVersionManager
 {
@@ -40,9 +40,9 @@ public class JettyVersionManager
     private JettyVersionManager()
     {
         // Jetty 7.0
-        register(JettyVersion.V70,Jetty70Provider.INSTANCE);
+        register(JettyVersion.V70,Jetty7Provider.INSTANCE);
         // Jetty 8.0, same than Jetty7.0
-        register(JettyVersion.V80,Jetty80Provider.INSTANCE);
+        register(JettyVersion.V80,Jetty8Provider.INSTANCE);
     }
 
     public void register(JettyVersion version, IJettyVersionProvider versionProvider)

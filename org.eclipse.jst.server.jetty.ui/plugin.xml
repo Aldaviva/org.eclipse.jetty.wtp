@@ -14,22 +14,22 @@
 <plugin>
 <extension point="org.eclipse.wst.server.ui.serverImages">
       <image
-         id="org.eclipse.jst.server.jetty.70"
+         id="org.eclipse.jst.server.jetty.7"
          icon="icons/obj16/jetty.gif"
-         typeIds="org.eclipse.jst.server.jetty.runtime.70"/>
+         typeIds="org.eclipse.jst.server.jetty.runtime.7"/>
       <image
-         id="org.eclipse.jst.server.jetty.80"
+         id="org.eclipse.jst.server.jetty.8"
          icon="icons/obj16/jetty.gif"
-         typeIds="org.eclipse.jst.server.jetty.runtime.80"/>
+         typeIds="org.eclipse.jst.server.jetty.runtime.8"/>
 
       <image
-         id="org.eclipse.jst.server.jetty.70"
+         id="org.eclipse.jst.server.jetty.7"
          icon="icons/obj16/jetty.gif"
-         typeIds="org.eclipse.jst.server.jetty.70"/>
+         typeIds="org.eclipse.jst.server.jetty.7"/>
       <image
-         id="org.eclipse.jst.server.jetty.80"
+         id="org.eclipse.jst.server.jetty.8"
          icon="icons/obj16/jetty.gif"
-         typeIds="org.eclipse.jst.server.jetty.80"/>
+         typeIds="org.eclipse.jst.server.jetty.8"/>
    </extension>
    
    <extension point="org.eclipse.core.expressions.propertyTesters">
@@ -70,12 +70,12 @@
       
    <extension point="org.eclipse.wst.server.ui.wizardFragments">
       <fragment
-         id="org.eclipse.jst.server.jetty.runtime.70"
-         typeIds="org.eclipse.jst.server.jetty.runtime.70"
+         id="org.eclipse.jst.server.jetty.runtime.7"
+         typeIds="org.eclipse.jst.server.jetty.runtime.7"
          class="org.eclipse.jst.server.jetty.ui.internal.JettyRuntimeWizardFragment"/>
       <fragment
-         id="org.eclipse.jst.server.jetty.runtime.80"
-         typeIds="org.eclipse.jst.server.jetty.runtime.80"
+         id="org.eclipse.jst.server.jetty.runtime.8"
+         typeIds="org.eclipse.jst.server.jetty.runtime.8"
          class="org.eclipse.jst.server.jetty.ui.internal.JettyRuntimeWizardFragment"/>         
    </extension>   
    

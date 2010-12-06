@@ -8,7 +8,7 @@
  * Contributors:
  *     Angelo Zerr <angelo.zerr@gmail.com> - Initial API and implementation 
  *******************************************************************************/
-package org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server;
+package org.eclipse.jst.server.jetty.core.internal.xml.jetty7.server;
 
 import java.io.File;
 

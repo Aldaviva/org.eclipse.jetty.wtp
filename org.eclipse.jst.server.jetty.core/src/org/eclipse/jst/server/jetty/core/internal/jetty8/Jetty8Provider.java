@@ -8,19 +8,20 @@
  * Contributors:
  *     Angelo Zerr <angelo.zerr@gmail.com> - Initial API and implementation 
  *******************************************************************************/
-package org.eclipse.jst.server.jetty.core.internal.jetty70;
+package org.eclipse.jst.server.jetty.core.internal.jetty8;
 
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.jst.server.jetty.core.IJettyConfiguration;
 import org.eclipse.jst.server.jetty.core.internal.IJettyVersionHandler;
 import org.eclipse.jst.server.jetty.core.internal.IJettyVersionProvider;
+import org.eclipse.jst.server.jetty.core.internal.jetty7.Jetty7Configuration;
 
-public class Jetty70Provider implements IJettyVersionProvider
+public class Jetty8Provider implements IJettyVersionProvider
 {
 
-    public static final IJettyVersionProvider INSTANCE = new Jetty70Provider();
+    public static final IJettyVersionProvider INSTANCE = new Jetty8Provider();
 
-    private IJettyVersionHandler versionHandler = new Jetty70Handler();
+    private IJettyVersionHandler versionHandler = new Jetty8Handler();
 
     public IJettyVersionHandler getJettyVersionHandler()
     {
@@ -29,6 +30,6 @@ public class Jetty70Provider implements IJettyVersionProvider
 
     public IJettyConfiguration createJettyConfiguration(IFolder path)
     {
-        return new Jetty70Configuration(path);
+        return new Jetty7Configuration(path);
     }
 }

@@ -16,9 +16,9 @@
   <extension point="org.eclipse.wst.server.core.runtimeTypes">
   
     <runtimeType
-       id="org.eclipse.jst.server.jetty.runtime.70"
-       name="%runtimeTypeJetty70Label"
-       description="%runtimeTypeJetty70Description"
+       id="org.eclipse.jst.server.jetty.runtime.7"
+       name="%runtimeTypeJetty7Label"
+       description="%runtimeTypeJetty7Description"
        vendor="%jetty"
        version="7.0"
        class="org.eclipse.jst.server.jetty.core.internal.JettyRuntime">
@@ -31,9 +31,9 @@
     </runtimeType>
     
     <runtimeType
-       id="org.eclipse.jst.server.jetty.runtime.80"
-       name="%runtimeTypeJetty80Label"
-       description="%runtimeTypeJetty80Description"
+       id="org.eclipse.jst.server.jetty.runtime.8"
+       name="%runtimeTypeJetty8Label"
+       description="%runtimeTypeJetty8Description"
        vendor="%jetty"
        version="8.0"
        class="org.eclipse.jst.server.jetty.core.internal.JettyRuntime">
@@ -65,9 +65,9 @@
              
   <extension point="org.eclipse.wst.server.core.serverTypes">
      <serverType
-       id="org.eclipse.jst.server.jetty.70"
-       name="%jetty70ServerType"
-       description="%jetty70ServerDescription"
+       id="org.eclipse.jst.server.jetty.7"
+       name="%jetty7ServerType"
+       description="%jetty7ServerDescription"
        supportsRemoteHosts="false"
        runtime="true"
        startTimeout="30000"
@@ -75,15 +75,15 @@
        initialState="stopped"
        hasConfiguration="true"
        launchConfigId="org.eclipse.jst.server.jetty.core.launchConfigurationType"
-       runtimeTypeId="org.eclipse.jst.server.jetty.runtime.70"
+       runtimeTypeId="org.eclipse.jst.server.jetty.runtime.7"
        class="org.eclipse.jst.server.jetty.core.internal.JettyServer"
        behaviourClass="org.eclipse.jst.server.jetty.core.internal.JettyServerBehaviour">
      </serverType>
      
      <serverType
-       id="org.eclipse.jst.server.jetty.80"
-       name="%jetty80ServerType"
-       description="%jetty80ServerDescription"
+       id="org.eclipse.jst.server.jetty.8"
+       name="%jetty8ServerType"
+       description="%jetty8ServerDescription"
        supportsRemoteHosts="false"
        runtime="true"
        startTimeout="30000"
@@ -91,7 +91,7 @@
        initialState="stopped"
        hasConfiguration="true"
        launchConfigId="org.eclipse.jst.server.jetty.core.launchConfigurationType"
-       runtimeTypeId="org.eclipse.jst.server.jetty.runtime.80"
+       runtimeTypeId="org.eclipse.jst.server.jetty.runtime.8"
        class="org.eclipse.jst.server.jetty.core.internal.JettyServer"
        behaviourClass="org.eclipse.jst.server.jetty.core.internal.JettyServerBehaviour">
      </serverType>     
@@ -140,11 +140,11 @@
 
     <runtime-component-version
        type="org.eclipse.jst.server.jetty"
-       version="7.0"/>
+       version="7.x"/>
 
     <runtime-component-version
        type="org.eclipse.jst.server.jetty"
-       version="8.0"/>
+       version="8.x"/>
 
     <adapter>
       <runtime-component
@@ -192,26 +192,26 @@
   
   <extension point="org.eclipse.jst.server.core.runtimeFacetMappings">
     <runtimeFacetMapping
-      runtimeTypeId="org.eclipse.jst.server.jetty.runtime.70"
+      runtimeTypeId="org.eclipse.jst.server.jetty.runtime.7"
       runtime-component="org.eclipse.jst.server.jetty"
-      version="7.0"/>
+      version="7.x"/>
     <runtimeFacetMapping
-      runtimeTypeId="org.eclipse.jst.server.jetty.runtime.80"
+      runtimeTypeId="org.eclipse.jst.server.jetty.runtime.8"
       runtime-component="org.eclipse.jst.server.jetty"
-      version="8.0"/>
+      version="8.x"/>
   </extension>
           
   <extension point="org.eclipse.wst.server.core.installableRuntimes">
     <runtime
-      id="org.eclipse.jst.server.jetty.runtime.70"
+      id="org.eclipse.jst.server.jetty.runtime.7"
       licenseUrl="http://www.apache.org/licenses/LICENSE-2.0.txt"
       archiveUrl="http://download.eclipse.org/jetty/7.2.1.v20101111/dist/jetty-distribution-7.2.1.v20101111.zip"
       archivePath="jetty-distribution-7.2.1.v20101111" />
 	  <runtime
-      id="org.eclipse.jst.server.jetty.runtime.80"
+      id="org.eclipse.jst.server.jetty.runtime.8"
       licenseUrl="http://www.apache.org/licenses/LICENSE-2.0.txt"
-      archiveUrl="http://download.eclipse.org/jetty/8.0.0.M1/dist/jetty-distribution-8.0.0.M1.zip"
-      archivePath="jetty-distribution-8.0.0.M1" />      
+      archiveUrl="http://download.eclipse.org/jetty/8.0.0.M2/dist/jetty-distribution-8.0.0.M2.zip"
+      archivePath="jetty-distribution-8.0.0.M2" />      
   </extension>          
           
 </plugin>    

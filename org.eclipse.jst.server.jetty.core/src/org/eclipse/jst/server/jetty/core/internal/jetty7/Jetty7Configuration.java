@@ -8,7 +8,7 @@
  * Contributors:
  *     Angelo Zerr <angelo.zerr@gmail.com> - Initial API and implementation 
  *******************************************************************************/
-package org.eclipse.jst.server.jetty.core.internal.jetty70;
+package org.eclipse.jst.server.jetty.core.internal.jetty7;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -43,18 +43,18 @@ import org.eclipse.jst.server.jetty.core.internal.config.StartIni;
 import org.eclipse.jst.server.jetty.core.internal.config.WebdefaultXMLConfig;
 import org.eclipse.jst.server.jetty.core.internal.util.IOUtils;
 import org.eclipse.jst.server.jetty.core.internal.xml.Factory;
-import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.ServerInstance;
-import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server.Connector;
-import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server.Server;
-import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server.WebApp;
-import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.webapp.WebAppContext;
+import org.eclipse.jst.server.jetty.core.internal.xml.jetty7.ServerInstance;
+import org.eclipse.jst.server.jetty.core.internal.xml.jetty7.server.Connector;
+import org.eclipse.jst.server.jetty.core.internal.xml.jetty7.server.Server;
+import org.eclipse.jst.server.jetty.core.internal.xml.jetty7.server.WebApp;
+import org.eclipse.jst.server.jetty.core.internal.xml.jetty7.webapp.WebAppContext;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.wst.server.core.ServerPort;
 
-public class Jetty70Configuration extends JettyConfiguration implements JettyConstants
+public class Jetty7Configuration extends JettyConfiguration implements JettyConstants
 {
 
-    public Jetty70Configuration(IFolder path)
+    public Jetty7Configuration(IFolder path)
     {
         super(path);
     }
@@ -338,7 +338,7 @@ public class Jetty70Configuration extends JettyConfiguration implements JettyCon
 
                     jettyPath = jettyXMLConfig.getPath();
                     serverFactory = new Factory();
-                    serverFactory.setPackageName("org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server");
+                    serverFactory.setPackageName("org.eclipse.jst.server.jetty.core.internal.xml.jetty7.server");
                     server = (Server)serverFactory.loadDocument(JettyXMLConfig.getInputStream(file));
                     server.setFile(file);
                     server.setPath(jettyPath);
@@ -354,7 +354,7 @@ public class Jetty70Configuration extends JettyConfiguration implements JettyCon
                 IPath webAppPath = pathFileConfig.getPath();
 
                 Factory webdefaultFactory = new Factory();
-                webdefaultFactory.setPackageName("org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server");
+                webdefaultFactory.setPackageName("org.eclipse.jst.server.jetty.core.internal.xml.jetty7.server");
                 webApp = (WebApp)webdefaultFactory.loadDocument(WebdefaultXMLConfig.getInputStream(webAppFile));
                 webApp.setFile(webAppFile);
                 webApp.setPath(webAppPath);
@@ -391,7 +391,7 @@ public class Jetty70Configuration extends JettyConfiguration implements JettyCon
         }
         catch (Exception e)
         {
-            Trace.trace(Trace.WARNING,"Could not load Jetty v7.0 configuration from " + path.toOSString() + ": " + e.getMessage());
+            Trace.trace(Trace.WARNING,"Could not load Jetty v7.x configuration from " + path.toOSString() + ": " + e.getMessage());
             throw new CoreException(new Status(IStatus.ERROR,JettyPlugin.PLUGIN_ID,0,NLS.bind(Messages.errorCouldNotLoadConfiguration,path.toOSString()),e));
         }
     }
@@ -421,7 +421,7 @@ public class Jetty70Configuration extends JettyConfiguration implements JettyCon
                     file = jettyXMLConfig.getFile();
                     jettyPath = jettyXMLConfig.getPath();
                     serverFactory = new Factory();
-                    serverFactory.setPackageName("org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server");
+                    serverFactory.setPackageName("org.eclipse.jst.server.jetty.core.internal.xml.jetty7.server");
                     server = (Server)serverFactory.loadDocument(new FileInputStream(file));
                     server.setFile(file);
                     server.setPath(jettyPath);
@@ -443,7 +443,7 @@ public class Jetty70Configuration extends JettyConfiguration implements JettyCon
                 IPath webAppPath = pathFileConfig.getPath();
 
                 Factory webdefaultFactory = new Factory();
-                webdefaultFactory.setPackageName("org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server");
+                webdefaultFactory.setPackageName("org.eclipse.jst.server.jetty.core.internal.xml.jetty7.server");
                 webApp = (WebApp)webdefaultFactory.loadDocument(new FileInputStream(webAppFile));
                 webApp.setFile(webAppFile);
                 webApp.setPath(webAppPath);
@@ -493,7 +493,7 @@ public class Jetty70Configuration extends JettyConfiguration implements JettyCon
         }
         catch (Exception e)
         {
-            Trace.trace(Trace.WARNING,"Could not reload Jetty v7.0 configuration from: " + folder.getFullPath() + ": " + e.getMessage());
+            Trace.trace(Trace.WARNING,"Could not reload Jetty v7.x configuration from: " + folder.getFullPath() + ": " + e.getMessage());
             throw new CoreException(new Status(IStatus.ERROR,JettyPlugin.PLUGIN_ID,0,NLS.bind(Messages.errorCouldNotLoadConfiguration,folder.getFullPath()
                     .toOSString()),e));
         }
@@ -574,7 +574,7 @@ public class Jetty70Configuration extends JettyConfiguration implements JettyCon
         }
         catch (Exception e)
         {
-            Trace.trace(Trace.SEVERE,"Could not save Jetty v7.0 configuration to " + folder.toString(),e);
+            Trace.trace(Trace.SEVERE,"Could not save Jetty v7.x configuration to " + folder.toString(),e);
             throw new CoreException(new Status(IStatus.ERROR,JettyPlugin.PLUGIN_ID,0,NLS.bind(Messages.errorCouldNotSaveConfiguration,new String[]
             { e.getLocalizedMessage() }),e));
         }

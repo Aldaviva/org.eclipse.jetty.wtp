@@ -8,7 +8,7 @@
  * Contributors:
  *     Angelo Zerr <angelo.zerr@gmail.com> - Initial API and implementation 
  *******************************************************************************/
-package org.eclipse.jst.server.jetty.core.internal.xml.jetyy70;
+package org.eclipse.jst.server.jetty.core.internal.xml.jetty7;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -27,10 +27,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jst.server.core.internal.ProgressUtil;
 import org.eclipse.jst.server.jetty.core.internal.util.IOUtils;
 import org.eclipse.jst.server.jetty.core.internal.xml.Factory;
-import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server.Connector;
-import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server.Server;
-import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server.WebApp;
-import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.webapp.WebAppContext;
+import org.eclipse.jst.server.jetty.core.internal.xml.jetty7.server.Connector;
+import org.eclipse.jst.server.jetty.core.internal.xml.jetty7.server.Server;
+import org.eclipse.jst.server.jetty.core.internal.xml.jetty7.server.WebApp;
+import org.eclipse.jst.server.jetty.core.internal.xml.jetty7.webapp.WebAppContext;
 import org.xml.sax.SAXException;
 
 public class ServerInstance
@@ -196,7 +196,7 @@ public class ServerInstance
     private WebAppContext createContext(InputStream stream) throws IOException, SAXException
     {
         Factory webAppContextFactory = new Factory();
-        webAppContextFactory.setPackageName("org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.webapp");
+        webAppContextFactory.setPackageName("org.eclipse.jst.server.jetty.core.internal.xml.jetty70.webapp");
         WebAppContext context = (WebAppContext)webAppContextFactory.loadDocument(stream);
         webAppContexts.add(context);
         return context;

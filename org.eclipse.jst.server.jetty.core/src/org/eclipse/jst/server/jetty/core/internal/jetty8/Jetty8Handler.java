@@ -8,17 +8,17 @@
  * Contributors:
  *     Angelo Zerr <angelo.zerr@gmail.com> - Initial API and implementation 
  *******************************************************************************/
-package org.eclipse.jst.server.jetty.core.internal.jetty80;
+package org.eclipse.jst.server.jetty.core.internal.jetty8;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jst.server.jetty.core.JettyPlugin;
 import org.eclipse.jst.server.jetty.core.internal.IJettyVersionHandler;
 import org.eclipse.jst.server.jetty.core.internal.Messages;
-import org.eclipse.jst.server.jetty.core.internal.jetty70.Jetty70Handler;
+import org.eclipse.jst.server.jetty.core.internal.jetty7.Jetty7Handler;
 import org.eclipse.wst.server.core.IModule;
 
-public class Jetty80Handler extends Jetty70Handler
+public class Jetty8Handler extends Jetty7Handler
 {
 
     /**

@@ -8,7 +8,7 @@
  * Contributors:
  *     Angelo Zerr <angelo.zerr@gmail.com> - Initial API and implementation 
  *******************************************************************************/
-package org.eclipse.jst.server.jetty.core.internal.jetty70;
+package org.eclipse.jst.server.jetty.core.internal.jetty7;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
@@ -22,7 +22,7 @@ import org.eclipse.jst.server.jetty.core.internal.Messages;
 import org.eclipse.jst.server.jetty.core.internal.util.JettyVersionHelper;
 import org.eclipse.wst.server.core.IModule;
 
-public class Jetty70Handler extends JettyHandler
+public class Jetty7Handler extends JettyHandler
 {
 
     protected static final IStatus startJarRequiredInstallDirStatus = new Status(IStatus.ERROR,JettyPlugin.PLUGIN_ID,0,
