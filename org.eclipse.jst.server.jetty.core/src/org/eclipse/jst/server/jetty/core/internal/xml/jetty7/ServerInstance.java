@@ -196,7 +196,7 @@ public class ServerInstance
     private WebAppContext createContext(InputStream stream) throws IOException, SAXException
     {
         Factory webAppContextFactory = new Factory();
-        webAppContextFactory.setPackageName("org.eclipse.jst.server.jetty.core.internal.xml.jetty70.webapp");
+        webAppContextFactory.setPackageName("org.eclipse.jst.server.jetty.core.internal.xml.jetty7.webapp");
         WebAppContext context = (WebAppContext)webAppContextFactory.loadDocument(stream);
         webAppContexts.add(context);
         return context;

@@ -20,7 +20,7 @@
        name="%runtimeTypeJetty7Label"
        description="%runtimeTypeJetty7Description"
        vendor="%jetty"
-       version="7.0"
+       version="7.x"
        class="org.eclipse.jst.server.jetty.core.internal.JettyRuntime">
        <moduleType
          types="jst.web"
@@ -35,7 +35,7 @@
        name="%runtimeTypeJetty8Label"
        description="%runtimeTypeJetty8Description"
        vendor="%jetty"
-       version="8.0"
+       version="8.x"
        class="org.eclipse.jst.server.jetty.core.internal.JettyRuntime">
        <moduleType
          types="jst.web"
@@ -158,7 +158,7 @@
     <supported>
       <runtime-component
          id="org.eclipse.jst.server.jetty"
-         version="7.0"/>
+         version="7.x"/>
       <facet
          id="jst.web"
          version="2.2,2.3,2.4,2.5"/>
@@ -170,7 +170,7 @@
     <supported>
       <runtime-component
          id="org.eclipse.jst.server.jetty"
-         version="8.0"/>
+         version="8.x"/>
       <facet
          id="jst.web"
          version="2.2,2.3,2.4,2.5,3.0"/>

@@ -34,15 +34,15 @@ public class JettyVersionManager
 
     public enum JettyVersion
     {
-        V70, V80
+        V7, V8
     }
 
     private JettyVersionManager()
     {
         // Jetty 7.0
-        register(JettyVersion.V70,Jetty7Provider.INSTANCE);
+        register(JettyVersion.V7,Jetty7Provider.INSTANCE);
         // Jetty 8.0, same than Jetty7.0
-        register(JettyVersion.V80,Jetty8Provider.INSTANCE);
+        register(JettyVersion.V8,Jetty8Provider.INSTANCE);
     }
 
     public void register(JettyVersion version, IJettyVersionProvider versionProvider)
