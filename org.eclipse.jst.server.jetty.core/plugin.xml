@@ -257,7 +257,7 @@
     </runtimeFacetMapping>
   </extension>
           
-  <extension point="org.eclipse.wst.server.core.installableRuntimes">
+  <!--extension point="org.eclipse.wst.server.core.installableRuntimes">
     <runtime
       id="org.eclipse.jst.server.jetty.runtime.71"
       licenseUrl="http://www.apache.org/licenses/LICENSE-2.0.txt"
@@ -275,6 +275,6 @@
       archiveUrl="http://download.eclipse.org/jetty/8.0.0.M2/dist/jetty-distribution-8.0.0.M2.zip"
       archivePath="jetty-distribution-8.0.0.M2" />
 
-  </extension>          
+  </extension-->          
           
 </plugin>    
