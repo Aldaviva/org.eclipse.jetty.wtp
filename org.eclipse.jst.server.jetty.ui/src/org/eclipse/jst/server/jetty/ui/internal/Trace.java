@@ -11,17 +11,19 @@
  *******************************************************************************/
 package org.eclipse.jst.server.jetty.ui.internal;
 
+import org.eclipse.jst.server.jetty.core.JettyPlugin;
+
 /**
  * Helper class to route trace output.
  */
 public class Trace
 {
     public static final byte CONFIG = 0;
-    public static final byte WARNING = 1;
-    public static final byte SEVERE = 2;
-    public static final byte FINEST = 3;
-    public static final byte FINER = 4;
-
+    public static final byte PERF = 1;
+    public static final byte WARNING = 2;
+    public static final byte SEVERE = 3;
+    public static final byte FINEST = 4;
+    
     /**
      * Trace constructor comment.
      */
@@ -61,5 +63,15 @@ public class Trace
         System.out.println(JettyUIPlugin.__PLUGIN_ID + " " + s);
         if (t != null)
             t.printStackTrace();
+    }
+    
+    /**
+     * Gets state of debug flag for the plug-in.
+     * 
+     * @return true if tracing is enabled
+     */
+    public static boolean isTraceEnabled()
+    {
+        return JettyUIPlugin.getDefault().isDebugging();
     }
 }

@@ -76,8 +76,8 @@ public class JettyRuntimeComposite extends Composite
     protected Combo _combo;
     protected List<IVMInstall> _installedJREs;
     protected String[] _jreNames;
-    protected IInstallableRuntime _ir;
-    protected Job _installRuntimeJob;
+    protected IInstallableRuntime _installableRuntime;
+    protected Job _installableRuntimeJob;
     protected IJobChangeListener _jobListener;
     protected Label _installLabel;
     protected Button _installButton;
@@ -117,17 +117,17 @@ public class JettyRuntimeComposite extends Composite
 
         if (_runtimeWC == null)
         {
-            _ir = null;
+            _installableRuntime = null;
             _installButton.setEnabled(false);
             _installLabel.setText("");
         }
         else
         {
-            _ir = ServerPlugin.findInstallableRuntime(_runtimeWC.getRuntimeType().getId());
-            if (_ir != null)
+            _installableRuntime = ServerPlugin.findInstallableRuntime(_runtimeWC.getRuntimeType().getId());
+            if (_installableRuntime != null)
             {
                 _installButton.setEnabled(true);
-                _installLabel.setText(_ir.getName());
+                _installLabel.setText(_installableRuntime.getName());
             }
         }
 
@@ -138,9 +138,9 @@ public class JettyRuntimeComposite extends Composite
     public void dispose()
     {
         super.dispose();
-        if (_installRuntimeJob != null)
+        if (_installableRuntimeJob != null)
         {
-            _installRuntimeJob.removeJobChangeListener(_jobListener);
+            _installableRuntimeJob.removeJobChangeListener(_jobListener);
         }
     }
 
@@ -149,6 +149,8 @@ public class JettyRuntimeComposite extends Composite
      */
     protected void createControl()
     {
+        Trace.trace(Trace.CONFIG,"RuntimeComposite createControl()");
+        
         GridLayout layout = new GridLayout();
         layout.numColumns = 2;
         setLayout(layout);
@@ -219,7 +221,7 @@ public class JettyRuntimeComposite extends Composite
                 String license = null;
                 try
                 {
-                    license = _ir.getLicense(new NullProgressMonitor());
+                    license = _installableRuntime.getLicense(new NullProgressMonitor());
                 }
                 catch (CoreException e)
                 {
@@ -247,7 +249,7 @@ public class JettyRuntimeComposite extends Composite
                 {
                     // ir.install(new Path(selectedDirectory));
                     final IPath installPath = new Path(selectedDirectory);
-                    _installRuntimeJob = new Job("Installing server runtime environment")
+                    _installableRuntimeJob = new Job("Installing server runtime environment")
                     {
                         public boolean belongsTo(Object family)
                         {
@@ -258,7 +260,7 @@ public class JettyRuntimeComposite extends Composite
                         {
                             try
                             {
-                                _ir.install(installPath,monitor);
+                                _installableRuntime.install(installPath,monitor);
                             }
                             catch (CoreException ce)
                             {
@@ -274,8 +276,8 @@ public class JettyRuntimeComposite extends Composite
                     {
                         public void done(IJobChangeEvent event)
                         {
-                            _installRuntimeJob.removeJobChangeListener(this);
-                            _installRuntimeJob = null;
+                            _installableRuntimeJob.removeJobChangeListener(this);
+                            _installableRuntimeJob = null;
                             Display.getDefault().asyncExec(new Runnable()
                             {
                                 public void run()
@@ -288,8 +290,8 @@ public class JettyRuntimeComposite extends Composite
                             });
                         }
                     };
-                    _installRuntimeJob.addJobChangeListener(_jobListener);
-                    _installRuntimeJob.schedule();
+                    _installableRuntimeJob.addJobChangeListener(_jobListener);
+                    _installableRuntimeJob.schedule();
                 }
             }
         });

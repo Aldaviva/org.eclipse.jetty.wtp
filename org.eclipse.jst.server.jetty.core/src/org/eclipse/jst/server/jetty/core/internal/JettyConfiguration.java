@@ -157,7 +157,7 @@ public abstract class JettyConfiguration implements IJettyConfiguration, IJettyC
         
         if (Trace.isTraceEnabled())
         {
-            Trace.trace(Trace.FINER,"Backup and publish");
+            Trace.trace(Trace.FINEST,"Backup and publish");
         }
         
         monitor = ProgressUtil.getMonitorFor(monitor);

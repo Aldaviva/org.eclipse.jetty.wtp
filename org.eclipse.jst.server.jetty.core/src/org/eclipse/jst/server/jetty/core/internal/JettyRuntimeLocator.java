@@ -124,7 +124,7 @@ public class JettyRuntimeLocator extends RuntimeLocatorDelegate
                 if (status == null || status.getSeverity() != IStatus.ERROR)
                     return runtime;
 
-                Trace.trace(Trace.FINER,"False runtime found at " + dir.getAbsolutePath() + ": " + status.getMessage());
+                Trace.trace(Trace.FINEST,"False runtime found at " + dir.getAbsolutePath() + ": " + status.getMessage());
             }
             catch (Exception e)
             {

@@ -22,13 +22,13 @@ import org.eclipse.jst.server.jetty.core.JettyPlugin;
 public class Trace
 {
     public static final byte CONFIG = 0;
-    public static final byte WARNING = 1;
-    public static final byte SEVERE = 2;
-    public static final byte FINEST = 3;
-    public static final byte FINER = 4;
+    public static final byte PERF = 1;
+    public static final byte WARNING = 2;
+    public static final byte SEVERE = 3;
+    public static final byte FINEST = 4;
 
     private static final String[] levelNames = new String[]
-    { "CONFIG   ", "WARNING  ", "SEVERE   ", "FINER    ", "FINEST   " };
+    { "CONFIG   ", "PERF     ", "WARNING  ", "SEVERE   ", "FINER    ", "FINEST   " };
     private static final String spacer = "                                   ";
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy HH:mm.ss.SSS");

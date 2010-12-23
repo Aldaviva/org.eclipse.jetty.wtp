@@ -36,7 +36,7 @@ public class JettyLaunchableAdapterDelegate extends LaunchableAdapterDelegate
      */
     public Object getLaunchable(IServer server, IModuleArtifact moduleObject)
     {
-        Trace.trace(Trace.FINER,"JettyLaunchableAdapter " + server + "-" + moduleObject);
+        Trace.trace(Trace.FINEST,"JettyLaunchableAdapter " + server + "-" + moduleObject);
         
         if (server.getAdapter(JettyServer.class) == null)
         {
@@ -57,7 +57,7 @@ public class JettyLaunchableAdapterDelegate extends LaunchableAdapterDelegate
         {
             URL url = ((IURLProvider)server.loadAdapter(IURLProvider.class,null)).getModuleRootURL(moduleObject.getModule());
 
-            Trace.trace(Trace.FINER,"root: " + url);
+            Trace.trace(Trace.FINEST,"root: " + url);
 
             if (moduleObject instanceof Servlet)
             {
@@ -76,7 +76,7 @@ public class JettyLaunchableAdapterDelegate extends LaunchableAdapterDelegate
             {
                 WebResource resource = (WebResource)moduleObject;
                 String path = resource.getPath().toString();
-                Trace.trace(Trace.FINER,"path: " + path);
+                Trace.trace(Trace.FINEST,"path: " + path);
                 if (path != null && path.startsWith("/") && path.length() > 0)
                     path = path.substring(1);
                 if (path != null && path.length() > 0)

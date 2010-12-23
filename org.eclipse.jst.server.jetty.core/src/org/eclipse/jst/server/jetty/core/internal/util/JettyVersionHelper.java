@@ -148,7 +148,7 @@ public class JettyVersionHelper implements JettyConstants
     public static IStatus createJettyInstanceDirectory(IPath baseDir)
     {
         if (Trace.isTraceEnabled())
-            Trace.trace(Trace.FINER,"Creating runtime directory at " + baseDir.toOSString());
+            Trace.trace(Trace.CONFIG,"Creating runtime directory at " + baseDir.toOSString());
         File temp = baseDir.append("contexts").toFile();
         if (!temp.exists())
             temp.mkdirs();

@@ -357,7 +357,7 @@ public class JettyServerBehaviour extends ServerBehaviourDelegate implements IJe
         try
         {
             if (Trace.isTraceEnabled())
-                Trace.trace(Trace.FINER,"Stopping Jetty");
+                Trace.trace(Trace.FINEST,"Stopping Jetty");
             if (state != IServer.STATE_STOPPED)
                 setServerState(IServer.STATE_STOPPING);
 
@@ -394,7 +394,7 @@ public class JettyServerBehaviour extends ServerBehaviourDelegate implements IJe
         {
             setServerState(IServer.STATE_STOPPING);
             if (Trace.isTraceEnabled())
-                Trace.trace(Trace.FINER,"Killing the Jetty process");
+                Trace.trace(Trace.FINEST,"Killing the Jetty process");
             ILaunch launch = getServer().getLaunch();
             if (launch != null)
             {
