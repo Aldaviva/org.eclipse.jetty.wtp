@@ -43,6 +43,7 @@ public class JettyServerLocator extends ServerLocatorDelegate
                 }
             }
         };
+        
         JettyRuntimeLocator.searchForRuntimes2(null,listener2,monitor);
     }
 

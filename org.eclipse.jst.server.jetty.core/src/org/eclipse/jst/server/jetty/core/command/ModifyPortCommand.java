@@ -22,9 +22,9 @@ import org.eclipse.wst.server.core.ServerPort;
  */
 public class ModifyPortCommand extends ConfigurationCommand
 {
-    protected String id;
-    protected int port;
-    protected int oldPort;
+    protected String _id;
+    protected int _port;
+    protected int _oldPort;
 
     /**
      * ModifyPortCommand constructor.
@@ -39,8 +39,8 @@ public class ModifyPortCommand extends ConfigurationCommand
     public ModifyPortCommand(IJettyConfigurationWorkingCopy configuration, String id, int port)
     {
         super(configuration,Messages.configurationEditorActionModifyPort);
-        this.id = id;
-        this.port = port;
+        this._id = id;
+        this._port = port;
     }
 
     /**
@@ -49,16 +49,19 @@ public class ModifyPortCommand extends ConfigurationCommand
     public void execute()
     {
         // find old port number
-        Iterator iterator = configuration.getServerPorts().iterator();
+        Iterator<ServerPort> iterator = getWorkingCopy().getServerPorts().iterator();
         while (iterator.hasNext())
         {
-            ServerPort temp = (ServerPort)iterator.next();
-            if (id.equals(temp.getId()))
-                oldPort = temp.getPort();
+            ServerPort temp = iterator.next();
+            
+            if (_id.equals(temp.getId()))
+            {
+                _oldPort = temp.getPort();
+            }
         }
 
         // make the change
-        configuration.modifyServerPort(id,port);
+        getWorkingCopy().modifyServerPort(_id,_port);
     }
 
     /**
@@ -66,6 +69,6 @@ public class ModifyPortCommand extends ConfigurationCommand
      */
     public void undo()
     {
-        configuration.modifyServerPort(id,oldPort);
+        getWorkingCopy().modifyServerPort(_id,_oldPort);
     }
 }

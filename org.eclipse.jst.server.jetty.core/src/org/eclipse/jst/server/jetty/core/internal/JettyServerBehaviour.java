@@ -64,15 +64,17 @@ import org.eclipse.wst.server.core.util.SocketUtil;
 public class JettyServerBehaviour extends ServerBehaviourDelegate implements IJettyServerBehaviour, IModulePublishHelper
 {
 
-    private static final String ATTR_STOP = "stop-server";
+    private static final String __ATTR_STOP = "stop-server";
 
-    private static final String[] JMX_EXCLUDE_ARGS = new String[]
-    { "-Dcom.sun.management.jmxremote", "-Dcom.sun.management.jmxremote.port=", "-Dcom.sun.management.jmxremote.ssl=",
-            "-Dcom.sun.management.jmxremote.authenticate=" };
+    private static final String[] __JMX_EXCLUDE_ARGS = new String[]{ 
+        "-Dcom.sun.management.jmxremote", 
+        "-Dcom.sun.management.jmxremote.port=", 
+        "-Dcom.sun.management.jmxremote.ssl=",
+        "-Dcom.sun.management.jmxremote.authenticate=" };
 
     // the thread used to ping the server to check for startup
-    protected transient PingThread ping = null;
-    protected transient IDebugEventSetListener processListener;
+    protected transient PingThread _ping = null;
+    protected transient IDebugEventSetListener _processListener;
 
     /**
      * JettyServerBehaviour.
@@ -90,7 +92,9 @@ public class JettyServerBehaviour extends ServerBehaviourDelegate implements IJe
     public JettyRuntime getJettyRuntime()
     {
         if (getServer().getRuntime() == null)
+        {
             return null;
+        }
 
         return (JettyRuntime)getServer().getRuntime().loadAdapter(JettyRuntime.class,null);
     }
@@ -211,13 +215,18 @@ public class JettyServerBehaviour extends ServerBehaviourDelegate implements IJe
     protected static String renderCommandLine(String[] commandLine, String separator)
     {
         if (commandLine == null || commandLine.length < 1)
+        {
             return "";
+        }
+        
         StringBuffer buf = new StringBuffer(commandLine[0]);
+        
         for (int i = 1; i < commandLine.length; i++)
         {
             buf.append(separator);
             buf.append(commandLine[i]);
         }
+        
         return buf.toString();
     }
 
@@ -235,14 +244,19 @@ public class JettyServerBehaviour extends ServerBehaviourDelegate implements IJe
      */
     public void setupLaunch(ILaunch launch, String launchMode, IProgressMonitor monitor) throws CoreException
     {
-        if (StringUtils.isTrue(launch.getLaunchConfiguration().getAttribute(ATTR_STOP,StringUtils.FALSE)))
+        if (StringUtils.isTrue(launch.getLaunchConfiguration().getAttribute(__ATTR_STOP,StringUtils.FALSE)))
+        {
             return;
+        }
         // if (getJettyRuntime() == null)
         // throw new CoreException();
 
         IStatus status = getJettyRuntime().validate();
+        
         if (status != null && status.getSeverity() == IStatus.ERROR)
+        {
             throw new CoreException(status);
+        }
 
         // setRestartNeeded(false);
         IJettyConfiguration configuration = getJettyConfiguration();
@@ -308,7 +322,7 @@ public class JettyServerBehaviour extends ServerBehaviourDelegate implements IJe
             int port = configuration.getMainPort().getPort();
             if (port != 80)
                 url += ":" + port;
-            ping = new PingThread(getServer(),url,-1,this);
+            _ping = new PingThread(getServer(),url,-1,this);
         }
         catch (Exception e)
         {
@@ -353,13 +367,13 @@ public class JettyServerBehaviour extends ServerBehaviourDelegate implements IJe
             String args = renderCommandLine(getRuntimeProgramArguments(false)," ");
             // Remove JMX arguments if present
             String existingVMArgs = wc.getAttribute(IJavaLaunchConfigurationConstants.ATTR_VM_ARGUMENTS,(String)null);
-            if (existingVMArgs.indexOf(JMX_EXCLUDE_ARGS[0]) >= 0)
+            if (existingVMArgs.indexOf(__JMX_EXCLUDE_ARGS[0]) >= 0)
             {
-                wc.setAttribute(IJavaLaunchConfigurationConstants.ATTR_VM_ARGUMENTS,mergeArguments(existingVMArgs,new String[] {},JMX_EXCLUDE_ARGS,false));
+                wc.setAttribute(IJavaLaunchConfigurationConstants.ATTR_VM_ARGUMENTS,mergeArguments(existingVMArgs,new String[] {},__JMX_EXCLUDE_ARGS,false));
             }
             wc.setAttribute(IJavaLaunchConfigurationConstants.ATTR_PROGRAM_ARGUMENTS,args);
             wc.setAttribute("org.eclipse.debug.ui.private",true);
-            wc.setAttribute(ATTR_STOP,"true");
+            wc.setAttribute(__ATTR_STOP,"true");
             wc.launch(ILaunchManager.RUN_MODE,new NullProgressMonitor());
         }
         catch (Exception e)
@@ -599,12 +613,14 @@ public class JettyServerBehaviour extends ServerBehaviourDelegate implements IJe
      * @param cp
      * @param entry
      */
-    public static void replaceJREContainer(List cp, IRuntimeClasspathEntry entry)
+    public static void replaceJREContainer(List<IRuntimeClasspathEntry> cp, IRuntimeClasspathEntry entry)
     {
         int size = cp.size();
+        
         for (int i = 0; i < size; i++)
         {
-            IRuntimeClasspathEntry entry2 = (IRuntimeClasspathEntry)cp.get(i);
+            IRuntimeClasspathEntry entry2 = cp.get(i);
+            
             if (entry2.getPath().uptoSegment(2).isPrefixOf(entry.getPath()))
             {
                 cp.set(i,entry);
@@ -621,12 +637,12 @@ public class JettyServerBehaviour extends ServerBehaviourDelegate implements IJe
      * @param cp
      * @param entry
      */
-    public static void mergeClasspath(List cp, IRuntimeClasspathEntry entry)
+    public static void mergeClasspath(List<IRuntimeClasspathEntry> cp, IRuntimeClasspathEntry entry)
     {
-        Iterator iterator = cp.iterator();
+        Iterator<IRuntimeClasspathEntry> iterator = cp.iterator();
         while (iterator.hasNext())
         {
-            IRuntimeClasspathEntry entry2 = (IRuntimeClasspathEntry)iterator.next();
+            IRuntimeClasspathEntry entry2 = iterator.next();
 
             if (entry2.getPath().equals(entry.getPath()))
                 return;
@@ -708,17 +724,23 @@ public class JettyServerBehaviour extends ServerBehaviourDelegate implements IJe
         IJettyRuntime runtime = getJettyRuntime();
         IVMInstall vmInstall = runtime.getVMInstall();
         if (vmInstall != null)
+        {
             workingCopy.setAttribute(IJavaLaunchConfigurationConstants.ATTR_JRE_CONTAINER_PATH,JavaRuntime.newJREContainerPath(vmInstall).toPortableString());
+        }
 
         // update classpath
         IRuntimeClasspathEntry[] originalClasspath = JavaRuntime.computeUnresolvedRuntimeClasspath(workingCopy);
         int size = originalClasspath.length;
         List<IRuntimeClasspathEntry> oldCp = new ArrayList<IRuntimeClasspathEntry>(originalClasspath.length + 2);
+        
         for (int i = 0; i < size; i++)
+        {
             oldCp.add(originalClasspath[i]);
+        }
 
         Collection<IRuntimeClasspathEntry> cp2 = runtime.getRuntimeClasspath(getRuntimeBaseDirectory());
         Iterator<IRuntimeClasspathEntry> iterator = cp2.iterator();
+        
         while (iterator.hasNext())
         {
             IRuntimeClasspathEntry entry = (IRuntimeClasspathEntry)iterator.next();
@@ -730,12 +752,14 @@ public class JettyServerBehaviour extends ServerBehaviourDelegate implements IJe
             try
             {
                 String typeId = vmInstall.getVMInstallType().getId();
+                
                 replaceJREContainer(oldCp,JavaRuntime.newRuntimeContainerClasspathEntry(
                         new Path(JavaRuntime.JRE_CONTAINER).append(typeId).append(vmInstall.getName()),IRuntimeClasspathEntry.BOOTSTRAP_CLASSES));
+                
             }
             catch (Exception e)
             {
-                // ignore
+                JettyPlugin.log(e);
             }
 
             IPath jrePath = new Path(vmInstall.getInstallLocation().getAbsolutePath());
@@ -747,6 +771,7 @@ public class JettyServerBehaviour extends ServerBehaviourDelegate implements IJe
                     IRuntimeClasspathEntry toolsJar = JavaRuntime.newArchiveRuntimeClasspathEntry(toolsPath);
                     // Search for index to any existing tools.jar entry
                     int toolsIndex;
+                    
                     for (toolsIndex = 0; toolsIndex < oldCp.size(); toolsIndex++)
                     {
                         IRuntimeClasspathEntry entry = (IRuntimeClasspathEntry)oldCp.get(toolsIndex);
@@ -758,15 +783,20 @@ public class JettyServerBehaviour extends ServerBehaviourDelegate implements IJe
                     // If existing tools.jar found, replace in case it's
                     // different. Otherwise add.
                     if (toolsIndex < oldCp.size())
+                    {
                         oldCp.set(toolsIndex,toolsJar);
+                    }
                     else
+                    {
                         mergeClasspath(oldCp,toolsJar);
+                    }
                 }
             }
         }
 
         iterator = oldCp.iterator();
         List<String> list = new ArrayList<String>();
+        
         while (iterator.hasNext())
         {
             IRuntimeClasspathEntry entry = iterator.next();
@@ -786,10 +816,10 @@ public class JettyServerBehaviour extends ServerBehaviourDelegate implements IJe
 
     protected void addProcessListener(final IProcess newProcess)
     {
-        if (processListener != null || newProcess == null)
+        if (_processListener != null || newProcess == null)
             return;
 
-        processListener = new IDebugEventSetListener()
+        _processListener = new IDebugEventSetListener()
         {
             public void handleDebugEvents(DebugEvent[] events)
             {
@@ -806,7 +836,8 @@ public class JettyServerBehaviour extends ServerBehaviourDelegate implements IJe
                 }
             }
         };
-        DebugPlugin.getDefault().addDebugEventListener(processListener);
+        
+        DebugPlugin.getDefault().addDebugEventListener(_processListener);
     }
 
     protected void setServerStarted()
@@ -816,15 +847,15 @@ public class JettyServerBehaviour extends ServerBehaviourDelegate implements IJe
 
     protected void stopImpl()
     {
-        if (ping != null)
+        if (_ping != null)
         {
-            ping.stop();
-            ping = null;
+            _ping.stop();
+            _ping = null;
         }
-        if (processListener != null)
+        if (_processListener != null)
         {
-            DebugPlugin.getDefault().removeDebugEventListener(processListener);
-            processListener = null;
+            DebugPlugin.getDefault().removeDebugEventListener(_processListener);
+            _processListener = null;
         }
         setServerState(IServer.STATE_STOPPED);
     }

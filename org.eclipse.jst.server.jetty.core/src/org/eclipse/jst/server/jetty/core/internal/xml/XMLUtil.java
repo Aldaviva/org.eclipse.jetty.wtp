@@ -43,7 +43,7 @@ import org.xml.sax.SAXException;
  */
 public class XMLUtil
 {
-    private static DocumentBuilder documentBuilder;
+    private static DocumentBuilder _documentBuilder;
 
     /**
      * XMLUtil constructor comment.
@@ -55,7 +55,7 @@ public class XMLUtil
 
     public static DocumentBuilder getDocumentBuilder()
     {
-        if (documentBuilder == null)
+        if (_documentBuilder == null)
             try
             {
                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -72,8 +72,8 @@ public class XMLUtil
                     // Ignore if feature isn't supported
                 }
                 // factory.setAttribute("http://apache.org/xml/features/nonvalidating/load-external-dtd", new Boolean(false));
-                documentBuilder = factory.newDocumentBuilder();
-                documentBuilder.setEntityResolver(new EntityResolver()
+                _documentBuilder = factory.newDocumentBuilder();
+                _documentBuilder.setEntityResolver(new EntityResolver()
                 {
                     public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException
                     {
@@ -86,7 +86,7 @@ public class XMLUtil
                 Trace.trace(Trace.SEVERE,"Error creating document builder");
             }
 
-        return documentBuilder;
+        return _documentBuilder;
     }
 
     /**

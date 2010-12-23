@@ -90,8 +90,7 @@ public class FileUtil
                 }
                 else if (current.isDirectory())
                 {
-                    monitor.subTask(NLS.bind(Messages.copyingTask,new String[]
-                    { fromFile, toFile }));
+                    monitor.subTask(NLS.bind(Messages.copyingTask,new String[] { fromFile, toFile }));
                     copyDirectory(fromFile,toFile,ProgressUtil.getSubMonitorFor(monitor,50));
                 }
                 if (monitor.isCanceled())
@@ -145,7 +144,7 @@ public class FileUtil
             }
             catch (Exception ex)
             {
-                // ignore
+                JettyPlugin.log(ex);
             }
             try
             {
@@ -154,7 +153,7 @@ public class FileUtil
             }
             catch (Exception ex)
             {
-                // ignore
+                JettyPlugin.log(ex);
             }
         }
     }
@@ -309,8 +308,7 @@ public class FileUtil
                     }
                     else if (current.isDirectory())
                     {
-                        monitor.subTask(NLS.bind(Messages.copyingTask,new String[]
-                        { fromFile, toFile }));
+                        monitor.subTask(NLS.bind(Messages.copyingTask,new String[] { fromFile, toFile }));
                         smartCopyDirectory(fromFile,toFile,ProgressUtil.getSubMonitorFor(monitor,dw));
                     }
                 }

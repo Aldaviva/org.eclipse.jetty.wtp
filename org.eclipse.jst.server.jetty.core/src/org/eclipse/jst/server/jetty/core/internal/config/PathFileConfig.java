@@ -17,22 +17,22 @@ import org.eclipse.core.runtime.IPath;
 public class PathFileConfig
 {
 
-    private File file;
-    private IPath path;
+    private File _file;
+    private IPath _path;
 
     public PathFileConfig(File file, IPath path)
     {
-        this.file = file;
-        this.path = path;
+        this._file = file;
+        this._path = path;
     }
 
     public File getFile()
     {
-        return file;
+        return _file;
     }
 
     public IPath getPath()
     {
-        return path;
+        return _path;
     }
 }

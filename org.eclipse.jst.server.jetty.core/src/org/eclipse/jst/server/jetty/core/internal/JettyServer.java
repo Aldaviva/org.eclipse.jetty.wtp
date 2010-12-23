@@ -42,15 +42,15 @@ import org.eclipse.wst.server.core.model.ServerDelegate;
 public class JettyServer extends ServerDelegate implements IJettyServer, IJettyServerWorkingCopy
 {
 
-    private static final ServerPort[] EMPTY_SERVER_PORTS = new ServerPort[0];
-    public static final String PROPERTY_SECURE = "secure";
-    public static final String PROPERTY_DEBUG = "debug";
+    private static final ServerPort[] _EMPTY_SERVER_PORTS = new ServerPort[0];
+    public static final String __PROPERTY_SECURE = "secure";
+    public static final String __PROPERTY_DEBUG = "debug";
 
-    private static final String JST_WEB_MODULETYPE = "jst.web";
+    private static final String __JST_WEB_MODULETYPE = "jst.web";
 
-    private static final IModule[] EMPTY_MODULES = new IModule[0];
-    protected transient IJettyConfiguration configuration;
-    protected transient IJettyVersionHandler versionHandler;
+    private static final IModule[] __EMPTY_MODULES = new IModule[0];
+    protected transient IJettyConfiguration _configuration;
+    protected transient IJettyVersionHandler _versionHandler;
 
     /**
      * JettyServer.
@@ -68,7 +68,9 @@ public class JettyServer extends ServerDelegate implements IJettyServer, IJettyS
     public JettyRuntime getJettyRuntime()
     {
         if (getServer().getRuntime() == null)
+        {
             return null;
+        }
 
         return (JettyRuntime)getServer().getRuntime().loadAdapter(JettyRuntime.class,null);
     }
@@ -80,19 +82,21 @@ public class JettyServer extends ServerDelegate implements IJettyServer, IJettyS
      */
     public IJettyVersionHandler getJettyVersionHandler()
     {
-        if (versionHandler == null)
+        if (_versionHandler == null)
         {
             if (getServer().getRuntime() == null || getJettyRuntime() == null)
+            {
                 return null;
+            }
 
-            versionHandler = getJettyRuntime().getVersionHandler();
+            _versionHandler = getJettyRuntime().getVersionHandler();
         }
-        return versionHandler;
+        return _versionHandler;
     }
 
     public IJettyConfiguration getJettyConfiguration() throws CoreException
     {
-        if (configuration == null)
+        if (_configuration == null)
         {
             IFolder folder = getServer().getServerConfiguration();
             if (folder == null || !folder.exists())
@@ -110,25 +114,25 @@ public class JettyServer extends ServerDelegate implements IJettyServer, IJettyS
             }
 
             String id = getServer().getServerType().getId();
-            configuration = JettyPlugin.getJettyConfiguration(id,folder);
+            _configuration = JettyPlugin.getJettyConfiguration(id,folder);
             try
             {
-                configuration.load(folder,getRuntimeBaseDirectory(),null);
+                _configuration.load(folder,getRuntimeBaseDirectory(),null);
             }
             catch (CoreException ce)
             {
                 // ignore
-                configuration = null;
+                _configuration = null;
                 throw ce;
             }
         }
-        return configuration;
+        return _configuration;
     }
 
     @Override
     public void configurationChanged()
     {
-        configuration = null;
+        _configuration = null;
     }
 
     @Override
@@ -136,22 +140,22 @@ public class JettyServer extends ServerDelegate implements IJettyServer, IJettyS
     {
         if (runtime == null)
         {
-            configuration = null;
+            _configuration = null;
             return;
         }
         IPath path = runtime.getLocation();
         String id = getServer().getServerType().getId();
         IPath runtimeBaseDirectory = getRuntimeBaseDirectory();
         IFolder folder = getServer().getServerConfiguration();
-        configuration = JettyPlugin.getJettyConfiguration(id,folder);
+        _configuration = JettyPlugin.getJettyConfiguration(id,folder);
         try
         {
-            configuration.importFromPath(path,runtimeBaseDirectory,isTestEnvironment(),monitor);
+            _configuration.importFromPath(path,runtimeBaseDirectory,isTestEnvironment(),monitor);
         }
         catch (CoreException ce)
         {
             // ignore
-            configuration = null;
+            _configuration = null;
             throw ce;
         }
     }
@@ -159,16 +163,16 @@ public class JettyServer extends ServerDelegate implements IJettyServer, IJettyS
     @Override
     public void saveConfiguration(IProgressMonitor monitor) throws CoreException
     {
-        if (configuration == null)
+        if (_configuration == null)
             return;
-        configuration.save(getServer().getServerConfiguration(),monitor);
+        _configuration.save(getServer().getServerConfiguration(),monitor);
     }
 
     @Override
     public ServerPort[] getServerPorts()
     {
         if (getServer().getServerConfiguration() == null)
-            return EMPTY_SERVER_PORTS;
+            return _EMPTY_SERVER_PORTS;
 
         try
         {
@@ -179,7 +183,7 @@ public class JettyServer extends ServerDelegate implements IJettyServer, IJettyS
         }
         catch (Exception e)
         {
-            return EMPTY_SERVER_PORTS;
+            return _EMPTY_SERVER_PORTS;
         }
     }
 
@@ -200,7 +204,7 @@ public class JettyServer extends ServerDelegate implements IJettyServer, IJettyS
      */
     public void setDebug(boolean b)
     {
-        setAttribute(PROPERTY_DEBUG,b);
+        setAttribute(__PROPERTY_DEBUG,b);
     }
 
     /**
@@ -211,7 +215,7 @@ public class JettyServer extends ServerDelegate implements IJettyServer, IJettyS
      */
     public void setSecure(boolean b)
     {
-        setAttribute(PROPERTY_SECURE,b);
+        setAttribute(__PROPERTY_SECURE,b);
     }
 
     /**
@@ -297,7 +301,7 @@ public class JettyServer extends ServerDelegate implements IJettyServer, IJettyS
             for (int i = 0; i < size; i++)
             {
                 IModule module = add[i];
-                if (!JST_WEB_MODULETYPE.equals(module.getModuleType().getId()))
+                if (!__JST_WEB_MODULETYPE.equals(module.getModuleType().getId()))
                     return new Status(IStatus.ERROR,JettyPlugin.PLUGIN_ID,0,Messages.errorWebModulesOnly,null);
 
                 if (getJettyVersionHandler() == null)
@@ -382,7 +386,7 @@ public class JettyServer extends ServerDelegate implements IJettyServer, IJettyS
 
         IModuleType moduleType = module[0].getModuleType();
 
-        if (module.length == 1 && moduleType != null && JST_WEB_MODULETYPE.equals(moduleType.getId()))
+        if (module.length == 1 && moduleType != null && __JST_WEB_MODULETYPE.equals(moduleType.getId()))
         {
             IWebModule webModule = (IWebModule)module[0].loadAdapter(IWebModule.class,null);
             if (webModule != null)
@@ -393,7 +397,7 @@ public class JettyServer extends ServerDelegate implements IJettyServer, IJettyS
                 return modules;
             }
         }
-        return EMPTY_MODULES;
+        return __EMPTY_MODULES;
     }
 
     /**
@@ -407,7 +411,7 @@ public class JettyServer extends ServerDelegate implements IJettyServer, IJettyS
     @Override
     public IModule[] getRootModules(IModule module) throws CoreException
     {
-        if (JST_WEB_MODULETYPE.equals(module.getModuleType().getId()))
+        if (__JST_WEB_MODULETYPE.equals(module.getModuleType().getId()))
         {
             IStatus status = canModifyModules(new IModule[]
             { module },null);
@@ -466,7 +470,7 @@ public class JettyServer extends ServerDelegate implements IJettyServer, IJettyS
      */
     public boolean isDebug()
     {
-        return getAttribute(PROPERTY_DEBUG,false);
+        return getAttribute(__PROPERTY_DEBUG,false);
     }
 
     /**
@@ -486,7 +490,7 @@ public class JettyServer extends ServerDelegate implements IJettyServer, IJettyS
      */
     public boolean isSecure()
     {
-        return getAttribute(PROPERTY_SECURE,false);
+        return getAttribute(__PROPERTY_SECURE,false);
     }
 
     public String getInstanceDirectory()

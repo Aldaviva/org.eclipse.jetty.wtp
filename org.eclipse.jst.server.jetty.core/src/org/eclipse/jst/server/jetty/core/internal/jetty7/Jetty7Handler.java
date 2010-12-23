@@ -25,16 +25,17 @@ import org.eclipse.wst.server.core.IModule;
 public class Jetty7Handler extends JettyHandler
 {
 
-    protected static final IStatus startJarRequiredInstallDirStatus = new Status(IStatus.ERROR,JettyPlugin.PLUGIN_ID,0,
+    protected static final IStatus __START_JAR_REQUIRED_STATUS = new Status(IStatus.ERROR,JettyPlugin.PLUGIN_ID,0,    
             Messages.startJarRequiredInstallDirStatus,null);
 
     public IStatus verifyInstallPath(IPath installPath)
     {
         IStatus result = JettyVersionHelper.checkJettyVersion(installPath);
+        
         if (result.getSeverity() == IStatus.CANCEL)
         {
             // TODO : search in a folder.
-            return startJarRequiredInstallDirStatus;
+            return __START_JAR_REQUIRED_STATUS;
         }
 
         return result;
@@ -52,8 +53,14 @@ public class Jetty7Handler extends JettyHandler
     public IStatus canAddModule(IModule module)
     {
         String version = module.getModuleType().getVersion();
-        if ("2.2".equals(version) || "2.3".equals(version) || "2.4".equals(version) || "2.5".equals(version))
+        
+        if ("2.2".equals(version) || 
+            "2.3".equals(version) || 
+            "2.4".equals(version) || 
+            "2.5".equals(version))
+        {
             return Status.OK_STATUS;
+        }
 
         return new Status(IStatus.ERROR,JettyPlugin.PLUGIN_ID,0,Messages.errorSpec70,null);
     }

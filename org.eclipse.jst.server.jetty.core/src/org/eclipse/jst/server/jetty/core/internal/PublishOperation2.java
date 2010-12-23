@@ -38,11 +38,11 @@ import org.eclipse.wst.server.core.util.PublishHelper;
  */
 public class PublishOperation2 extends PublishOperation
 {
-    protected JettyServerBehaviour server;
-    protected IModule[] module;
-    protected int kind;
-    protected int deltaKind;
-    private PublishHelper helper;
+    protected JettyServerBehaviour _server;
+    protected IModule[] _module;
+    protected int _kind;
+    protected int _deltaKind;
+    private PublishHelper _helper;
 
     /**
      * Construct the operation object to publish the specified module to the specified server.
@@ -59,20 +59,21 @@ public class PublishOperation2 extends PublishOperation
     public PublishOperation2(JettyServerBehaviour server, int kind, IModule[] module, int deltaKind)
     {
         super("Publish to server","Publish Web module to Jetty server");
-        this.server = server;
-        this.module = module;
-        this.kind = kind;
-        this.deltaKind = deltaKind;
+        
+        this._server = server;
+        this._module = module;
+        this._kind = kind;
+        this._deltaKind = deltaKind;
         IPath base = server.getRuntimeBaseDirectory();
         if (base != null)
         {
-            helper = new PublishHelper(base.append("temp").toFile());
+            _helper = new PublishHelper(base.append("temp").toFile());
         }
         else
         {
             // We are doomed without a base directory. However, allow the catastrophe
             // to occur elsewhere and hope for a useful error message.
-            helper = new PublishHelper(null);
+            _helper = new PublishHelper(null);
         }
     }
 
@@ -99,24 +100,24 @@ public class PublishOperation2 extends PublishOperation
     {
         List<IStatus> status = new ArrayList<IStatus>();
         // If parent web module
-        if (module.length == 1)
+        if (_module.length == 1)
         {
-            publishDir(module[0],status,monitor);
+            publishDir(_module[0],status,monitor);
         }
         // Else a child module
         else
         {
-            Properties p = server.loadModulePublishLocations();
+            Properties p = _server.loadModulePublishLocations();
 
             // Try to determine the URI for the child module
-            IWebModule webModule = (IWebModule)module[0].loadAdapter(IWebModule.class,monitor);
+            IWebModule webModule = (IWebModule)_module[0].loadAdapter(IWebModule.class,monitor);
             String childURI = null;
             if (webModule != null)
             {
-                childURI = webModule.getURI(module[1]);
+                childURI = webModule.getURI(_module[1]);
             }
             // Try to determine if child is binary
-            IJ2EEModule childModule = (IJ2EEModule)module[1].loadAdapter(IJ2EEModule.class,monitor);
+            IJ2EEModule childModule = (IJ2EEModule)_module[1].loadAdapter(IJ2EEModule.class,monitor);
             boolean isBinary = false;
             if (childModule != null)
             {
@@ -131,18 +132,18 @@ public class PublishOperation2 extends PublishOperation
             {
                 publishJar(childURI,p,status,monitor);
             }
-            server.saveModulePublishLocations(p);
+            _server.saveModulePublishLocations(p);
         }
         throwException(status);
-        server.setModulePublishState2(module,IServer.PUBLISH_STATE_NONE);
+        _server.setModulePublishState2(_module,IServer.PUBLISH_STATE_NONE);
     }
 
     private void publishDir(IModule module2, List status, IProgressMonitor monitor) throws CoreException
     {
-        IPath path = server.getModuleDeployDirectory(module2);
+        IPath path = _server.getModuleDeployDirectory(module2);
 
         // Remove if requested or if previously published and are now serving without publishing
-        if (kind == IServer.PUBLISH_CLEAN || deltaKind == ServerBehaviourDelegate.REMOVED || server.getJettyServer().isServeModulesWithoutPublish())
+        if (_kind == IServer.PUBLISH_CLEAN || _deltaKind == ServerBehaviourDelegate.REMOVED || _server.getJettyServer().isServeModulesWithoutPublish())
         {
             File f = path.toFile();
             if (f.exists())
@@ -151,34 +152,34 @@ public class PublishOperation2 extends PublishOperation
                 addArrayToList(status,stat);
             }
 
-            if (deltaKind == ServerBehaviourDelegate.REMOVED || server.getJettyServer().isServeModulesWithoutPublish())
+            if (_deltaKind == ServerBehaviourDelegate.REMOVED || _server.getJettyServer().isServeModulesWithoutPublish())
                 return;
         }
 
-        if (kind == IServer.PUBLISH_CLEAN || kind == IServer.PUBLISH_FULL)
+        if (_kind == IServer.PUBLISH_CLEAN || _kind == IServer.PUBLISH_FULL)
         {
-            IModuleResource[] mr = server.getResources(module);
-            IStatus[] stat = helper.publishFull(mr,path,monitor);
+            IModuleResource[] mr = _server.getResources(_module);
+            IStatus[] stat = _helper.publishFull(mr,path,monitor);
             addArrayToList(status,stat);
             return;
         }
 
-        IModuleResourceDelta[] delta = server.getPublishedResourceDelta(module);
+        IModuleResourceDelta[] delta = _server.getPublishedResourceDelta(_module);
 
         int size = delta.length;
         for (int i = 0; i < size; i++)
         {
-            IStatus[] stat = helper.publishDelta(delta[i],path,monitor);
+            IStatus[] stat = _helper.publishDelta(delta[i],path,monitor);
             addArrayToList(status,stat);
         }
     }
 
     private void publishJar(String jarURI, Properties p, List status, IProgressMonitor monitor) throws CoreException
     {
-        IPath path = server.getModuleDeployDirectory(module[0]);
+        IPath path = _server.getModuleDeployDirectory(_module[0]);
         boolean moving = false;
         // Get URI used for previous publish, if known
-        String oldURI = (String)p.get(module[1].getId());
+        String oldURI = (String)p.get(_module[1].getId());
         if (oldURI != null)
         {
             // If old URI found, detect if jar is moving or changing its name
@@ -190,7 +191,7 @@ public class PublishOperation2 extends PublishOperation
         // If we don't have a jar URI, make a guess so we have one if we need it
         if (jarURI == null)
         {
-            jarURI = "WEB-INF/lib/" + module[1].getName() + ".jar";
+            jarURI = "WEB-INF/lib/" + _module[1].getName() + ".jar";
         }
         IPath jarPath = path.append(jarURI);
         // Make our best determination of the path to the old jar
@@ -203,20 +204,20 @@ public class PublishOperation2 extends PublishOperation
         path = jarPath.removeLastSegments(1);
 
         // Remove if requested or if previously published and are now serving without publishing
-        if (moving || kind == IServer.PUBLISH_CLEAN || deltaKind == ServerBehaviourDelegate.REMOVED || server.getJettyServer().isServeModulesWithoutPublish())
+        if (moving || _kind == IServer.PUBLISH_CLEAN || _deltaKind == ServerBehaviourDelegate.REMOVED || _server.getJettyServer().isServeModulesWithoutPublish())
         {
             File file = oldJarPath.toFile();
             if (file.exists())
                 file.delete();
-            p.remove(module[1].getId());
+            p.remove(_module[1].getId());
 
-            if (deltaKind == ServerBehaviourDelegate.REMOVED || server.getJettyServer().isServeModulesWithoutPublish())
+            if (_deltaKind == ServerBehaviourDelegate.REMOVED || _server.getJettyServer().isServeModulesWithoutPublish())
                 return;
         }
-        if (!moving && kind != IServer.PUBLISH_CLEAN && kind != IServer.PUBLISH_FULL)
+        if (!moving && _kind != IServer.PUBLISH_CLEAN && _kind != IServer.PUBLISH_FULL)
         {
             // avoid changes if no changes to module since last publish
-            IModuleResourceDelta[] delta = server.getPublishedResourceDelta(module);
+            IModuleResourceDelta[] delta = _server.getPublishedResourceDelta(_module);
             if (delta == null || delta.length == 0)
                 return;
         }
@@ -225,18 +226,18 @@ public class PublishOperation2 extends PublishOperation
         if (!path.toFile().exists())
             path.toFile().mkdirs();
 
-        IModuleResource[] mr = server.getResources(module);
-        IStatus[] stat = helper.publishZip(mr,jarPath,monitor);
+        IModuleResource[] mr = _server.getResources(_module);
+        IStatus[] stat = _helper.publishZip(mr,jarPath,monitor);
         addArrayToList(status,stat);
-        p.put(module[1].getId(),jarURI);
+        p.put(_module[1].getId(),jarURI);
     }
 
     private void publishArchiveModule(String jarURI, Properties p, List status, IProgressMonitor monitor)
     {
-        IPath path = server.getModuleDeployDirectory(module[0]);
+        IPath path = _server.getModuleDeployDirectory(_module[0]);
         boolean moving = false;
         // Get URI used for previous publish, if known
-        String oldURI = (String)p.get(module[1].getId());
+        String oldURI = (String)p.get(_module[1].getId());
         if (oldURI != null)
         {
             // If old URI found, detect if jar is moving or changing its name
@@ -248,7 +249,7 @@ public class PublishOperation2 extends PublishOperation
         // If we don't have a jar URI, make a guess so we have one if we need it
         if (jarURI == null)
         {
-            jarURI = "WEB-INF/lib/" + module[1].getName();
+            jarURI = "WEB-INF/lib/" + _module[1].getName();
         }
         IPath jarPath = path.append(jarURI);
         // Make our best determination of the path to the old jar
@@ -261,22 +262,22 @@ public class PublishOperation2 extends PublishOperation
         path = jarPath.removeLastSegments(1);
 
         // Remove if requested or if previously published and are now serving without publishing
-        if (moving || kind == IServer.PUBLISH_CLEAN || deltaKind == ServerBehaviourDelegate.REMOVED || server.getJettyServer().isServeModulesWithoutPublish())
+        if (moving || _kind == IServer.PUBLISH_CLEAN || _deltaKind == ServerBehaviourDelegate.REMOVED || _server.getJettyServer().isServeModulesWithoutPublish())
         {
             File file = oldJarPath.toFile();
             if (file.exists())
             {
                 file.delete();
             }
-            p.remove(module[1].getId());
+            p.remove(_module[1].getId());
 
-            if (deltaKind == ServerBehaviourDelegate.REMOVED || server.getJettyServer().isServeModulesWithoutPublish())
+            if (_deltaKind == ServerBehaviourDelegate.REMOVED || _server.getJettyServer().isServeModulesWithoutPublish())
                 return;
         }
-        if (!moving && kind != IServer.PUBLISH_CLEAN && kind != IServer.PUBLISH_FULL)
+        if (!moving && _kind != IServer.PUBLISH_CLEAN && _kind != IServer.PUBLISH_FULL)
         {
             // avoid changes if no changes to module since last publish
-            IModuleResourceDelta[] delta = server.getPublishedResourceDelta(module);
+            IModuleResourceDelta[] delta = _server.getPublishedResourceDelta(_module);
             if (delta == null || delta.length == 0)
                 return;
         }
@@ -285,10 +286,10 @@ public class PublishOperation2 extends PublishOperation
         if (!path.toFile().exists())
             path.toFile().mkdirs();
 
-        IModuleResource[] mr = server.getResources(module);
-        IStatus[] stat = helper.publishToPath(mr,jarPath,monitor);
+        IModuleResource[] mr = _server.getResources(_module);
+        IStatus[] stat = _helper.publishToPath(mr,jarPath,monitor);
         addArrayToList(status,stat);
-        p.put(module[1].getId(),jarURI);
+        p.put(_module[1].getId(),jarURI);
     }
 
     /**

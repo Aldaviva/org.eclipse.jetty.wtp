@@ -27,8 +27,8 @@ import org.xml.sax.SAXException;
  */
 public class Factory
 {
-    protected String packageName;
-    protected Document document;
+    protected String _packageName;
+    protected Document _document;
 
     public Factory()
     {
@@ -37,7 +37,7 @@ public class Factory
 
     protected Attr createAttribute(String s, Element element)
     {
-        Attr attr = document.createAttribute(s);
+        Attr attr = _document.createAttribute(s);
         element.setAttributeNode(attr);
         return attr;
     }
@@ -47,7 +47,7 @@ public class Factory
         if (index < 0)
             return createElement(s,node);
 
-        Element element = document.createElement(s);
+        Element element = _document.createElement(s);
         try
         {
             Node child = node.getFirstChild();
@@ -78,14 +78,14 @@ public class Factory
 
     protected XMLElement createElement(String s, Node node)
     {
-        Element element = document.createElement(s);
+        Element element = _document.createElement(s);
         node.appendChild(element);
         return newInstance(element);
     }
 
     public byte[] getContents() throws IOException
     {
-        return XMLUtil.getContents(document);
+        return XMLUtil.getContents(_document);
     }
 
     /**
@@ -94,20 +94,20 @@ public class Factory
      */
     public Document getDocument()
     {
-        return document;
+        return _document;
     }
 
     public String getPackageName()
     {
-        return packageName;
+        return _packageName;
     }
 
     public XMLElement loadDocument(InputStream in) throws IOException, SAXException
     {
         try
         {
-            document = XMLUtil.getDocumentBuilder().parse(new InputSource(in));
-            Element element = document.getDocumentElement();
+            _document = XMLUtil.getDocumentBuilder().parse(new InputSource(in));
+            Element element = _document.getDocumentElement();
             return newInstance(element);
         }
         catch (IllegalArgumentException exception)
@@ -147,8 +147,8 @@ public class Factory
             }
 
             // add package name
-            if (packageName != null)
-                s = packageName + "." + s;
+            if (_packageName != null)
+                s = _packageName + "." + s;
             Class class1 = Class.forName(s);
 
             XMLElement xmlElement = (XMLElement)class1.newInstance();
@@ -165,16 +165,16 @@ public class Factory
 
     public void save(String filename) throws IOException
     {
-        XMLUtil.save(filename,document);
+        XMLUtil.save(filename,_document);
     }
 
     public void setDocument(Document d)
     {
-        document = d;
+        _document = d;
     }
 
     public void setPackageName(String s)
     {
-        packageName = s;
+        _packageName = s;
     }
 }

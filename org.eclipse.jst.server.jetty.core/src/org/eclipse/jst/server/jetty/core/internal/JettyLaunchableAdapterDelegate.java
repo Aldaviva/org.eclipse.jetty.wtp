@@ -15,6 +15,7 @@ import java.net.URL;
 
 import org.eclipse.jst.server.core.IWebModule;
 import org.eclipse.jst.server.core.Servlet;
+import org.eclipse.jst.server.jetty.core.JettyPlugin;
 import org.eclipse.wst.server.core.IModuleArtifact;
 import org.eclipse.wst.server.core.IServer;
 import org.eclipse.wst.server.core.model.IURLProvider;
@@ -28,7 +29,7 @@ import org.eclipse.wst.server.core.util.WebResource;
 public class JettyLaunchableAdapterDelegate extends LaunchableAdapterDelegate
 {
 
-    private static final String SERVLET_PATH = "servlet/";
+    private static final String __SERVLET_PATH = "servlet/";
 
     /*
      * @see LaunchableAdapterDelegate#getLaunchable(IServer, IModuleArtifact)
@@ -36,12 +37,21 @@ public class JettyLaunchableAdapterDelegate extends LaunchableAdapterDelegate
     public Object getLaunchable(IServer server, IModuleArtifact moduleObject)
     {
         Trace.trace(Trace.FINER,"JettyLaunchableAdapter " + server + "-" + moduleObject);
+        
         if (server.getAdapter(JettyServer.class) == null)
+        {
             return null;
+        }
+        
         if (!(moduleObject instanceof Servlet) && !(moduleObject instanceof WebResource))
+        {
             return null;
+        }
+        
         if (moduleObject.getModule().loadAdapter(IWebModule.class,null) == null)
+        {
             return null;
+        }
 
         try
         {
@@ -60,7 +70,7 @@ public class JettyLaunchableAdapterDelegate extends LaunchableAdapterDelegate
                     url = new URL(url,path);
                 }
                 else
-                    url = new URL(url,SERVLET_PATH + servlet.getServletClassName());
+                    url = new URL(url,__SERVLET_PATH + servlet.getServletClassName());
             }
             else if (moduleObject instanceof WebResource)
             {
@@ -77,7 +87,9 @@ public class JettyLaunchableAdapterDelegate extends LaunchableAdapterDelegate
         catch (Exception e)
         {
             Trace.trace(Trace.SEVERE,"Error getting URL for " + moduleObject,e);
-            return null;
+            JettyPlugin.log(e);
         }
+        
+        return null;
     }
 }

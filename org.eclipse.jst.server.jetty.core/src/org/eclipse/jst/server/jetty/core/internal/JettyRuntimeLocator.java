@@ -129,6 +129,7 @@ public class JettyRuntimeLocator extends RuntimeLocatorDelegate
             catch (Exception e)
             {
                 Trace.trace(Trace.SEVERE,"Could not find runtime",e);
+                JettyPlugin.log(e);
             }
         }
         return null;

@@ -19,13 +19,13 @@ import org.eclipse.jst.server.jetty.core.internal.jetty7.Jetty7Configuration;
 public class Jetty8Provider implements IJettyVersionProvider
 {
 
-    public static final IJettyVersionProvider INSTANCE = new Jetty8Provider();
+    public static final IJettyVersionProvider __INSTANCE = new Jetty8Provider();
 
-    private IJettyVersionHandler versionHandler = new Jetty8Handler();
+    private IJettyVersionHandler _versionHandler = new Jetty8Handler();
 
     public IJettyVersionHandler getJettyVersionHandler()
     {
-        return versionHandler;
+        return _versionHandler;
     }
 
     public IJettyConfiguration createJettyConfiguration(IFolder path)

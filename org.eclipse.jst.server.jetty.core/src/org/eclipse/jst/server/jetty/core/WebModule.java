@@ -18,10 +18,10 @@ import org.eclipse.jst.server.jetty.core.internal.IJettyWebModule;
  */
 public class WebModule implements IJettyWebModule
 {
-    private String docBase;
-    private String path;
-    private String memento;
-    private boolean reloadable;
+    private String _docBase;
+    private String _path;
+    private String _memento;
+    private boolean _reloadable;
 
     /**
      * WebModule constructor comment.
@@ -38,10 +38,10 @@ public class WebModule implements IJettyWebModule
     public WebModule(String path, String docBase, String memento, boolean reloadable)
     {
         super();
-        this.path = path;
-        this.docBase = docBase;
-        this.memento = memento;
-        this.reloadable = reloadable;
+        this._path = path;
+        this._docBase = docBase;
+        this._memento = memento;
+        this._reloadable = reloadable;
     }
 
     /**
@@ -51,7 +51,7 @@ public class WebModule implements IJettyWebModule
      */
     public String getDocumentBase()
     {
-        return docBase;
+        return _docBase;
     }
 
     /**
@@ -61,7 +61,7 @@ public class WebModule implements IJettyWebModule
      */
     public String getPath()
     {
-        return path;
+        return _path;
     }
 
     /**
@@ -71,7 +71,7 @@ public class WebModule implements IJettyWebModule
      */
     public String getMemento()
     {
-        return memento;
+        return _memento;
     }
 
     /**
@@ -81,7 +81,7 @@ public class WebModule implements IJettyWebModule
      */
     public boolean isReloadable()
     {
-        return reloadable;
+        return _reloadable;
     }
 
     public int hashCode()

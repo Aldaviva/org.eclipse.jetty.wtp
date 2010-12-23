@@ -35,14 +35,14 @@ public class JettyRuntimeClasspathProvider extends RuntimeClasspathProviderDeleg
         // TODO : switch Jetty version, is there different classpath?
 
         List<IClasspathEntry> entries = new ArrayList<IClasspathEntry>();
-        IPath libPath = installPath.append(LIB_FOLDER);
+        IPath libPath = installPath.append(__LIB_FOLDER);
         File libDir = libPath.toFile();
         if (libDir.exists())
         {
             // add all jars from the Jetty ${jetty.home}/lib
             RuntimeClasspathProviderDelegate.addLibraryEntries(entries,libDir,true);
             // add all jars from the Jetty ${jetty.home}/lib/jsp directory
-            IPath jspLibPath = libPath.append(JSP_FOLDER);
+            IPath jspLibPath = libPath.append(__JSP_FOLDER);
             File jspLibDir = jspLibPath.toFile();
             if (jspLibDir.exists())
             {

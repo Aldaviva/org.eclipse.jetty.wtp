@@ -16,16 +16,16 @@ import org.w3c.dom.Node;
 public class Connector
 {
 
-    private Element portElement;
+    private Element _portElement;
 
     public Connector(Element portElement)
     {
-        this.portElement = portElement;
+        this._portElement = portElement;
     }
 
     public String getPort()
     {
-        Node firstChild = portElement.getFirstChild();
+        Node firstChild = _portElement.getFirstChild();
         if (firstChild.getNodeType() == Node.ELEMENT_NODE)
         {
             // SystemProperty default=""
@@ -34,13 +34,13 @@ public class Connector
         }
         else
         {
-            return portElement.getTextContent();
+            return _portElement.getTextContent();
         }
     }
 
     public void setPort(String port)
     {
-        portElement.setTextContent(port);
+        _portElement.setTextContent(port);
     }
 
 }

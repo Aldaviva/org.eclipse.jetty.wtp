@@ -34,7 +34,7 @@ public class JettyPlugin extends AbstractUIPlugin
     public static final String PLUGIN_ID = "org.eclipse.jst.server.jetty.core"; //$NON-NLS-1$
 
     // The shared instance
-    private static JettyPlugin plugin;
+    private static JettyPlugin _plugin;
 
     /**
      * The constructor
@@ -51,7 +51,7 @@ public class JettyPlugin extends AbstractUIPlugin
     public void start(BundleContext context) throws Exception
     {
         super.start(context);
-        plugin = this;
+        _plugin = this;
     }
 
     /*
@@ -61,7 +61,7 @@ public class JettyPlugin extends AbstractUIPlugin
      */
     public void stop(BundleContext context) throws Exception
     {
-        plugin = null;
+        _plugin = null;
         super.stop(context);
     }
 
@@ -72,7 +72,7 @@ public class JettyPlugin extends AbstractUIPlugin
      */
     public static JettyPlugin getDefault()
     {
-        return plugin;
+        return _plugin;
     }
 
     /**
@@ -153,17 +153,17 @@ public class JettyPlugin extends AbstractUIPlugin
 
     public static IJettyVersionHandler getJettyVersionHandler(String id)
     {
-        return JettyVersionManager.INSTANCE.getJettyVersionHandler(id);
+        return JettyVersionManager.__INSTANCE.getJettyVersionHandler(id);
     }
 
     public static IJettyConfiguration getJettyConfiguration(String id, IFolder path)
     {
-        return JettyVersionManager.INSTANCE.getJettyConfiguration(id,path);
+        return JettyVersionManager.__INSTANCE.getJettyConfiguration(id,path);
     }
 
     public static Collection<String> getRuntimeTypes()
     {
-        return JettyVersionManager.INSTANCE.getRuntimeTypes();
+        return JettyVersionManager.__INSTANCE.getRuntimeTypes();
     }
 
 }

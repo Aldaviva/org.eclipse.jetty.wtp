@@ -1,3 +1,4 @@
 1.0.0-SNAPSHOT
+ + Bug 331163 disabled Download and Install button
  + Bug 330525 address license display from html -> txt
  + Bug 329144 modify websocket template to generate WebSocket #onFragment

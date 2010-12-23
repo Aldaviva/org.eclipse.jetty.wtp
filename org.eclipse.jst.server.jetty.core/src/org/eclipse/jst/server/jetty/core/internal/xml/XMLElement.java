@@ -27,8 +27,8 @@ import org.w3c.dom.Text;
  */
 public class XMLElement
 {
-    private Element xmlElement;
-    protected Factory factory;
+    private Element _xmlElement;
+    protected Factory _factory;
 
     public XMLElement()
     {
@@ -37,41 +37,41 @@ public class XMLElement
 
     public void setText(String textContent)
     {
-        xmlElement.setTextContent(textContent);
+        _xmlElement.setTextContent(textContent);
     }
 
     public Element getElementNode()
     {
-        return xmlElement;
+        return _xmlElement;
     }
 
     public Attr addAttribute(String s, String s1)
     {
-        Attr attr = factory.createAttribute(s,xmlElement);
+        Attr attr = _factory.createAttribute(s,_xmlElement);
         attr.setValue(s1);
         return attr;
     }
 
     public XMLElement createElement(int index, String s)
     {
-        return factory.createElement(index,s,xmlElement);
+        return _factory.createElement(index,s,_xmlElement);
     }
 
     public XMLElement createElement(String s)
     {
-        return factory.createElement(s,xmlElement);
+        return _factory.createElement(s,_xmlElement);
     }
 
     public XMLElement findElement(String s)
     {
-        NodeList nodelist = xmlElement.getElementsByTagName(s);
+        NodeList nodelist = _xmlElement.getElementsByTagName(s);
         int i = nodelist == null?0:nodelist.getLength();
         for (int j = 0; j < i; j++)
         {
             Node node = nodelist.item(j);
             String s1 = node.getNodeName().trim();
             if (s1.equals(s))
-                return factory.newInstance((Element)node);
+                return _factory.newInstance((Element)node);
         }
 
         return createElement(s);
@@ -79,14 +79,14 @@ public class XMLElement
 
     public XMLElement findElement(String s, int i)
     {
-        NodeList nodelist = xmlElement.getElementsByTagName(s);
+        NodeList nodelist = _xmlElement.getElementsByTagName(s);
         int j = nodelist == null?0:nodelist.getLength();
         for (int k = 0; k < j; k++)
         {
             Node node = nodelist.item(k);
             String s1 = node.getNodeName().trim();
             if (s1.equals(s) && k == i)
-                return factory.newInstance((Element)node);
+                return _factory.newInstance((Element)node);
         }
 
         return createElement(s);
@@ -94,7 +94,7 @@ public class XMLElement
 
     public Element findElement(String s, String attrName)
     {
-        return findElement(xmlElement,s,attrName);
+        return findElement(_xmlElement,s,attrName);
     }
 
     public Element findElement(Element element, String s, String attrName)
@@ -131,7 +131,7 @@ public class XMLElement
 
     public String getAttributeValue(String s)
     {
-        Attr attr = xmlElement.getAttributeNode(s);
+        Attr attr = _xmlElement.getAttributeNode(s);
         if (attr != null)
             return attr.getValue();
 
@@ -141,7 +141,7 @@ public class XMLElement
     public Map getAttributes()
     {
         Map attributes = new LinkedHashMap();
-        NamedNodeMap attrs = xmlElement.getAttributes();
+        NamedNodeMap attrs = _xmlElement.getAttributes();
         if (null != attrs)
         {
             for (int i = 0; i < attrs.getLength(); i++)
@@ -157,12 +157,12 @@ public class XMLElement
 
     public String getElementName()
     {
-        return xmlElement.getNodeName();
+        return _xmlElement.getNodeName();
     }
 
     public String getElementValue()
     {
-        return getElementValue(xmlElement);
+        return getElementValue(_xmlElement);
     }
 
     protected static String getElementValue(Element element)
@@ -180,7 +180,7 @@ public class XMLElement
 
     public Element getSubElement(String s)
     {
-        NodeList nodelist = xmlElement.getElementsByTagName(s);
+        NodeList nodelist = _xmlElement.getElementsByTagName(s);
         int i = nodelist == null?0:nodelist.getLength();
         for (int j = 0; j < i; j++)
         {
@@ -210,7 +210,7 @@ public class XMLElement
     {
         try
         {
-            xmlElement.removeAttribute(s);
+            _xmlElement.removeAttribute(s);
             return true;
         }
         catch (Exception ex)
@@ -221,7 +221,7 @@ public class XMLElement
 
     public boolean removeElement(String s, int i)
     {
-        NodeList nodelist = xmlElement.getElementsByTagName(s);
+        NodeList nodelist = _xmlElement.getElementsByTagName(s);
         int j = nodelist == null?0:nodelist.getLength();
         for (int k = 0; k < j; k++)
         {
@@ -229,7 +229,7 @@ public class XMLElement
             String s1 = node.getNodeName().trim();
             if (s1.equals(s) && k == i)
             {
-                xmlElement.removeChild(node);
+                _xmlElement.removeChild(node);
                 return true;
             }
         }
@@ -239,7 +239,7 @@ public class XMLElement
 
     public void setAttributeValue(String s, String s1)
     {
-        Attr attr = xmlElement.getAttributeNode(s);
+        Attr attr = _xmlElement.getAttributeNode(s);
         if (attr == null)
             attr = addAttribute(s,s1);
         else
@@ -248,7 +248,7 @@ public class XMLElement
 
     void setElement(Element element)
     {
-        xmlElement = element;
+        _xmlElement = element;
     }
 
     protected static void setElementValue(Element element, String value)
@@ -273,12 +273,12 @@ public class XMLElement
 
     void setFactory(Factory factory1)
     {
-        factory = factory1;
+        _factory = factory1;
     }
 
     public Factory getFactory()
     {
-        return factory;
+        return _factory;
     }
 
     public void setSubElementValue(String s, String value)
@@ -286,16 +286,16 @@ public class XMLElement
         Element element = getSubElement(s);
         if (element == null)
         {
-            element = factory.document.createElement(s);
-            element.appendChild(factory.document.createTextNode("temp"));
-            xmlElement.appendChild(element);
+            element = _factory._document.createElement(s);
+            element.appendChild(_factory._document.createTextNode("temp"));
+            _xmlElement.appendChild(element);
         }
         setElementValue(element,value);
     }
 
     public int sizeOfElement(String s)
     {
-        NodeList nodelist = xmlElement.getElementsByTagName(s);
+        NodeList nodelist = _xmlElement.getElementsByTagName(s);
         int i = nodelist == null?0:nodelist.getLength();
         return i;
     }
@@ -304,11 +304,11 @@ public class XMLElement
     {
         try
         {
-            xmlElement.setNodeValue(s);
+            _xmlElement.setNodeValue(s);
         }
         catch (DOMException ex)
         {
-            NodeList nodelist = xmlElement.getChildNodes();
+            NodeList nodelist = _xmlElement.getChildNodes();
             int i = nodelist == null?0:nodelist.getLength();
             if (i > 0)
             {
@@ -321,27 +321,27 @@ public class XMLElement
             }
             else
             {
-                xmlElement.appendChild(factory.document.createTextNode(s));
+                _xmlElement.appendChild(_factory._document.createTextNode(s));
             }
         }
     }
 
     public boolean hasChildNodes()
     {
-        return xmlElement.hasChildNodes();
+        return _xmlElement.hasChildNodes();
     }
 
     public void removeChildren()
     {
-        while (xmlElement.hasChildNodes())
+        while (_xmlElement.hasChildNodes())
         {
-            xmlElement.removeChild(xmlElement.getFirstChild());
+            _xmlElement.removeChild(_xmlElement.getFirstChild());
         }
     }
 
     public void copyChildrenTo(XMLElement destination)
     {
-        NodeList nodelist = xmlElement.getChildNodes();
+        NodeList nodelist = _xmlElement.getChildNodes();
         int len = nodelist == null?0:nodelist.getLength();
         for (int i = 0; i < len; i++)
         {
@@ -352,7 +352,7 @@ public class XMLElement
 
     public void importNode(Node node, boolean deep)
     {
-        xmlElement.appendChild(xmlElement.getOwnerDocument().importNode(node,deep));
+        _xmlElement.appendChild(_xmlElement.getOwnerDocument().importNode(node,deep));
     }
 
     /**
@@ -371,7 +371,7 @@ public class XMLElement
         {
             try
             {
-                return elementsAreEquivalent(xmlElement,obj.getElementNode());
+                return elementsAreEquivalent(_xmlElement,obj.getElementNode());
             }
             catch (Exception e)
             {
@@ -392,7 +392,7 @@ public class XMLElement
     {
         if (obj != null)
         {
-            return elementsAreEquivalent(xmlElement,obj.getElementNode());
+            return elementsAreEquivalent(_xmlElement,obj.getElementNode());
         }
         return false;
     }

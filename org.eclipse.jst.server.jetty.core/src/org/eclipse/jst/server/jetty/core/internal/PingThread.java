@@ -24,18 +24,18 @@ import org.eclipse.wst.server.core.IServer;
 public class PingThread
 {
     // delay before pinging starts
-    private static final int PING_DELAY = 2000;
+    private static final int __PING_DELAY = 2000;
 
     // delay between pings
-    private static final int PING_INTERVAL = 250;
+    private static final int __PING_INTERVAL = 250;
 
     // maximum number of pings before giving up
-    private int maxPings;
+    private int _maxPings;
 
-    private boolean stop = false;
-    private String url;
-    private IServer server;
-    private JettyServerBehaviour behaviour;
+    private boolean _stop = false;
+    private String _url;
+    private IServer _server;
+    private JettyServerBehaviour _behaviour;
 
     /**
      * Create a new PingThread.
@@ -49,10 +49,11 @@ public class PingThread
     public PingThread(IServer server, String url, int maxPings, JettyServerBehaviour behaviour)
     {
         super();
-        this.server = server;
-        this.url = url;
-        this.maxPings = maxPings;
-        this.behaviour = behaviour;
+        
+        this._server = server;
+        this._url = url;
+        this._maxPings = maxPings;
+        this._behaviour = behaviour;
         Thread t = new Thread("Jetty Ping Thread")
         {
             public void run()
@@ -72,44 +73,44 @@ public class PingThread
         int count = 0;
         try
         {
-            Thread.sleep(PING_DELAY);
+            Thread.sleep(__PING_DELAY);
         }
         catch (Exception e)
         {
             // ignore
         }
-        while (!stop)
+        while (!_stop)
         {
             try
             {
-                if (count == maxPings)
+                if (count == _maxPings)
                 {
                     try
                     {
-                        server.stop(false);
+                        _server.stop(false);
                     }
                     catch (Exception e)
                     {
                         Trace.trace(Trace.FINEST,"Ping: could not stop server");
                     }
-                    stop = true;
+                    _stop = true;
                     break;
                 }
                 count++;
 
                 Trace.trace(Trace.FINEST,"Ping: pinging " + count);
-                URL pingUrl = new URL(url);
+                URL pingUrl = new URL(_url);
                 URLConnection conn = pingUrl.openConnection();
                 ((HttpURLConnection)conn).getResponseCode();
 
                 // ping worked - server is up
-                if (!stop)
+                if (!_stop)
                 {
                     Trace.trace(Trace.FINEST,"Ping: success");
                     Thread.sleep(200);
-                    behaviour.setServerStarted();
+                    _behaviour.setServerStarted();
                 }
-                stop = true;
+                _stop = true;
             }
             catch (FileNotFoundException fe)
             {
@@ -121,18 +122,18 @@ public class PingThread
                 {
                     // ignore
                 }
-                behaviour.setServerStarted();
-                stop = true;
+                _behaviour.setServerStarted();
+                _stop = true;
             }
             catch (Exception e)
             {
                 Trace.trace(Trace.FINEST,"Ping: failed");
                 // pinging failed
-                if (!stop)
+                if (!_stop)
                 {
                     try
                     {
-                        Thread.sleep(PING_INTERVAL);
+                        Thread.sleep(__PING_INTERVAL);
                     }
                     catch (InterruptedException e2)
                     {
@@ -149,6 +150,6 @@ public class PingThread
     public void stop()
     {
         Trace.trace(Trace.FINEST,"Ping: stopping");
-        stop = true;
+        _stop = true;
     }
 }

@@ -25,6 +25,7 @@ import org.eclipse.jdt.launching.IVMInstall;
 import org.eclipse.jdt.launching.IVMRunner;
 import org.eclipse.jdt.launching.VMRunnerConfiguration;
 import org.eclipse.jst.server.core.ServerProfilerDelegate;
+import org.eclipse.jst.server.jetty.core.JettyPlugin;
 import org.eclipse.jst.server.jetty.core.internal.JettyServerBehaviour;
 import org.eclipse.jst.server.jetty.core.internal.Trace;
 import org.eclipse.wst.server.core.IServer;

@@ -53,19 +53,21 @@ import org.eclipse.wst.server.core.ServerPort;
 
 public class Jetty7Configuration extends JettyConfiguration implements JettyConstants
 {
+    private StartIni _startIniConfig;
 
+    protected ServerInstance _serverInstance;
+    
+    private boolean _isServerDirty;
+    
+    // property change listeners
+    private transient List<PropertyChangeListener> _propertyListeners;
+
+    
     public Jetty7Configuration(IFolder path)
     {
         super(path);
     }
-
-    private StartIni startIniConfig;
-
-    protected ServerInstance serverInstance;
-    private boolean isServerDirty;
-    // property change listeners
-    private transient List<PropertyChangeListener> propertyListeners;
-
+    
     public Collection<ServerPort> getServerPorts()
     {
         List<ServerPort> ports = new ArrayList<ServerPort>();
@@ -83,7 +85,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
         try
         {
 
-            Collection<Connector> connectors = serverInstance.getConnectors();
+            Collection<Connector> connectors = _serverInstance.getConnectors();
             if (connectors != null)
             {
                 for (Connector connector : connectors)
@@ -97,7 +99,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
                     {
                         // ignore
                     }
-                    ports.add(new ServerPort("server",Messages.portServer,port,HTTP));
+                    ports.add(new ServerPort("server",Messages.portServer,port,__HTTP));
                     // TODO : how get HTTP type port???
 
                     // ports.add(new ServerPort(portId, name, port, protocol2,
@@ -112,7 +114,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
         }
         if (ports.size() < 1)
         {
-            ports.add(new ServerPort("server",Messages.portServer,8080,HTTP));
+            ports.add(new ServerPort("server",Messages.portServer,8080,__HTTP));
         }
         return ports;
 
@@ -191,7 +193,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
 
         try
         {
-            Collection<WebAppContext> contexts = serverInstance.getContexts();
+            Collection<WebAppContext> contexts = _serverInstance.getContexts();
             if (contexts != null)
             {
                 for (WebAppContext context : contexts)
@@ -215,7 +217,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
     {
         try
         {
-            WebAppContext context = serverInstance.createContext(module.getDocumentBase(),module.getMemento(),module.getPath());
+            WebAppContext context = _serverInstance.createContext(module.getDocumentBase(),module.getMemento(),module.getPath());
             if (context != null)
             {
                 // context.setDocBase(module.getDocumentBase());
@@ -225,7 +227,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
                 // if (module.getMemento() != null &&
                 // module.getMemento().length() > 0)
                 // context.setSource(module.getMemento());
-                isServerDirty = true;
+                _isServerDirty = true;
                 firePropertyChangeEvent(ADD_WEB_MODULE_PROPERTY,null,module);
             }
         }
@@ -246,8 +248,8 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
     {
         try
         {
-            serverInstance.removeContext(index);
-            isServerDirty = true;
+            _serverInstance.removeContext(index);
+            _isServerDirty = true;
             firePropertyChangeEvent(REMOVE_WEB_MODULE_PROPERTY,null,index);
         }
         catch (Exception e)
@@ -258,13 +260,13 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
 
     protected void firePropertyChangeEvent(String propertyName, Object oldValue, Object newValue)
     {
-        if (propertyListeners == null)
+        if (_propertyListeners == null)
             return;
 
         PropertyChangeEvent event = new PropertyChangeEvent(this,propertyName,oldValue,newValue);
         try
         {
-            Iterator<PropertyChangeListener> iterator = propertyListeners.iterator();
+            Iterator<PropertyChangeListener> iterator = _propertyListeners.iterator();
             while (iterator.hasNext())
             {
                 try
@@ -292,9 +294,9 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
      */
     public void addPropertyChangeListener(PropertyChangeListener listener)
     {
-        if (propertyListeners == null)
-            propertyListeners = new ArrayList<PropertyChangeListener>();
-        propertyListeners.add(listener);
+        if (_propertyListeners == null)
+            _propertyListeners = new ArrayList<PropertyChangeListener>();
+        _propertyListeners.add(listener);
     }
 
     /**
@@ -305,8 +307,8 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
      */
     public void removePropertyChangeListener(PropertyChangeListener listener)
     {
-        if (propertyListeners != null)
-            propertyListeners.remove(listener);
+        if (_propertyListeners != null)
+            _propertyListeners.remove(listener);
     }
 
     /**
@@ -322,10 +324,10 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
             Factory serverFactory = null;
 
             // Load config.ini
-            this.startIniConfig = new StartIni(path);
+            this._startIniConfig = new StartIni(path);
 
             // Load jetty.xml files
-            List<PathFileConfig> jettyXMLConfiFiles = startIniConfig.getJettyXMLFiles();
+            List<PathFileConfig> jettyXMLConfiFiles = _startIniConfig.getJettyXMLFiles();
             List<Server> servers = new ArrayList<Server>();
             Server server = null;
             File file = null;
@@ -347,7 +349,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
             }
 
             WebApp webApp = null;
-            PathFileConfig pathFileConfig = startIniConfig.getWebdefaultXMLConfig();
+            PathFileConfig pathFileConfig = _startIniConfig.getWebdefaultXMLConfig();
             if (pathFileConfig != null)
             {
                 File webAppFile = pathFileConfig.getFile();
@@ -368,7 +370,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
 
             // server = (Server) serverFactory.loadDocument(new FileInputStream(
             // path.append("jetty.xml").toFile()));
-            serverInstance = new ServerInstance(servers,webApp,runtimeBaseDirectory);
+            _serverInstance = new ServerInstance(servers,webApp,runtimeBaseDirectory);
             // monitor.worked(1);
             //
             // webAppDocument = new
@@ -383,7 +385,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
             // load policy file
             // policyFile = JettyVersionHelper.getFileContents(new
             // FileInputStream(path.append("catalina.policy").toFile()));
-            monitor.worked(1);
+            //monitor.worked(1);
 
             if (monitor.isCanceled())
                 return;
@@ -406,10 +408,10 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
             Factory serverFactory = null;
 
             // Load config.ini
-            this.startIniConfig = new StartIni(folder);
+            this._startIniConfig = new StartIni(folder);
 
             // Load jetty.xml files
-            List<PathFileConfig> jettyXMLConfiFiles = startIniConfig.getJettyXMLFiles();
+            List<PathFileConfig> jettyXMLConfiFiles = _startIniConfig.getJettyXMLFiles();
             List<Server> servers = new ArrayList<Server>();
             Server server = null;
             File file = null;
@@ -436,7 +438,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
             monitor.worked(1);
 
             WebApp webApp = null;
-            PathFileConfig pathFileConfig = startIniConfig.getWebdefaultXMLConfig();
+            PathFileConfig pathFileConfig = _startIniConfig.getWebdefaultXMLConfig();
             if (pathFileConfig != null)
             {
                 File webAppFile = pathFileConfig.getFile();
@@ -450,7 +452,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
             }
             // server = (Server) serverFactory.loadDocument(new FileInputStream(
             // path.append("jetty.xml").toFile()));
-            serverInstance = new ServerInstance(servers,webApp,runtimeBaseDirectory);
+            _serverInstance = new ServerInstance(servers,webApp,runtimeBaseDirectory);
             // check for catalina.policy to verify that this is a v4.0 config
             // IFile file = folder.getFile("catalina.policy");
             // if (!file.exists())
@@ -479,7 +481,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
 
             // jettyUsersDocument = XMLUtil.getDocumentBuilder().parse(new
             // InputSource(in));
-            monitor.worked(200);
+            //monitor.worked(200);
 
             // load catalina.policy
             // file = folder.getFile("catalina.policy");
@@ -518,8 +520,8 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
             if (monitor.isCanceled())
                 return;
 
-            startIniConfig.save(folder.getFile(START_INI),monitor);
-            serverInstance.save(folder,monitor);
+            _startIniConfig.save(folder.getFile(__START_INI),monitor);
+            _serverInstance.save(folder,monitor);
 
             // get etc/realm.properties
             // get etc/webdefault.xml
@@ -528,7 +530,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
             IFolder newFolder = folder;
             IPath path = null;
             String filename = null;
-            List<PathFileConfig> otherConfigs = startIniConfig.getOtherConfigs();
+            List<PathFileConfig> otherConfigs = _startIniConfig.getOtherConfigs();
             for (PathFileConfig pathFileConfig : otherConfigs)
             {
                 path = pathFileConfig.getPath();
@@ -552,7 +554,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
             }
 
             // start.config from start.jar
-            PathFileConfig startConfig = startIniConfig.getStartConfig();
+            PathFileConfig startConfig = _startIniConfig.getStartConfig();
             if (startConfig != null)
             {
                 File startJARFile = startConfig.getFile();
@@ -588,7 +590,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
         // catalina.base will be used
         if (isTestEnv)
         {
-            while (serverInstance.removeContext(0))
+            while (_serverInstance.removeContext(0))
             {
                 // no-op
             }
@@ -609,8 +611,8 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
         {
             if ("server".equals(id))
             {
-                serverInstance.setPort(port + "");
-                isServerDirty = true;
+                _serverInstance.setPort(port + "");
+                _isServerDirty = true;
                 firePropertyChangeEvent(MODIFY_PORT_PROPERTY,id, Integer.valueOf(port));
                 return;
             }
@@ -662,12 +664,12 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
     {
         try
         {
-            WebAppContext context = serverInstance.getContext(index);
+            WebAppContext context = _serverInstance.getContext(index);
             if (context != null)
             {
                 context.setContextPath(path);
                 context.save();
-                isServerDirty = true;
+                _isServerDirty = true;
                 WebModule module = new WebModule(path,docBase,null,reloadable);
                 firePropertyChangeEvent(MODIFY_WEB_MODULE_PROPERTY, Integer.valueOf(index),module);
             }

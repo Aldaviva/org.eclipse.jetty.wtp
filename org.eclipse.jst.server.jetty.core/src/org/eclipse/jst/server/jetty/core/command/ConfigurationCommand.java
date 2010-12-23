@@ -23,7 +23,7 @@ import org.eclipse.jst.server.jetty.core.IJettyConfigurationWorkingCopy;
  */
 public abstract class ConfigurationCommand extends AbstractOperation
 {
-    protected IJettyConfigurationWorkingCopy configuration;
+    private IJettyConfigurationWorkingCopy _configuration;
 
     /**
      * ConfigurationCommand constructor comment.
@@ -36,7 +36,7 @@ public abstract class ConfigurationCommand extends AbstractOperation
     public ConfigurationCommand(IJettyConfigurationWorkingCopy configuration, String label)
     {
         super(label);
-        this.configuration = configuration;
+        this._configuration = configuration;
     }
 
     public IStatus redo(IProgressMonitor monitor, IAdaptable info) throws ExecutionException
@@ -54,6 +54,11 @@ public abstract class ConfigurationCommand extends AbstractOperation
 
     public abstract void undo();
 
+    public IJettyConfigurationWorkingCopy getWorkingCopy()
+    {
+        return _configuration;
+    }
+    
     public IStatus undo(IProgressMonitor monitor, IAdaptable info) throws ExecutionException
     {
         undo();

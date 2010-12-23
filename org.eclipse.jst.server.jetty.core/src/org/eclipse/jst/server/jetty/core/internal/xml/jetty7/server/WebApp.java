@@ -18,27 +18,27 @@ import org.eclipse.jst.server.jetty.core.internal.xml.XMLElement;
 public class WebApp extends XMLElement
 {
 
-    private File file;
-    private IPath path;
+    private File _file;
+    private IPath _path;
 
     public File getFile()
     {
-        return file;
+        return _file;
     }
 
     public void setFile(File file)
     {
-        this.file = file;
+        this._file = file;
     }
 
     public IPath getPath()
     {
-        return path;
+        return _path;
     }
 
     public void setPath(IPath path)
     {
-        this.path = path;
+        this._path = path;
     }
 
 }

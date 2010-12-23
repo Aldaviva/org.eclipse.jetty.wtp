@@ -39,7 +39,7 @@ import org.eclipse.wst.server.core.ServerPort;
 public abstract class JettyConfiguration implements IJettyConfiguration, IJettyConfigurationWorkingCopy
 {
 
-    private IFolder configPath;
+    private IFolder _configPath;
 
     /**
      * JettyConfiguration constructor.
@@ -50,12 +50,12 @@ public abstract class JettyConfiguration implements IJettyConfiguration, IJettyC
     public JettyConfiguration(IFolder path)
     {
         super();
-        this.configPath = path;
+        this._configPath = path;
     }
 
     protected IFolder getFolder()
     {
-        return configPath;
+        return _configPath;
     }
 
     /**
@@ -66,12 +66,16 @@ public abstract class JettyConfiguration implements IJettyConfiguration, IJettyC
     public ServerPort getMainPort()
     {
         Collection<ServerPort> serverPorts = getServerPorts();
+        
         for (ServerPort serverPort : serverPorts)
         {
             // Return only an HTTP port from the selected Service
             if (serverPort.getProtocol().toLowerCase().equals("http") && serverPort.getId().indexOf('/') < 0)
+            {
                 return serverPort;
+            }
         }
+        
         return null;
     }
 
@@ -85,10 +89,14 @@ public abstract class JettyConfiguration implements IJettyConfiguration, IJettyC
     public String getWebModuleURL(IModule webModule)
     {
         WebModule module = getWebModule(webModule);
+        
         if (module != null)
+        {
             return module.getPath();
+        }
 
         IWebModule webModule2 = (IWebModule)webModule.loadAdapter(IWebModule.class,null);
+        
         return "/" + webModule2.getContextRoot();
     }
 
@@ -102,7 +110,9 @@ public abstract class JettyConfiguration implements IJettyConfiguration, IJettyC
     public WebModule getWebModule(IModule module)
     {
         if (module == null)
+        {
             return null;
+        }
 
         String memento = module.getId();
 
@@ -144,8 +154,12 @@ public abstract class JettyConfiguration implements IJettyConfiguration, IJettyC
     public IStatus backupAndPublish(IPath jettyDir, boolean doBackup, IProgressMonitor monitor)
     {
         MultiStatus ms = new MultiStatus(JettyPlugin.PLUGIN_ID,0,Messages.publishConfigurationTask,null);
+        
         if (Trace.isTraceEnabled())
+        {
             Trace.trace(Trace.FINER,"Backup and publish");
+        }
+        
         monitor = ProgressUtil.getMonitorFor(monitor);
 
         try
@@ -163,8 +177,7 @@ public abstract class JettyConfiguration implements IJettyConfiguration, IJettyC
         catch (Exception e)
         {
             Trace.trace(Trace.SEVERE,"backupAndPublish() error",e);
-            IStatus s = new Status(IStatus.ERROR,JettyPlugin.PLUGIN_ID,0,NLS.bind(Messages.errorPublishConfiguration,new String[]
-            { e.getLocalizedMessage() }),e);
+            IStatus s = new Status(IStatus.ERROR,JettyPlugin.PLUGIN_ID,0,NLS.bind(Messages.errorPublishConfiguration,new String[]{ e.getLocalizedMessage() }),e);
             ms.add(s);
         }
 

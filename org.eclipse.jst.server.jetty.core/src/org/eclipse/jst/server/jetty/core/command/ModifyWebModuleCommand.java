@@ -20,15 +20,15 @@ import org.eclipse.jst.server.jetty.core.internal.Messages;
  */
 public class ModifyWebModuleCommand extends ConfigurationCommand
 {
-    protected int index;
-    protected WebModule oldModule;
-    protected WebModule newModule;
+    protected int _index;
+    protected WebModule _oldModule;
+    protected WebModule _newModule;
 
     public ModifyWebModuleCommand(IJettyConfigurationWorkingCopy configuration, int index, WebModule module)
     {
         super(configuration,Messages.configurationEditorActionModifyWebModule);
-        this.index = index;
-        newModule = module;
+        _index = index;
+        _newModule = module;
     }
 
     /**
@@ -36,8 +36,8 @@ public class ModifyWebModuleCommand extends ConfigurationCommand
      */
     public void execute()
     {
-        oldModule = (WebModule)configuration.getWebModules().get(index);
-        configuration.modifyWebModule(index,newModule.getDocumentBase(),newModule.getPath(),newModule.isReloadable());
+        _oldModule = getWorkingCopy().getWebModules().get(_index);
+        getWorkingCopy().modifyWebModule(_index,_newModule.getDocumentBase(),_newModule.getPath(),_newModule.isReloadable());
     }
 
     /**
@@ -45,6 +45,6 @@ public class ModifyWebModuleCommand extends ConfigurationCommand
      */
     public void undo()
     {
-        configuration.modifyWebModule(index,oldModule.getDocumentBase(),oldModule.getPath(),oldModule.isReloadable());
+        getWorkingCopy().modifyWebModule(_index,_oldModule.getDocumentBase(),_oldModule.getPath(),_oldModule.isReloadable());
     }
 }

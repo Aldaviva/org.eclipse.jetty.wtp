@@ -37,7 +37,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class IOUtils
 {
 
-    private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
+    private static final int __DEFAULT_BUFFER_SIZE = 1024 * 4;
 
     /**
      * Converts the given URI to a local file. Use the existing file if the uri is on the local file system. Otherwise fetch it. Returns null if unable to fetch
@@ -115,7 +115,7 @@ public class IOUtils
      */
     public static int copy(InputStream input, OutputStream output) throws IOException
     {
-        byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
+        byte[] buffer = new byte[__DEFAULT_BUFFER_SIZE];
         int count = 0;
         int n = 0;
         while (-1 != (n = input.read(buffer)))

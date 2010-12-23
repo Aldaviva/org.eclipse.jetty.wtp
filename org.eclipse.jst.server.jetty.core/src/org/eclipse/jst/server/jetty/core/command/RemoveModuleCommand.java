@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jst.server.jetty.core.JettyPlugin;
 import org.eclipse.jst.server.jetty.core.internal.Messages;
 import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.IServerWorkingCopy;
@@ -26,8 +27,8 @@ import org.eclipse.wst.server.core.IServerWorkingCopy;
  */
 public class RemoveModuleCommand extends AbstractOperation
 {
-    protected IServerWorkingCopy server;
-    protected IModule module;
+    protected IServerWorkingCopy _server;
+    protected IModule _module;
 
     /**
      * AddModuleCommand constructor comment.
@@ -40,20 +41,19 @@ public class RemoveModuleCommand extends AbstractOperation
     public RemoveModuleCommand(IServerWorkingCopy server, IModule module)
     {
         super(Messages.configurationEditorActionRemoveWebModule);
-        this.server = server;
-        this.module = module;
+        this._server = server;
+        this._module = module;
     }
 
     public IStatus execute(IProgressMonitor monitor, IAdaptable info) throws ExecutionException
     {
         try
         {
-            server.modifyModules(null,new IModule[]
-            { module },monitor);
+            _server.modifyModules(null,new IModule[]{ _module },monitor);
         }
         catch (Exception e)
         {
-            // ignore
+            JettyPlugin.log(e);
         }
         return Status.OK_STATUS;
     }
@@ -67,13 +67,13 @@ public class RemoveModuleCommand extends AbstractOperation
     {
         try
         {
-            server.modifyModules(new IModule[]
-            { module },null,monitor);
+            _server.modifyModules(new IModule[]{ _module },null,monitor);
         }
         catch (Exception e)
         {
-            // ignore
+            JettyPlugin.log(e);
         }
+        
         return Status.OK_STATUS;
     }
 }

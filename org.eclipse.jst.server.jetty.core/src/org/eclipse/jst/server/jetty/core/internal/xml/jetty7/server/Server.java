@@ -22,8 +22,8 @@ import org.w3c.dom.NodeList;
 public class Server extends XMLElement
 {
 
-    private File file;
-    private IPath path;
+    private File _file;
+    private IPath _path;
 
     public List<Connector> getConnectors()
     {
@@ -53,22 +53,22 @@ public class Server extends XMLElement
 
     public void setFile(File jettyXMLFile)
     {
-        this.file = jettyXMLFile;
+        this._file = jettyXMLFile;
     }
 
     public File getFile()
     {
-        return file;
+        return _file;
     }
 
     public IPath getPath()
     {
-        return path;
+        return _path;
     }
 
     public void setPath(IPath path)
     {
-        this.path = path;
+        this._path = path;
     }
 
 }

@@ -26,11 +26,11 @@ import org.eclipse.jst.server.jetty.core.internal.jetty8.Jetty8Provider;
 public class JettyVersionManager
 {
 
-    public static final JettyVersionManager INSTANCE = new JettyVersionManager();
+    public static final JettyVersionManager __INSTANCE = new JettyVersionManager();
 
-    private Map<String, IJettyVersionProvider> versionProviders = new HashMap<String, IJettyVersionProvider>();
+    private Map<String, IJettyVersionProvider> _versionProviders = new HashMap<String, IJettyVersionProvider>();
 
-    private List<String> runtimeTypes = new ArrayList<String>();
+    private List<String> _runtimeTypes = new ArrayList<String>();
 
     public enum JettyVersion
     {
@@ -40,25 +40,26 @@ public class JettyVersionManager
     private JettyVersionManager()
     {
         // Jetty 7.1
-        register(JettyVersion.V71,Jetty7Provider.INSTANCE);
+        register(JettyVersion.V71, Jetty7Provider.__INSTANCE);
         // Jetty 7.2
-        register(JettyVersion.V72,Jetty7Provider.INSTANCE);
+        register(JettyVersion.V72, Jetty7Provider.__INSTANCE);
         // Jetty 8.0, same than Jetty7.0
-        register(JettyVersion.V80,Jetty8Provider.INSTANCE);
+        register(JettyVersion.V80, Jetty8Provider.__INSTANCE);
     }
 
     public void register(JettyVersion version, IJettyVersionProvider versionProvider)
     {
-        versionProviders.put(version.name(),versionProvider);
+        _versionProviders.put(version.name(),versionProvider);
 
         String versionNumber = version.name().substring(1,version.name().length());
-        runtimeTypes.add("org.eclipse.jst.server.jetty.runtime." + versionNumber);
+        
+        _runtimeTypes.add("org.eclipse.jst.server.jetty.runtime." + versionNumber);
     }
 
     public IJettyVersionHandler getJettyVersionHandler(String id)
     {
         String version = getVersion(id);
-        IJettyVersionProvider versionProvider = versionProviders.get(version);
+        IJettyVersionProvider versionProvider = _versionProviders.get(version);
         if (versionProvider == null)
         {
             throw new JettyVersionHandlerNotFoundException(version);
@@ -69,7 +70,7 @@ public class JettyVersionManager
     public IJettyConfiguration getJettyConfiguration(String id, IFolder path)
     {
         String version = getVersion(id);
-        IJettyVersionProvider versionProvider = versionProviders.get(version);
+        IJettyVersionProvider versionProvider = _versionProviders.get(version);
         if (versionProvider == null)
         {
             throw new JettyVersionHandlerNotFoundException(version);
@@ -80,15 +81,19 @@ public class JettyVersionManager
     private String getVersion(String id)
     {
         String version = id;
+        
         int index = version.lastIndexOf('.');
+        
         if (index != -1)
         {
             version = version.substring(index + 1,version.length());
         }
+        
         if (!version.startsWith("v"))
         {
             version = "v" + version;
         }
+        
         version = version.toUpperCase();
         return version;
     }
@@ -107,7 +112,7 @@ public class JettyVersionManager
 
     public Collection<String> getRuntimeTypes()
     {
-        return runtimeTypes;
+        return _runtimeTypes;
     }
 
 }

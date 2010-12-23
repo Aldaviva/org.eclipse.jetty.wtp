@@ -22,9 +22,9 @@ import org.w3c.dom.Node;
 public class WebAppContext extends XMLElement
 {
 
-    private File saveFile;
-    private String memento;
-    private String documentBase;
+    private File _saveFile;
+    private String _memento;
+    private String _documentBase;
 
     public void setContextPath(String contextPath)
     {
@@ -69,19 +69,19 @@ public class WebAppContext extends XMLElement
 
     public void save() throws IOException
     {
-        XMLUtil.save(saveFile.getCanonicalPath(),getElementNode().getOwnerDocument());
+        XMLUtil.save(_saveFile.getCanonicalPath(),getElementNode().getOwnerDocument());
     }
 
     public void setSaveFile(File saveFile)
     {
-        this.saveFile = saveFile;
+        this._saveFile = saveFile;
         String war = getWar();
         File warFile = new File(war);
         if (war != null && warFile.exists())
         {
             try
             {
-                this.documentBase = warFile.getCanonicalPath();
+                this._documentBase = warFile.getCanonicalPath();
             }
             catch (IOException e)
             {
@@ -91,19 +91,19 @@ public class WebAppContext extends XMLElement
         }
         else
         {
-            this.documentBase = saveFile.getName();
-            int index = documentBase.lastIndexOf('.');
+            this._documentBase = saveFile.getName();
+            int index = _documentBase.lastIndexOf('.');
             if (index != -1)
             {
-                documentBase = documentBase.substring(0,index);
+                _documentBase = _documentBase.substring(0,index);
             }
-            this.memento = "org.eclipse.jst.jee.server:" + documentBase;
+            this._memento = "org.eclipse.jst.jee.server:" + _documentBase;
         }
     }
 
     public String getMemento()
     {
-        return memento;
+        return _memento;
     }
 
     // public void setMemento(String memento) {
@@ -112,7 +112,7 @@ public class WebAppContext extends XMLElement
 
     public String getDocumentBase()
     {
-        return documentBase;
+        return _documentBase;
     }
 
     // public void setDocumentBase(String documentBase) {

@@ -20,8 +20,8 @@ import org.eclipse.jst.server.jetty.core.internal.Messages;
  */
 public class AddWebModuleCommand extends ConfigurationCommand
 {
-    protected WebModule module;
-    protected int modules = -1;
+    protected WebModule _module;
+    protected int _moduleCount = -1;
 
     /**
      * AddWebModuleCommand constructor comment.
@@ -34,7 +34,7 @@ public class AddWebModuleCommand extends ConfigurationCommand
     public AddWebModuleCommand(IJettyConfigurationWorkingCopy configuration, WebModule module)
     {
         super(configuration,Messages.configurationEditorActionAddWebModule);
-        this.module = module;
+        this._module = module;
     }
 
     /**
@@ -42,8 +42,8 @@ public class AddWebModuleCommand extends ConfigurationCommand
      */
     public void execute()
     {
-        modules = configuration.getWebModules().size();
-        configuration.addWebModule(-1,module);
+        _moduleCount = getWorkingCopy().getWebModules().size();
+        getWorkingCopy().addWebModule(-1,_module);
     }
 
     /**
@@ -51,6 +51,6 @@ public class AddWebModuleCommand extends ConfigurationCommand
      */
     public void undo()
     {
-        configuration.removeWebModule(modules);
+        getWorkingCopy().removeWebModule(_moduleCount);
     }
 }

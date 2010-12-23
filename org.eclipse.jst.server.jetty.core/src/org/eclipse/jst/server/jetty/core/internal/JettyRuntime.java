@@ -47,17 +47,19 @@ public class JettyRuntime extends RuntimeDelegate implements IJettyRuntime, IJet
 {
 
     // private static final String TOOLS_JAR_PATH = "lib" + File.separator + "tools.jar";
-    private static final String JAVAC_MAIN = "com.sun.tools.javac.Main";
-    private static final String CLASS_DETECTOR = "org.eclipse.jst.server.Jetty.core.internal.ClassDetector";
+    private static final String __JAVAC_MAIN = "com.sun.tools.javac.Main";
+    private static final String __CLASS_DETECTOR = "org.eclipse.jst.server.jetty.core.internal.ClassDetector";
 
-    protected static final String PROP_VM_INSTALL_TYPE_ID = "vm-install-type-id";
-    protected static final String PROP_VM_INSTALL_ID = "vm-install-id";
+    protected static final String __PROP_VM_INSTALL_TYPE_ID = "vm-install-type-id";
+    protected static final String __PROP_VM_INSTALL_ID = "vm-install-id";
 
-    protected final static Map<File, Boolean> sdkMap = new HashMap<File, Boolean>(2);
-    private static Map<String, Integer> javaVersionMap = new ConcurrentHashMap<String, Integer>();
+    protected final static Map<File, Boolean> __SDK_MAP = new HashMap<File, Boolean>(2);
+    
+    private static Map<String, Integer> __JAVA_VERSION_MAP = new ConcurrentHashMap<String, Integer>();
 
     public JettyRuntime()
     {
+        super();  // possible error
         // do nothing
     }
 
@@ -69,12 +71,12 @@ public class JettyRuntime extends RuntimeDelegate implements IJettyRuntime, IJet
 
     protected String getVMInstallTypeId()
     {
-        return getAttribute(PROP_VM_INSTALL_TYPE_ID,(String)null);
+        return getAttribute(__PROP_VM_INSTALL_TYPE_ID,(String)null);
     }
 
     protected String getVMInstallId()
     {
-        return getAttribute(PROP_VM_INSTALL_ID,(String)null);
+        return getAttribute(__PROP_VM_INSTALL_ID,(String)null);
     }
 
     public boolean isUsingDefaultJRE()
@@ -100,8 +102,9 @@ public class JettyRuntime extends RuntimeDelegate implements IJettyRuntime, IJet
         }
         catch (Exception e)
         {
-            // ignore
+            JettyPlugin.log(e);
         }
+        
         return null;
     }
 
@@ -119,7 +122,7 @@ public class JettyRuntime extends RuntimeDelegate implements IJettyRuntime, IJet
             }
             catch (IOException e)
             {
-                // Ignore if there is a problem
+                JettyPlugin.log(e);
             }
         }
         return getVersionHandler().getRuntimeClasspath(installPath,configPath);
@@ -165,6 +168,7 @@ public class JettyRuntime extends RuntimeDelegate implements IJettyRuntime, IJet
         // }
 
         status = getVersionHandler().validate(getRuntime().getLocation(),getVMInstall());
+        
         if (status != null)
         {
             return status;
@@ -245,20 +249,30 @@ public class JettyRuntime extends RuntimeDelegate implements IJettyRuntime, IJet
             setVMInstall(null,null);
         }
         else
+        {
             setVMInstall(vmInstall.getVMInstallType().getId(),vmInstall.getId());
+        }
     }
 
     protected void setVMInstall(String typeId, String id)
     {
         if (typeId == null)
-            setAttribute(PROP_VM_INSTALL_TYPE_ID,(String)null);
+        {
+            setAttribute(__PROP_VM_INSTALL_TYPE_ID,(String)null);
+        }
         else
-            setAttribute(PROP_VM_INSTALL_TYPE_ID,typeId);
+        {
+            setAttribute(__PROP_VM_INSTALL_TYPE_ID,typeId);
+        }
 
         if (id == null)
-            setAttribute(PROP_VM_INSTALL_ID,(String)null);
+        {
+            setAttribute(__PROP_VM_INSTALL_ID,(String)null);
+        }
         else
-            setAttribute(PROP_VM_INSTALL_ID,id);
+        {
+            setAttribute(__PROP_VM_INSTALL_ID,id);
+        }
     }
 
     /**
@@ -272,9 +286,10 @@ public class JettyRuntime extends RuntimeDelegate implements IJettyRuntime, IJet
     {
         // first try the cache
         File javaHome = getVMInstall().getInstallLocation();
+        
         try
         {
-            Boolean b = (Boolean)sdkMap.get(javaHome);
+            Boolean b = (Boolean)__SDK_MAP.get(javaHome);
             return b.booleanValue();
         }
         catch (Exception e)
@@ -287,10 +302,10 @@ public class JettyRuntime extends RuntimeDelegate implements IJettyRuntime, IJet
         if (file != null && file.exists())
         {
             IVMRunner vmRunner = getVMInstall().getVMRunner(ILaunchManager.RUN_MODE);
-            VMRunnerConfiguration config = new VMRunnerConfiguration(CLASS_DETECTOR,new String[]
+            VMRunnerConfiguration config = new VMRunnerConfiguration(__CLASS_DETECTOR,new String[]
             { file.getAbsolutePath() });
             config.setProgramArguments(new String[]
-            { JAVAC_MAIN });
+            { __JAVAC_MAIN });
             ILaunch launch = new Launch(null,ILaunchManager.RUN_MODE,null);
             try
             {
@@ -323,7 +338,7 @@ public class JettyRuntime extends RuntimeDelegate implements IJettyRuntime, IJet
                         if (StringUtils.isTrue(text))
                             found = true;
 
-                        sdkMap.put(javaHome,Boolean.valueOf(found));
+                        __SDK_MAP.put(javaHome,Boolean.valueOf(found));
                         return found;
                     }
                 }
@@ -355,7 +370,7 @@ public class JettyRuntime extends RuntimeDelegate implements IJettyRuntime, IJet
 
     private boolean isVMMinimumVersion(String javaVersion, int minimumVersion)
     {
-        Integer version = (Integer)javaVersionMap.get(javaVersion);
+        Integer version = (Integer)__JAVA_VERSION_MAP.get(javaVersion);
         if (version == null)
         {
             int index = javaVersion.indexOf('.');
@@ -370,7 +385,7 @@ public class JettyRuntime extends RuntimeDelegate implements IJettyRuntime, IJet
                     {
                         int minor = Integer.parseInt(javaVersion.substring(index,index2));
                         version = Integer.valueOf(major + minor);
-                        javaVersionMap.put(javaVersion,version);
+                        __JAVA_VERSION_MAP.put(javaVersion,version);
                     }
                 }
                 catch (NumberFormatException e)
@@ -386,5 +401,4 @@ public class JettyRuntime extends RuntimeDelegate implements IJettyRuntime, IJet
         }
         return true;
     }
-
 }

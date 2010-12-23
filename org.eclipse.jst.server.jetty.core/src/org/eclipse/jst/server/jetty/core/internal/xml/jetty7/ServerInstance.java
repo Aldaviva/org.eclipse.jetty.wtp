@@ -36,26 +36,29 @@ import org.xml.sax.SAXException;
 public class ServerInstance
 {
 
-    private List<Server> jettyServers;
-    private IPath runtimeBaseDirectory;
-    private boolean contextsLoaded = false;
-    private List<WebAppContext> webAppContexts = new ArrayList<WebAppContext>();
-    private WebApp webApp = null;
+    private List<Server> _jettyServers;
+    private IPath _runtimeBaseDirectory;
+    private boolean _contextsLoaded = false;
+    private List<WebAppContext> _webAppContexts = new ArrayList<WebAppContext>();
+    private WebApp _webApp = null;
 
     public ServerInstance(List<Server> jettyServers, WebApp webApp, IPath runtimeBaseDirectory)
     {
         if (jettyServers == null)
+        {
             throw new IllegalArgumentException("Jetty Server argument may not be null.");
-        this.jettyServers = jettyServers;
-        this.runtimeBaseDirectory = runtimeBaseDirectory;
-        this.webApp = webApp;
+        }
+        
+        this._jettyServers = jettyServers;
+        this._runtimeBaseDirectory = runtimeBaseDirectory;
+        this._webApp = webApp;
     }
 
     public List<Connector> getConnectors()
     {
         List<Connector> allConnectors = null;
         List<Connector> serverConnectors = null;
-        for (Server server : jettyServers)
+        for (Server server : _jettyServers)
         {
             serverConnectors = server.getConnectors();
             if (serverConnectors != null)
@@ -72,9 +75,9 @@ public class ServerInstance
 
     public boolean removeContext(int index)
     {
-        if (index >= webAppContexts.size())
+        if (index >= _webAppContexts.size())
             return false;
-        WebAppContext webAppContext = webAppContexts.remove(index);
+        WebAppContext webAppContext = _webAppContexts.remove(index);
         if (webAppContext != null)
         {
             IPath contextFilePath = getXMLContextFilePath(webAppContext.getContextPath());
@@ -89,7 +92,7 @@ public class ServerInstance
 
     public List<Server> getJettyServers()
     {
-        return jettyServers;
+        return _jettyServers;
     }
 
     public void save(final IFolder folder, IProgressMonitor monitor) throws IOException, CoreException
@@ -99,7 +102,7 @@ public class ServerInstance
         byte[] data = null;
         InputStream in = null;
         IFolder newFolder = folder;
-        for (Server jettyServer : jettyServers)
+        for (Server jettyServer : _jettyServers)
         {
             path = jettyServer.getPath();
             if (path.segmentCount() > 1)
@@ -122,17 +125,17 @@ public class ServerInstance
             else
                 file.create(in,true,ProgressUtil.getSubMonitorFor(monitor,200));
         }
-        if (webApp != null)
+        if (_webApp != null)
         {
-            path = webApp.getPath();
+            path = _webApp.getPath();
             if (path.segmentCount() > 1)
             {
                 newFolder = folder.getFolder(path.removeLastSegments(1));
                 IOUtils.createFolder(newFolder,monitor);
             }
 
-            filename = webApp.getFile().getName();
-            data = webApp.getFactory().getContents();
+            filename = _webApp.getFile().getName();
+            data = _webApp.getFactory().getContents();
             in = new ByteArrayInputStream(data);
             IFile file = newFolder.getFile(filename);
             if (file.exists())
@@ -184,7 +187,7 @@ public class ServerInstance
         }
         // Save it as file in the WTP /contexts
         String fileName = pathWithoutSlash + ".xml";
-        IPath contextFolderPath = runtimeBaseDirectory.append("contexts");
+        IPath contextFolderPath = _runtimeBaseDirectory.append("contexts");
         File folder = contextFolderPath.toFile();
         if (!folder.exists())
         {
@@ -198,18 +201,18 @@ public class ServerInstance
         Factory webAppContextFactory = new Factory();
         webAppContextFactory.setPackageName("org.eclipse.jst.server.jetty.core.internal.xml.jetty7.webapp");
         WebAppContext context = (WebAppContext)webAppContextFactory.loadDocument(stream);
-        webAppContexts.add(context);
+        _webAppContexts.add(context);
         return context;
     }
 
     private void loadContextsIfNeeded()
     {
-        if (contextsLoaded)
+        if (_contextsLoaded)
             return;
         try
         {
             WebAppContext context = null;
-            IPath contexts = runtimeBaseDirectory.append("contexts");
+            IPath contexts = _runtimeBaseDirectory.append("contexts");
             File contextsFolder = contexts.toFile();
             if (contextsFolder.exists())
             {
@@ -248,14 +251,14 @@ public class ServerInstance
         }
         finally
         {
-            contextsLoaded = true;
+            _contextsLoaded = true;
         }
     }
 
     public Collection<WebAppContext> getContexts()
     {
         loadContextsIfNeeded();
-        return webAppContexts;
+        return _webAppContexts;
     }
 
     public void setPort(String port)
@@ -271,7 +274,7 @@ public class ServerInstance
 
     public WebAppContext getContext(int index)
     {
-        return webAppContexts.get(index);
+        return _webAppContexts.get(index);
     }
 
 }

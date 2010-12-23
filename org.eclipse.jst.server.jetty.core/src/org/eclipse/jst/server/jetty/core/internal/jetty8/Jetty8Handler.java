@@ -27,8 +27,15 @@ public class Jetty8Handler extends Jetty7Handler
     public IStatus canAddModule(IModule module)
     {
         String version = module.getModuleType().getVersion();
-        if ("2.2".equals(version) || "2.3".equals(version) || "2.4".equals(version) || "2.5".equals(version) || "3.0".equals(version))
+        
+        if ("2.2".equals(version) || 
+            "2.3".equals(version) || 
+            "2.4".equals(version) || 
+            "2.5".equals(version) || 
+            "3.0".equals(version))
+        {
             return Status.OK_STATUS;
+        }
 
         return new Status(IStatus.ERROR,JettyPlugin.PLUGIN_ID,0,Messages.errorSpec70,null);
     }

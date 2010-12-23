@@ -20,8 +20,8 @@ import org.eclipse.jst.server.jetty.core.internal.Messages;
  */
 public class RemoveWebModuleCommand extends ConfigurationCommand
 {
-    protected int index;
-    protected WebModule module;
+    protected int _index;
+    protected WebModule _module;
 
     /**
      * RemoveWebModuleCommand constructor comment.
@@ -34,7 +34,7 @@ public class RemoveWebModuleCommand extends ConfigurationCommand
     public RemoveWebModuleCommand(IJettyConfigurationWorkingCopy configuration, int index)
     {
         super(configuration,Messages.configurationEditorActionRemoveWebModule);
-        this.index = index;
+        this._index = index;
     }
 
     /**
@@ -42,8 +42,8 @@ public class RemoveWebModuleCommand extends ConfigurationCommand
      */
     public void execute()
     {
-        module = (WebModule)configuration.getWebModules().get(index);
-        configuration.removeWebModule(index);
+        _module = getWorkingCopy().getWebModules().get(_index);
+        getWorkingCopy().removeWebModule(_index);
     }
 
     /**
@@ -51,6 +51,6 @@ public class RemoveWebModuleCommand extends ConfigurationCommand
      */
     public void undo()
     {
-        configuration.addWebModule(index,module);
+        getWorkingCopy().addWebModule(_index,_module);
     }
 }
