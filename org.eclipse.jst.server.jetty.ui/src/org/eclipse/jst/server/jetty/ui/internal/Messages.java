@@ -53,6 +53,6 @@ public class Messages extends NLS
 
     static
     {
-        NLS.initializeMessages(JettyUIPlugin.PLUGIN_ID + ".internal.Messages",Messages.class);
+        NLS.initializeMessages(JettyUIPlugin.__PLUGIN_ID + ".internal.Messages",Messages.class);
     }
 }

@@ -27,14 +27,14 @@ import org.eclipse.swt.widgets.Control;
  */
 public class SWTUtil
 {
-    private static FontMetrics fontMetrics;
+    private static FontMetrics _fontMetrics;
 
     protected static void initializeDialogUnits(Control testControl)
     {
         // Compute and store a font metric
         GC gc = new GC(testControl);
         gc.setFont(JFaceResources.getDialogFont());
-        fontMetrics = gc.getFontMetrics();
+        _fontMetrics = gc.getFontMetrics();
         gc.dispose();
     }
 
@@ -43,7 +43,7 @@ public class SWTUtil
      */
     protected static int getButtonWidthHint(Button button)
     {
-        int widthHint = Dialog.convertHorizontalDLUsToPixels(fontMetrics,IDialogConstants.BUTTON_WIDTH);
+        int widthHint = Dialog.convertHorizontalDLUsToPixels(_fontMetrics,IDialogConstants.BUTTON_WIDTH);
         return Math.max(widthHint,button.computeSize(SWT.DEFAULT,SWT.DEFAULT,true).x);
     }
 
@@ -60,8 +60,12 @@ public class SWTUtil
     {
         Button b = new Button(comp,SWT.PUSH);
         b.setText(label);
-        if (fontMetrics == null)
+        
+        if (_fontMetrics == null)
+        {
             initializeDialogUnits(comp);
+        }
+        
         GridData data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
         data.widthHint = getButtonWidthHint(b);
         b.setLayoutData(data);

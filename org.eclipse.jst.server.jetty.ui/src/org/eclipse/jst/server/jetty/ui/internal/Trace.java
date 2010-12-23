@@ -58,7 +58,7 @@ public class Trace
         if (!JettyUIPlugin.getDefault().isDebugging())
             return;
 
-        System.out.println(JettyUIPlugin.PLUGIN_ID + " " + s);
+        System.out.println(JettyUIPlugin.__PLUGIN_ID + " " + s);
         if (t != null)
             t.printStackTrace();
     }

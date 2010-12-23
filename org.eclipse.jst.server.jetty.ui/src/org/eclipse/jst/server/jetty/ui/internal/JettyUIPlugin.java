@@ -27,22 +27,22 @@ public class JettyUIPlugin extends AbstractUIPlugin
 {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "org.eclipse.jst.server.jetty.ui"; //$NON-NLS-1$
+    public static final String __PLUGIN_ID = "org.eclipse.jst.server.jetty.ui"; //$NON-NLS-1$
 
     // base url for icons
-    private static URL ICON_BASE_URL;
-    private static final String URL_OBJ = "obj16/";
-    private static final String URL_WIZBAN = "wizban/";
-    public static final String IMG_WIZ_JETTY = "wizJetty";
+    private static URL __ICON_BASE_URL;
+    private static final String __URL_OBJ = "obj16/";
+    private static final String __URL_WIZBAN = "wizban/";
+    public static final String __IMG_WIZ_JETTY = "wizJetty";
 
-    public static final String IMG_WEB_MODULE = "webModule";
-    public static final String IMG_PORT = "port";
-    public static final String IMG_PROJECT_MISSING = "projectMissing";
+    public static final String __IMG_WEB_MODULE = "webModule";
+    public static final String __IMG_PORT = "port";
+    public static final String __IMG_PROJECT_MISSING = "projectMissing";
 
     // The shared instance
-    private static JettyUIPlugin plugin;
+    private static JettyUIPlugin _plugin;
 
-    protected Map<String, ImageDescriptor> imageDescriptors = new HashMap<String, ImageDescriptor>();
+    protected Map<String, ImageDescriptor> _imageDescriptors = new HashMap<String, ImageDescriptor>();
 
     /**
      * The constructor
@@ -59,7 +59,7 @@ public class JettyUIPlugin extends AbstractUIPlugin
     public void start(BundleContext context) throws Exception
     {
         super.start(context);
-        plugin = this;
+        _plugin = this;
     }
 
     /*
@@ -69,7 +69,7 @@ public class JettyUIPlugin extends AbstractUIPlugin
      */
     public void stop(BundleContext context) throws Exception
     {
-        plugin = null;
+        _plugin = null;
         super.stop(context);
     }
 
@@ -80,7 +80,7 @@ public class JettyUIPlugin extends AbstractUIPlugin
      */
     public static JettyUIPlugin getDefault()
     {
-        return plugin;
+        return _plugin;
     }
 
     @Override
@@ -88,15 +88,15 @@ public class JettyUIPlugin extends AbstractUIPlugin
     {
         ImageRegistry registry = new ImageRegistry();
 
-        registerImage(registry,IMG_WIZ_JETTY,URL_WIZBAN + "jetty_wiz.png");
+        registerImage(registry,__IMG_WIZ_JETTY,__URL_WIZBAN + "jetty_wiz.png");
 
-        registerImage(registry,IMG_WEB_MODULE,URL_OBJ + "web_module.gif");
-        registerImage(registry,IMG_PORT,URL_OBJ + "port.gif");
+        registerImage(registry,__IMG_WEB_MODULE,__URL_OBJ + "web_module.gif");
+        registerImage(registry,__IMG_PORT,__URL_OBJ + "port.gif");
         // registerImage(registry, IMG_WEB_MODULE, URL_OBJ + "web_module.gif");
         // registerImage(registry, IMG_MIME_MAPPING, URL_OBJ + "mime_mapping.gif");
         // registerImage(registry, IMG_MIME_EXTENSION, URL_OBJ + "mime_extension.gif");
         // registerImage(registry, IMG_PORT, URL_OBJ + "port.gif");
-        registerImage(registry,IMG_PROJECT_MISSING,URL_OBJ + "project_missing.gif");
+        registerImage(registry,__IMG_PROJECT_MISSING,__URL_OBJ + "project_missing.gif");
 
         return registry;
     }
@@ -125,7 +125,7 @@ public class JettyUIPlugin extends AbstractUIPlugin
         try
         {
             getDefault().getImageRegistry();
-            return (ImageDescriptor)getDefault().imageDescriptors.get(key);
+            return (ImageDescriptor)getDefault()._imageDescriptors.get(key);
         }
         catch (Exception e)
         {
@@ -143,17 +143,17 @@ public class JettyUIPlugin extends AbstractUIPlugin
      */
     private void registerImage(ImageRegistry registry, String key, String partialURL)
     {
-        if (ICON_BASE_URL == null)
+        if (__ICON_BASE_URL == null)
         {
             String pathSuffix = "icons/";
-            ICON_BASE_URL = getDefault().getBundle().getEntry(pathSuffix);
+            __ICON_BASE_URL = getDefault().getBundle().getEntry(pathSuffix);
         }
 
         try
         {
-            ImageDescriptor id = ImageDescriptor.createFromURL(new URL(ICON_BASE_URL,partialURL));
+            ImageDescriptor id = ImageDescriptor.createFromURL(new URL(__ICON_BASE_URL,partialURL));
             registry.put(key,id);
-            imageDescriptors.put(key,id);
+            _imageDescriptors.put(key,id);
         }
         catch (Exception e)
         {

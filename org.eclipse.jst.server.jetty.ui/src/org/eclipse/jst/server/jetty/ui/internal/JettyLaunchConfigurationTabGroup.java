@@ -27,8 +27,7 @@ import org.eclipse.wst.server.ui.ServerLaunchConfigurationTab;
 public class JettyLaunchConfigurationTabGroup extends AbstractLaunchConfigurationTabGroup
 {
 
-    private static final String[] SERVER_TYPE_IDS = new String[]
-    { "org.eclipse.jst.server.jetty" };
+    private static final String[] __SERVER_TYPE_IDS = new String[]{ "org.eclipse.jst.server.jetty" };
 
     /*
      * @see ILaunchConfigurationTabGroup#createTabs(ILaunchConfigurationDialog, String)
@@ -36,7 +35,7 @@ public class JettyLaunchConfigurationTabGroup extends AbstractLaunchConfiguratio
     public void createTabs(ILaunchConfigurationDialog dialog, String mode)
     {
         ILaunchConfigurationTab[] tabs = new ILaunchConfigurationTab[6];
-        tabs[0] = new ServerLaunchConfigurationTab(SERVER_TYPE_IDS);
+        tabs[0] = new ServerLaunchConfigurationTab(__SERVER_TYPE_IDS);
         tabs[0].setLaunchConfigurationDialog(dialog);
         tabs[1] = new JavaArgumentsTab();
         tabs[1].setLaunchConfigurationDialog(dialog);

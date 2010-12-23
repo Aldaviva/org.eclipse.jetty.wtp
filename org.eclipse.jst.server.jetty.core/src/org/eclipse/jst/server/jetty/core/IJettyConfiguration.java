@@ -26,13 +26,13 @@ import org.eclipse.wst.server.core.ServerPort;
 public interface IJettyConfiguration
 {
 
-    public static final String NAME_PROPERTY = "name";
-    public static final String PORT_PROPERTY = "port";
-    public static final String MODIFY_PORT_PROPERTY = "modifyPort";
+    public static final String __NAME_PROPERTY = "name";
+    public static final String __PORT_PROPERTY = "port";
+    public static final String __MODIFY_PORT_PROPERTY = "modifyPort";
 
-    public static final String MODIFY_WEB_MODULE_PROPERTY = "modifyWebModule";
-    public static final String ADD_WEB_MODULE_PROPERTY = "addWebModule";
-    public static final String REMOVE_WEB_MODULE_PROPERTY = "removeWebModule";
+    public static final String __MODIFY_WEB_MODULE_PROPERTY = "modifyWebModule";
+    public static final String __ADD_WEB_MODULE_PROPERTY = "addWebModule";
+    public static final String __REMOVE_WEB_MODULE_PROPERTY = "removeWebModule";
 
     /**
      * Returns a list of ServerPorts that this configuration uses.

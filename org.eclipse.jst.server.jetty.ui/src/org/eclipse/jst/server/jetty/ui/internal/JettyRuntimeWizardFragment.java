@@ -25,7 +25,7 @@ import org.eclipse.wst.server.ui.wizard.WizardFragment;
  */
 public class JettyRuntimeWizardFragment extends WizardFragment
 {
-    protected JettyRuntimeComposite comp;
+    protected JettyRuntimeComposite _runtimeComposite;
 
     public JettyRuntimeWizardFragment()
     {
@@ -54,16 +54,16 @@ public class JettyRuntimeWizardFragment extends WizardFragment
      */
     public Composite createComposite(Composite parent, IWizardHandle wizard)
     {
-        comp = new JettyRuntimeComposite(parent,wizard);
-        return comp;
+        _runtimeComposite = new JettyRuntimeComposite(parent,wizard);
+        return _runtimeComposite;
     }
 
     public void enter()
     {
-        if (comp != null)
+        if (_runtimeComposite != null)
         {
             IRuntimeWorkingCopy runtime = (IRuntimeWorkingCopy)getTaskModel().getObject(TaskModel.TASK_RUNTIME);
-            comp.setRuntime(runtime);
+            _runtimeComposite.setRuntime(runtime);
         }
     }
 
@@ -72,6 +72,8 @@ public class JettyRuntimeWizardFragment extends WizardFragment
         IRuntimeWorkingCopy runtime = (IRuntimeWorkingCopy)getTaskModel().getObject(TaskModel.TASK_RUNTIME);
         IPath path = runtime.getLocation();
         if (runtime.validate(null).getSeverity() != IStatus.ERROR)
+        {
             JettyPlugin.setPreference("location" + runtime.getRuntimeType().getId(),path.toString());
+        }
     }
 }

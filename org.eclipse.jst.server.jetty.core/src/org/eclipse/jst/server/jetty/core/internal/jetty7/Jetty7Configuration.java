@@ -228,7 +228,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
                 // module.getMemento().length() > 0)
                 // context.setSource(module.getMemento());
                 _isServerDirty = true;
-                firePropertyChangeEvent(ADD_WEB_MODULE_PROPERTY,null,module);
+                firePropertyChangeEvent(__ADD_WEB_MODULE_PROPERTY,null,module);
             }
         }
         catch (Exception e)
@@ -250,7 +250,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
         {
             _serverInstance.removeContext(index);
             _isServerDirty = true;
-            firePropertyChangeEvent(REMOVE_WEB_MODULE_PROPERTY,null,index);
+            firePropertyChangeEvent(__REMOVE_WEB_MODULE_PROPERTY,null,index);
         }
         catch (Exception e)
         {
@@ -613,7 +613,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
             {
                 _serverInstance.setPort(port + "");
                 _isServerDirty = true;
-                firePropertyChangeEvent(MODIFY_PORT_PROPERTY,id, Integer.valueOf(port));
+                firePropertyChangeEvent(__MODIFY_PORT_PROPERTY,id, Integer.valueOf(port));
                 return;
             }
 
@@ -671,7 +671,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
                 context.save();
                 _isServerDirty = true;
                 WebModule module = new WebModule(path,docBase,null,reloadable);
-                firePropertyChangeEvent(MODIFY_WEB_MODULE_PROPERTY, Integer.valueOf(index),module);
+                firePropertyChangeEvent(__MODIFY_WEB_MODULE_PROPERTY, Integer.valueOf(index),module);
             }
         }
         catch (Exception e)

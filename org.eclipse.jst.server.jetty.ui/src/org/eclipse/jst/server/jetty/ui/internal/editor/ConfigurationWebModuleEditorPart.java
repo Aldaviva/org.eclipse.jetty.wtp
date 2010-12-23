@@ -67,17 +67,17 @@ import org.eclipse.wst.server.ui.editor.ServerEditorPart;
  */
 public class ConfigurationWebModuleEditorPart extends ServerEditorPart
 {
-    protected IJettyServerWorkingCopy server2;
-    protected IJettyConfigurationWorkingCopy configuration;
+    protected IJettyServerWorkingCopy _server2;
+    protected IJettyConfigurationWorkingCopy _configuration;
 
-    protected Table webAppTable;
-    protected int selection = -1;
-    protected Button addProject;
-    protected Button addExtProject;
-    protected Button remove;
-    protected Button edit;
+    protected Table _webAppTable;
+    protected int _selection = -1;
+    protected Button _addProjectButton;
+    protected Button _addExtProjectButton;
+    protected Button _removeButton;
+    protected Button _editButton;
 
-    protected PropertyChangeListener listener;
+    protected PropertyChangeListener _listener;
 
     /**
      * ConfigurationWebModuleEditorPart constructor comment.
@@ -92,25 +92,25 @@ public class ConfigurationWebModuleEditorPart extends ServerEditorPart
 	 */
     protected void addChangeListener()
     {
-        listener = new PropertyChangeListener()
+        _listener = new PropertyChangeListener()
         {
             public void propertyChange(PropertyChangeEvent event)
             {
-                if (IJettyConfiguration.MODIFY_WEB_MODULE_PROPERTY.equals(event.getPropertyName()))
+                if (IJettyConfiguration.__MODIFY_WEB_MODULE_PROPERTY.equals(event.getPropertyName()))
                 {
                     initialize();
                 }
-                else if (IJettyConfiguration.ADD_WEB_MODULE_PROPERTY.equals(event.getPropertyName()))
+                else if (IJettyConfiguration.__ADD_WEB_MODULE_PROPERTY.equals(event.getPropertyName()))
                 {
                     initialize();
                 }
-                else if (IJettyConfiguration.REMOVE_WEB_MODULE_PROPERTY.equals(event.getPropertyName()))
+                else if (IJettyConfiguration.__REMOVE_WEB_MODULE_PROPERTY.equals(event.getPropertyName()))
                 {
                     initialize();
                 }
             }
         };
-        configuration.addPropertyChangeListener(listener);
+        _configuration.addPropertyChangeListener(_listener);
     }
 
     /**
@@ -123,7 +123,7 @@ public class ConfigurationWebModuleEditorPart extends ServerEditorPart
         ScrolledForm form = toolkit.createScrolledForm(parent);
         toolkit.decorateFormHeading(form.getForm());
         form.setText(Messages.configurationEditorWebModulesPageTitle);
-        form.setImage(JettyUIPlugin.getImage(JettyUIPlugin.IMG_WEB_MODULE));
+        form.setImage(JettyUIPlugin.getImage(JettyUIPlugin.__IMG_WEB_MODULE));
         GridLayout layout = new GridLayout();
         layout.marginTop = 6;
         layout.marginLeft = 6;
@@ -148,25 +148,25 @@ public class ConfigurationWebModuleEditorPart extends ServerEditorPart
         toolkit.paintBordersFor(composite);
         section.setClient(composite);
 
-        webAppTable = toolkit.createTable(composite,SWT.V_SCROLL | SWT.SINGLE | SWT.FULL_SELECTION);
-        webAppTable.setHeaderVisible(true);
-        webAppTable.setLinesVisible(true);
-        whs.setHelp(webAppTable,ContextIds.CONFIGURATION_EDITOR_WEBMODULES_LIST);
+        _webAppTable = toolkit.createTable(composite,SWT.V_SCROLL | SWT.SINGLE | SWT.FULL_SELECTION);
+        _webAppTable.setHeaderVisible(true);
+        _webAppTable.setLinesVisible(true);
+        whs.setHelp(_webAppTable,ContextIds.CONFIGURATION_EDITOR_WEBMODULES_LIST);
         // toolkit.paintBordersFor(webAppTable);
 
         TableLayout tableLayout = new TableLayout();
 
-        TableColumn col = new TableColumn(webAppTable,SWT.NONE);
+        TableColumn col = new TableColumn(_webAppTable,SWT.NONE);
         col.setText(Messages.configurationEditorPathColumn);
         ColumnWeightData colData = new ColumnWeightData(8,85,true);
         tableLayout.addColumnData(colData);
 
-        TableColumn col2 = new TableColumn(webAppTable,SWT.NONE);
+        TableColumn col2 = new TableColumn(_webAppTable,SWT.NONE);
         col2.setText(Messages.configurationEditorDocBaseColumn);
         colData = new ColumnWeightData(13,135,true);
         tableLayout.addColumnData(colData);
 
-        TableColumn col3 = new TableColumn(webAppTable,SWT.NONE);
+        TableColumn col3 = new TableColumn(_webAppTable,SWT.NONE);
         col3.setText(Messages.configurationEditorProjectColumn);
         colData = new ColumnWeightData(8,85,true);
         tableLayout.addColumnData(colData);
@@ -176,13 +176,13 @@ public class ConfigurationWebModuleEditorPart extends ServerEditorPart
         // colData = new ColumnWeightData(7, 75, true);
         // tableLayout.addColumnData(colData);
 
-        webAppTable.setLayout(tableLayout);
+        _webAppTable.setLayout(tableLayout);
 
         GridData data = new GridData(GridData.FILL_HORIZONTAL);
         data.widthHint = 450;
         data.heightHint = 120;
-        webAppTable.setLayoutData(data);
-        webAppTable.addSelectionListener(new SelectionAdapter()
+        _webAppTable.setLayoutData(data);
+        _webAppTable.addSelectionListener(new SelectionAdapter()
         {
             public void widgetSelected(SelectionEvent e)
             {
@@ -201,80 +201,80 @@ public class ConfigurationWebModuleEditorPart extends ServerEditorPart
 
         // buttons still to add:
         // add project, add external module, remove module
-        addProject = toolkit.createButton(rightPanel,Messages.configurationEditorAddProjectModule,SWT.PUSH);
+        _addProjectButton = toolkit.createButton(rightPanel,Messages.configurationEditorAddProjectModule,SWT.PUSH);
         data = new GridData(GridData.FILL_HORIZONTAL);
-        addProject.setLayoutData(data);
-        whs.setHelp(addProject,ContextIds.CONFIGURATION_EDITOR_WEBMODULES_ADD_PROJECT);
+        _addProjectButton.setLayoutData(data);
+        whs.setHelp(_addProjectButton,ContextIds.CONFIGURATION_EDITOR_WEBMODULES_ADD_PROJECT);
 
         // disable the add project module button if there are no
         // web projects in the workbench
         if (!canAddWebModule())
-            addProject.setEnabled(false);
+            _addProjectButton.setEnabled(false);
         else
         {
-            addProject.addSelectionListener(new SelectionAdapter()
+            _addProjectButton.addSelectionListener(new SelectionAdapter()
             {
                 public void widgetSelected(SelectionEvent e)
                 {
-                    WebModuleDialog dialog = new WebModuleDialog(getEditorSite().getShell(),getServer(),server2,configuration,true);
+                    WebModuleDialog dialog = new WebModuleDialog(getEditorSite().getShell(),getServer(),_server2,_configuration,true);
                     dialog.open();
                     if (dialog.getReturnCode() == IDialogConstants.OK_ID)
                     {
-                        execute(new AddModuleCommand(getServer(),dialog.module4));
+                        execute(new AddModuleCommand(getServer(),dialog._module4));
                     }
                 }
             });
         }
 
-        addExtProject = toolkit.createButton(rightPanel,Messages.configurationEditorAddExternalModule,SWT.PUSH);
+        _addExtProjectButton = toolkit.createButton(rightPanel,Messages.configurationEditorAddExternalModule,SWT.PUSH);
         data = new GridData(GridData.FILL_HORIZONTAL);
-        addExtProject.setLayoutData(data);
-        addExtProject.addSelectionListener(new SelectionAdapter()
+        _addExtProjectButton.setLayoutData(data);
+        _addExtProjectButton.addSelectionListener(new SelectionAdapter()
         {
             public void widgetSelected(SelectionEvent e)
             {
-                WebModuleDialog dialog = new WebModuleDialog(getEditorSite().getShell(),getServer(),server2,configuration,false);
+                WebModuleDialog dialog = new WebModuleDialog(getEditorSite().getShell(),getServer(),_server2,_configuration,false);
                 dialog.open();
                 if (dialog.getReturnCode() == IDialogConstants.OK_ID)
                 {
-                    execute(new AddWebModuleCommand(configuration,dialog.getWebModule()));
+                    execute(new AddWebModuleCommand(_configuration,dialog.getWebModule()));
                 }
             }
         });
-        whs.setHelp(addExtProject,ContextIds.CONFIGURATION_EDITOR_WEBMODULES_ADD_EXTERNAL);
+        whs.setHelp(_addExtProjectButton,ContextIds.CONFIGURATION_EDITOR_WEBMODULES_ADD_EXTERNAL);
 
-        edit = toolkit.createButton(rightPanel,Messages.editorEdit,SWT.PUSH);
+        _editButton = toolkit.createButton(rightPanel,Messages.editorEdit,SWT.PUSH);
         data = new GridData(GridData.FILL_HORIZONTAL);
-        edit.setLayoutData(data);
-        edit.setEnabled(false);
-        edit.addSelectionListener(new SelectionAdapter()
+        _editButton.setLayoutData(data);
+        _editButton.setEnabled(false);
+        _editButton.addSelectionListener(new SelectionAdapter()
         {
             public void widgetSelected(SelectionEvent e)
             {
-                if (selection < 0)
+                if (_selection < 0)
                     return;
-                WebModule module = (WebModule)configuration.getWebModules().get(selection);
-                WebModuleDialog dialog = new WebModuleDialog(getEditorSite().getShell(),getServer(),server2,configuration,module);
+                WebModule module = (WebModule)_configuration.getWebModules().get(_selection);
+                WebModuleDialog dialog = new WebModuleDialog(getEditorSite().getShell(),getServer(),_server2,_configuration,module);
                 dialog.open();
                 if (dialog.getReturnCode() == IDialogConstants.OK_ID)
                 {
-                    execute(new ModifyWebModuleCommand(configuration,selection,dialog.getWebModule()));
+                    execute(new ModifyWebModuleCommand(_configuration,_selection,dialog.getWebModule()));
                 }
             }
         });
-        whs.setHelp(edit,ContextIds.CONFIGURATION_EDITOR_WEBMODULES_EDIT);
+        whs.setHelp(_editButton,ContextIds.CONFIGURATION_EDITOR_WEBMODULES_EDIT);
 
-        remove = toolkit.createButton(rightPanel,Messages.editorRemove,SWT.PUSH);
+        _removeButton = toolkit.createButton(rightPanel,Messages.editorRemove,SWT.PUSH);
         data = new GridData(GridData.FILL_HORIZONTAL);
-        remove.setLayoutData(data);
-        remove.setEnabled(false);
-        remove.addSelectionListener(new SelectionAdapter()
+        _removeButton.setLayoutData(data);
+        _removeButton.setEnabled(false);
+        _removeButton.addSelectionListener(new SelectionAdapter()
         {
             public void widgetSelected(SelectionEvent e)
             {
-                if (selection < 0)
+                if (_selection < 0)
                     return;
-                TableItem item = webAppTable.getItem(selection);
+                TableItem item = _webAppTable.getItem(_selection);
                 if (item.getData() != null)
                 {
                     IModule module = (IModule)item.getData();
@@ -282,14 +282,14 @@ public class ConfigurationWebModuleEditorPart extends ServerEditorPart
                 }
                 else
                 {
-                    execute(new RemoveWebModuleCommand(configuration,selection));
+                    execute(new RemoveWebModuleCommand(_configuration,_selection));
                 }
-                remove.setEnabled(false);
-                edit.setEnabled(false);
-                selection = -1;
+                _removeButton.setEnabled(false);
+                _editButton.setEnabled(false);
+                _selection = -1;
             }
         });
-        whs.setHelp(remove,ContextIds.CONFIGURATION_EDITOR_WEBMODULES_REMOVE);
+        whs.setHelp(_removeButton,ContextIds.CONFIGURATION_EDITOR_WEBMODULES_REMOVE);
 
         form.setContent(section);
         form.reflow(true);
@@ -322,8 +322,8 @@ public class ConfigurationWebModuleEditorPart extends ServerEditorPart
     {
         super.dispose();
 
-        if (configuration != null)
-            configuration.removePropertyChangeListener(listener);
+        if (_configuration != null)
+            _configuration.removePropertyChangeListener(_listener);
     }
 
     /*
@@ -336,17 +336,17 @@ public class ConfigurationWebModuleEditorPart extends ServerEditorPart
         IJettyServer ts = (IJettyServer)server.loadAdapter(IJettyServer.class,null);
         try
         {
-            configuration = (IJettyConfigurationWorkingCopy)ts.getJettyConfiguration();
+            _configuration = (IJettyConfigurationWorkingCopy)ts.getJettyConfiguration();
         }
         catch (Exception e)
         {
             // ignore
         }
-        if (configuration != null)
+        if (_configuration != null)
             addChangeListener();
 
         if (server != null)
-            server2 = (IJettyServerWorkingCopy)server.loadAdapter(IJettyServerWorkingCopy.class,null);
+            _server2 = (IJettyServerWorkingCopy)server.loadAdapter(IJettyServerWorkingCopy.class,null);
 
         initialize();
     }
@@ -356,19 +356,20 @@ public class ConfigurationWebModuleEditorPart extends ServerEditorPart
 	 */
     protected void initialize()
     {
-        if (webAppTable == null)
+        if (_webAppTable == null)
             return;
 
-        webAppTable.removeAll();
+        _webAppTable.removeAll();
         setErrorMessage(null);
 
         ILabelProvider labelProvider = ServerUICore.getLabelProvider();
-        List list = configuration.getWebModules();
-        Iterator iterator = list.iterator();
+        List<WebModule> list = _configuration.getWebModules();
+        Iterator<WebModule> iterator = list.iterator();
+        
         while (iterator.hasNext())
         {
-            WebModule module = (WebModule)iterator.next();
-            TableItem item = new TableItem(webAppTable,SWT.NONE);
+            WebModule module = iterator.next();
+            TableItem item = new TableItem(_webAppTable,SWT.NONE);
 
             String memento = module.getMemento();
             String projectName = "";
@@ -377,7 +378,7 @@ public class ConfigurationWebModuleEditorPart extends ServerEditorPart
             {
                 projectName = NLS.bind(Messages.configurationEditorProjectMissing,new String[]
                 { memento });
-                projectImage = JettyUIPlugin.getImage(JettyUIPlugin.IMG_PROJECT_MISSING);
+                projectImage = JettyUIPlugin.getImage(JettyUIPlugin.__IMG_PROJECT_MISSING);
                 IModule module2 = ServerUtil.getModule(memento);
                 if (module2 != null)
                 {
@@ -391,13 +392,13 @@ public class ConfigurationWebModuleEditorPart extends ServerEditorPart
             String[] s = new String[]
             { module.getPath(), module.getDocumentBase(), projectName, reload };
             item.setText(s);
-            item.setImage(0,JettyUIPlugin.getImage(JettyUIPlugin.IMG_WEB_MODULE));
+            item.setImage(0,JettyUIPlugin.getImage(JettyUIPlugin.__IMG_WEB_MODULE));
             if (projectImage != null)
                 item.setImage(2,projectImage);
 
             if (!isDocumentBaseValid(module.getDocumentBase()))
             {
-                item.setImage(1,JettyUIPlugin.getImage(JettyUIPlugin.IMG_PROJECT_MISSING));
+                item.setImage(1,JettyUIPlugin.getImage(JettyUIPlugin.__IMG_PROJECT_MISSING));
                 setErrorMessage(NLS.bind(Messages.errorMissingWebModule,module.getDocumentBase()));
             }
         }
@@ -405,15 +406,15 @@ public class ConfigurationWebModuleEditorPart extends ServerEditorPart
 
         if (readOnly)
         {
-            addProject.setEnabled(false);
-            addExtProject.setEnabled(false);
-            edit.setEnabled(false);
-            remove.setEnabled(false);
+            _addProjectButton.setEnabled(false);
+            _addExtProjectButton.setEnabled(false);
+            _editButton.setEnabled(false);
+            _removeButton.setEnabled(false);
         }
         else
         {
-            addProject.setEnabled(canAddWebModule());
-            addExtProject.setEnabled(true);
+            _addProjectButton.setEnabled(canAddWebModule());
+            _addExtProjectButton.setEnabled(true);
         }
     }
 
@@ -427,15 +428,15 @@ public class ConfigurationWebModuleEditorPart extends ServerEditorPart
 
         try
         {
-            selection = webAppTable.getSelectionIndex();
-            remove.setEnabled(true);
-            edit.setEnabled(true);
+            _selection = _webAppTable.getSelectionIndex();
+            _removeButton.setEnabled(true);
+            _editButton.setEnabled(true);
         }
         catch (Exception e)
         {
-            selection = -1;
-            remove.setEnabled(false);
-            edit.setEnabled(false);
+            _selection = -1;
+            _removeButton.setEnabled(false);
+            _editButton.setEnabled(false);
         }
     }
 
@@ -460,11 +461,11 @@ public class ConfigurationWebModuleEditorPart extends ServerEditorPart
             // bad path
         }
 
-        if (s.startsWith(configuration.getDocBasePrefix()))
+        if (s.startsWith(_configuration.getDocBasePrefix()))
         {
             try
             {
-                String t = s.substring(configuration.getDocBasePrefix().length());
+                String t = s.substring(_configuration.getDocBasePrefix().length());
                 if (ResourcesPlugin.getWorkspace().getRoot().getProject(t).exists())
                     return true;
             }
@@ -494,7 +495,7 @@ public class ConfigurationWebModuleEditorPart extends ServerEditorPart
      */
     public void setFocus()
     {
-        if (webAppTable != null)
-            webAppTable.setFocus();
+        if (_webAppTable != null)
+            _webAppTable.setFocus();
     }
 }

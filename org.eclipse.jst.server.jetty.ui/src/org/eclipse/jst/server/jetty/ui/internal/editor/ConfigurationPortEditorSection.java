@@ -53,14 +53,14 @@ import org.eclipse.wst.server.ui.editor.ServerEditorSection;
  */
 public class ConfigurationPortEditorSection extends ServerEditorSection
 {
-    protected IJettyConfigurationWorkingCopy jettyConfiguration;
+    protected IJettyConfigurationWorkingCopy _jettyConfiguration;
 
-    protected boolean updating;
+    protected boolean _updating;
 
-    protected Table ports;
-    protected TableViewer viewer;
+    protected Table _ports;
+    protected TableViewer _viewer;
 
-    protected PropertyChangeListener listener;
+    protected PropertyChangeListener _listener;
 
     /**
      * ConfigurationPortEditorSection constructor comment.
@@ -75,11 +75,11 @@ public class ConfigurationPortEditorSection extends ServerEditorSection
 	 */
     protected void addChangeListener()
     {
-        listener = new PropertyChangeListener()
+        _listener = new PropertyChangeListener()
         {
             public void propertyChange(PropertyChangeEvent event)
             {
-                if (IJettyConfiguration.MODIFY_PORT_PROPERTY.equals(event.getPropertyName()))
+                if (IJettyConfiguration.__MODIFY_PORT_PROPERTY.equals(event.getPropertyName()))
                 {
                     String id = (String)event.getOldValue();
                     Integer i = (Integer)event.getNewValue();
@@ -87,7 +87,7 @@ public class ConfigurationPortEditorSection extends ServerEditorSection
                 }
             }
         };
-        jettyConfiguration.addPropertyChangeListener(listener);
+        _jettyConfiguration.addPropertyChangeListener(_listener);
     }
 
     /**
@@ -99,7 +99,7 @@ public class ConfigurationPortEditorSection extends ServerEditorSection
      */
     protected void changePortNumber(String id, int port)
     {
-        TableItem[] items = ports.getItems();
+        TableItem[] items = _ports.getItems();
         int size = items.length;
         for (int i = 0; i < size; i++)
         {
@@ -145,19 +145,19 @@ public class ConfigurationPortEditorSection extends ServerEditorSection
         toolkit.paintBordersFor(composite);
         section.setClient(composite);
 
-        ports = toolkit.createTable(composite,SWT.V_SCROLL | SWT.H_SCROLL | SWT.FULL_SELECTION);
-        ports.setHeaderVisible(true);
-        ports.setLinesVisible(true);
-        whs.setHelp(ports,ContextIds.CONFIGURATION_EDITOR_PORTS_LIST);
+        _ports = toolkit.createTable(composite,SWT.V_SCROLL | SWT.H_SCROLL | SWT.FULL_SELECTION);
+        _ports.setHeaderVisible(true);
+        _ports.setLinesVisible(true);
+        whs.setHelp(_ports,ContextIds.CONFIGURATION_EDITOR_PORTS_LIST);
 
         TableLayout tableLayout = new TableLayout();
 
-        TableColumn col = new TableColumn(ports,SWT.NONE);
+        TableColumn col = new TableColumn(_ports,SWT.NONE);
         col.setText(Messages.configurationEditorPortNameColumn);
         ColumnWeightData colData = new ColumnWeightData(15,150,true);
         tableLayout.addColumnData(colData);
 
-        col = new TableColumn(ports,SWT.NONE);
+        col = new TableColumn(_ports,SWT.NONE);
         col.setText(Messages.configurationEditorPortValueColumn);
         colData = new ColumnWeightData(8,80,true);
         tableLayout.addColumnData(colData);
@@ -165,11 +165,11 @@ public class ConfigurationPortEditorSection extends ServerEditorSection
         GridData data = new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_FILL);
         data.widthHint = 230;
         data.heightHint = 100;
-        ports.setLayoutData(data);
-        ports.setLayout(tableLayout);
+        _ports.setLayoutData(data);
+        _ports.setLayout(tableLayout);
 
-        viewer = new TableViewer(ports);
-        viewer.setColumnProperties(new String[]
+        _viewer = new TableViewer(_ports);
+        _viewer.setColumnProperties(new String[]
         { "name", "port" });
 
         initialize();
@@ -177,8 +177,8 @@ public class ConfigurationPortEditorSection extends ServerEditorSection
 
     protected void setupPortEditors()
     {
-        viewer.setCellEditors(new CellEditor[]
-        { null, new TextCellEditor(ports) });
+        _viewer.setCellEditors(new CellEditor[]
+        { null, new TextCellEditor(_ports) });
 
         ICellModifier cellModifier = new ICellModifier()
         {
@@ -205,7 +205,7 @@ public class ConfigurationPortEditorSection extends ServerEditorSection
                     Item item = (Item)element;
                     ServerPort sp = (ServerPort)item.getData();
                     int port = Integer.parseInt((String)value);
-                    execute(new ModifyPortCommand(jettyConfiguration,sp.getId(),port));
+                    execute(new ModifyPortCommand(_jettyConfiguration,sp.getId(),port));
                 }
                 catch (Exception ex)
                 {
@@ -213,20 +213,20 @@ public class ConfigurationPortEditorSection extends ServerEditorSection
                 }
             }
         };
-        viewer.setCellModifier(cellModifier);
+        _viewer.setCellModifier(cellModifier);
 
         // preselect second column (Windows-only)
         String os = System.getProperty("os.name");
         if (os != null && os.toLowerCase().indexOf("win") >= 0)
         {
-            ports.addSelectionListener(new SelectionAdapter()
+            _ports.addSelectionListener(new SelectionAdapter()
             {
                 public void widgetSelected(SelectionEvent event)
                 {
                     try
                     {
-                        int n = ports.getSelectionIndex();
-                        viewer.editElement(ports.getItem(n).getData(),1);
+                        int n = _ports.getSelectionIndex();
+                        _viewer.editElement(_ports.getItem(n).getData(),1);
                     }
                     catch (Exception e)
                     {
@@ -239,8 +239,8 @@ public class ConfigurationPortEditorSection extends ServerEditorSection
 
     public void dispose()
     {
-        if (jettyConfiguration != null)
-            jettyConfiguration.removePropertyChangeListener(listener);
+        if (_jettyConfiguration != null)
+            _jettyConfiguration.removePropertyChangeListener(_listener);
     }
 
     /*
@@ -257,7 +257,7 @@ public class ConfigurationPortEditorSection extends ServerEditorSection
             {
                 ts = (IJettyServer)server.loadAdapter(IJettyServer.class,null);
             }
-            jettyConfiguration = (IJettyConfigurationWorkingCopy)ts.getJettyConfiguration();
+            _jettyConfiguration = (IJettyConfigurationWorkingCopy)ts.getJettyConfiguration();
         }
         catch (Exception e)
         {
@@ -272,31 +272,32 @@ public class ConfigurationPortEditorSection extends ServerEditorSection
      */
     protected void initialize()
     {
-        if (ports == null)
+        if (_ports == null)
             return;
 
-        ports.removeAll();
+        _ports.removeAll();
 
-        Iterator iterator = jettyConfiguration.getServerPorts().iterator();
+        Iterator<ServerPort> iterator = _jettyConfiguration.getServerPorts().iterator();
+        
         while (iterator.hasNext())
         {
-            ServerPort port = (ServerPort)iterator.next();
-            TableItem item = new TableItem(ports,SWT.NONE);
+            ServerPort port = iterator.next();
+            TableItem item = new TableItem(_ports,SWT.NONE);
             String portStr = "-";
             if (port.getPort() >= 0)
                 portStr = port.getPort() + "";
             String[] s = new String[]
             { port.getName(), portStr };
             item.setText(s);
-            item.setImage(JettyUIPlugin.getImage(JettyUIPlugin.IMG_PORT));
+            item.setImage(JettyUIPlugin.getImage(JettyUIPlugin.__IMG_PORT));
             item.setData(port);
         }
 
         if (readOnly)
         {
-            viewer.setCellEditors(new CellEditor[]
+            _viewer.setCellEditors(new CellEditor[]
             { null, null });
-            viewer.setCellModifier(null);
+            _viewer.setCellModifier(null);
         }
         else
         {

@@ -66,21 +66,21 @@ import org.eclipse.wst.server.ui.wizard.WizardFragment;
  */
 public class JettyRuntimeComposite extends Composite
 {
-    protected IRuntimeWorkingCopy runtimeWC;
-    protected IJettyRuntimeWorkingCopy runtime;
+    protected IRuntimeWorkingCopy _runtimeWC;
+    protected IJettyRuntimeWorkingCopy _jettyRuntimeWC;
 
-    protected IWizardHandle wizard;
+    protected IWizardHandle _wizard;
 
-    protected Text installDir;
-    protected Text name;
-    protected Combo combo;
-    protected List<IVMInstall> installedJREs;
-    protected String[] jreNames;
-    protected IInstallableRuntime ir;
-    protected Job installRuntimeJob;
-    protected IJobChangeListener jobListener;
-    protected Label installLabel;
-    protected Button install;
+    protected Text _installDir;
+    protected Text _name;
+    protected Combo _combo;
+    protected List<IVMInstall> _installedJREs;
+    protected String[] _jreNames;
+    protected IInstallableRuntime _ir;
+    protected Job _installRuntimeJob;
+    protected IJobChangeListener _jobListener;
+    protected Label _installLabel;
+    protected Button _installButton;
 
     /**
      * JettyRuntimeWizardPage constructor comment.
@@ -93,11 +93,11 @@ public class JettyRuntimeComposite extends Composite
     protected JettyRuntimeComposite(Composite parent, IWizardHandle wizard)
     {
         super(parent,SWT.NONE);
-        this.wizard = wizard;
+        this._wizard = wizard;
 
         wizard.setTitle(Messages.wizardTitle);
         wizard.setDescription(Messages.wizardDescription);
-        wizard.setImageDescriptor(JettyUIPlugin.getImageDescriptor(JettyUIPlugin.IMG_WIZ_JETTY));
+        wizard.setImageDescriptor(JettyUIPlugin.getImageDescriptor(JettyUIPlugin.__IMG_WIZ_JETTY));
 
         createControl();
     }
@@ -106,28 +106,28 @@ public class JettyRuntimeComposite extends Composite
     {
         if (newRuntime == null)
         {
-            runtimeWC = null;
-            runtime = null;
+            _runtimeWC = null;
+            _jettyRuntimeWC = null;
         }
         else
         {
-            runtimeWC = newRuntime;
-            runtime = (IJettyRuntimeWorkingCopy)newRuntime.loadAdapter(IJettyRuntimeWorkingCopy.class,null);
+            _runtimeWC = newRuntime;
+            _jettyRuntimeWC = (IJettyRuntimeWorkingCopy)newRuntime.loadAdapter(IJettyRuntimeWorkingCopy.class,null);
         }
 
-        if (runtimeWC == null)
+        if (_runtimeWC == null)
         {
-            ir = null;
-            install.setEnabled(false);
-            installLabel.setText("");
+            _ir = null;
+            _installButton.setEnabled(false);
+            _installLabel.setText("");
         }
         else
         {
-            ir = ServerPlugin.findInstallableRuntime(runtimeWC.getRuntimeType().getId());
-            if (ir != null)
+            _ir = ServerPlugin.findInstallableRuntime(_runtimeWC.getRuntimeType().getId());
+            if (_ir != null)
             {
-                install.setEnabled(true);
-                installLabel.setText(ir.getName());
+                _installButton.setEnabled(true);
+                _installLabel.setText(_ir.getName());
             }
         }
 
@@ -138,9 +138,9 @@ public class JettyRuntimeComposite extends Composite
     public void dispose()
     {
         super.dispose();
-        if (installRuntimeJob != null)
+        if (_installRuntimeJob != null)
         {
-            installRuntimeJob.removeJobChangeListener(jobListener);
+            _installRuntimeJob.removeJobChangeListener(_jobListener);
         }
     }
 
@@ -161,14 +161,14 @@ public class JettyRuntimeComposite extends Composite
         data.horizontalSpan = 2;
         label.setLayoutData(data);
 
-        name = new Text(this,SWT.BORDER);
+        _name = new Text(this,SWT.BORDER);
         data = new GridData(GridData.FILL_HORIZONTAL);
-        name.setLayoutData(data);
-        name.addModifyListener(new ModifyListener()
+        _name.setLayoutData(data);
+        _name.addModifyListener(new ModifyListener()
         {
             public void modifyText(ModifyEvent e)
             {
-                runtimeWC.setName(name.getText());
+                _runtimeWC.setName(_name.getText());
                 validate();
             }
         });
@@ -179,14 +179,14 @@ public class JettyRuntimeComposite extends Composite
         data.horizontalSpan = 2;
         label.setLayoutData(data);
 
-        installDir = new Text(this,SWT.BORDER);
+        _installDir = new Text(this,SWT.BORDER);
         data = new GridData(GridData.FILL_HORIZONTAL);
-        installDir.setLayoutData(data);
-        installDir.addModifyListener(new ModifyListener()
+        _installDir.setLayoutData(data);
+        _installDir.addModifyListener(new ModifyListener()
         {
             public void modifyText(ModifyEvent e)
             {
-                runtimeWC.setLocation(new Path(installDir.getText()));
+                _runtimeWC.setLocation(new Path(_installDir.getText()));
                 validate();
             }
         });
@@ -198,28 +198,28 @@ public class JettyRuntimeComposite extends Composite
             {
                 DirectoryDialog dialog = new DirectoryDialog(JettyRuntimeComposite.this.getShell());
                 dialog.setMessage(Messages.selectInstallDir);
-                dialog.setFilterPath(installDir.getText());
+                dialog.setFilterPath(_installDir.getText());
                 String selectedDirectory = dialog.open();
                 if (selectedDirectory != null)
-                    installDir.setText(selectedDirectory);
+                    _installDir.setText(selectedDirectory);
             }
         });
 
-        installLabel = new Label(this,SWT.RIGHT);
+        _installLabel = new Label(this,SWT.RIGHT);
         data = new GridData(GridData.FILL_HORIZONTAL);
         data.horizontalIndent = 10;
-        installLabel.setLayoutData(data);
+        _installLabel.setLayoutData(data);
 
-        install = SWTUtil.createButton(this,Messages.install);
-        install.setEnabled(false);
-        install.addSelectionListener(new SelectionAdapter()
+        _installButton = SWTUtil.createButton(this,Messages.install);
+        _installButton.setEnabled(false);
+        _installButton.addSelectionListener(new SelectionAdapter()
         {
             public void widgetSelected(SelectionEvent se)
             {
                 String license = null;
                 try
                 {
-                    license = ir.getLicense(new NullProgressMonitor());
+                    license = _ir.getLicense(new NullProgressMonitor());
                 }
                 catch (CoreException e)
                 {
@@ -241,13 +241,13 @@ public class JettyRuntimeComposite extends Composite
 
                 DirectoryDialog dialog = new DirectoryDialog(JettyRuntimeComposite.this.getShell());
                 dialog.setMessage(Messages.selectInstallDir);
-                dialog.setFilterPath(installDir.getText());
+                dialog.setFilterPath(_installDir.getText());
                 String selectedDirectory = dialog.open();
                 if (selectedDirectory != null)
                 {
                     // ir.install(new Path(selectedDirectory));
                     final IPath installPath = new Path(selectedDirectory);
-                    installRuntimeJob = new Job("Installing server runtime environment")
+                    _installRuntimeJob = new Job("Installing server runtime environment")
                     {
                         public boolean belongsTo(Object family)
                         {
@@ -258,7 +258,7 @@ public class JettyRuntimeComposite extends Composite
                         {
                             try
                             {
-                                ir.install(installPath,monitor);
+                                _ir.install(installPath,monitor);
                             }
                             catch (CoreException ce)
                             {
@@ -269,13 +269,13 @@ public class JettyRuntimeComposite extends Composite
                         }
                     };
 
-                    installDir.setText(selectedDirectory);
-                    jobListener = new JobChangeAdapter()
+                    _installDir.setText(selectedDirectory);
+                    _jobListener = new JobChangeAdapter()
                     {
                         public void done(IJobChangeEvent event)
                         {
-                            installRuntimeJob.removeJobChangeListener(this);
-                            installRuntimeJob = null;
+                            _installRuntimeJob.removeJobChangeListener(this);
+                            _installRuntimeJob = null;
                             Display.getDefault().asyncExec(new Runnable()
                             {
                                 public void run()
@@ -288,8 +288,8 @@ public class JettyRuntimeComposite extends Composite
                             });
                         }
                     };
-                    installRuntimeJob.addJobChangeListener(jobListener);
-                    installRuntimeJob.schedule();
+                    _installRuntimeJob.addJobChangeListener(_jobListener);
+                    _installRuntimeJob.schedule();
                 }
             }
         });
@@ -303,21 +303,21 @@ public class JettyRuntimeComposite extends Composite
         data.horizontalSpan = 2;
         label.setLayoutData(data);
 
-        combo = new Combo(this,SWT.DROP_DOWN | SWT.READ_ONLY);
-        combo.setItems(jreNames);
+        _combo = new Combo(this,SWT.DROP_DOWN | SWT.READ_ONLY);
+        _combo.setItems(_jreNames);
         data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-        combo.setLayoutData(data);
+        _combo.setLayoutData(data);
 
-        combo.addSelectionListener(new SelectionListener()
+        _combo.addSelectionListener(new SelectionListener()
         {
             public void widgetSelected(SelectionEvent e)
             {
-                int sel = combo.getSelectionIndex();
+                int sel = _combo.getSelectionIndex();
                 IVMInstall vmInstall = null;
                 if (sel > 0)
-                    vmInstall = (IVMInstall)installedJREs.get(sel - 1);
+                    vmInstall = (IVMInstall)_installedJREs.get(sel - 1);
 
-                runtime.setVMInstall(vmInstall);
+                _jettyRuntimeWC.setVMInstall(vmInstall);
                 validate();
             }
 
@@ -332,14 +332,14 @@ public class JettyRuntimeComposite extends Composite
         {
             public void widgetSelected(SelectionEvent e)
             {
-                String currentVM = combo.getText();
+                String currentVM = _combo.getText();
                 if (showPreferencePage())
                 {
                     updateJREs();
-                    combo.setItems(jreNames);
-                    combo.setText(currentVM);
-                    if (combo.getSelectionIndex() == -1)
-                        combo.select(0);
+                    _combo.setItems(_jreNames);
+                    _combo.setText(currentVM);
+                    if (_combo.getSelectionIndex() == -1)
+                        _combo.select(0);
                     validate();
                 }
             }
@@ -350,13 +350,13 @@ public class JettyRuntimeComposite extends Composite
 
         Dialog.applyDialogFont(this);
 
-        name.forceFocus();
+        _name.forceFocus();
     }
 
     protected void updateJREs()
     {
         // get all installed JVMs
-        installedJREs = new ArrayList<IVMInstall>();
+        _installedJREs = new ArrayList<IVMInstall>();
         IVMInstallType[] vmInstallTypes = JavaRuntime.getVMInstallTypes();
         int size = vmInstallTypes.length;
         for (int i = 0; i < size; i++)
@@ -365,18 +365,18 @@ public class JettyRuntimeComposite extends Composite
             int size2 = vmInstalls.length;
             for (int j = 0; j < size2; j++)
             {
-                installedJREs.add(vmInstalls[j]);
+                _installedJREs.add(vmInstalls[j]);
             }
         }
 
         // get names
-        size = installedJREs.size();
-        jreNames = new String[size + 1];
-        jreNames[0] = Messages.runtimeDefaultJRE;
+        size = _installedJREs.size();
+        _jreNames = new String[size + 1];
+        _jreNames[0] = Messages.runtimeDefaultJRE;
         for (int i = 0; i < size; i++)
         {
-            IVMInstall vmInstall = (IVMInstall)installedJREs.get(i);
-            jreNames[i + 1] = vmInstall.getName();
+            IVMInstall vmInstall = (IVMInstall)_installedJREs.get(i);
+            _jreNames[i + 1] = vmInstall.getName();
         }
     }
 
@@ -403,55 +403,55 @@ public class JettyRuntimeComposite extends Composite
 
     protected void init()
     {
-        if (name == null || runtime == null)
+        if (_name == null || _jettyRuntimeWC == null)
             return;
 
-        if (runtimeWC.getName() != null)
-            name.setText(runtimeWC.getName());
+        if (_runtimeWC.getName() != null)
+            _name.setText(_runtimeWC.getName());
         else
-            name.setText("");
+            _name.setText("");
 
-        if (runtimeWC.getLocation() != null)
-            installDir.setText(runtimeWC.getLocation().toOSString());
+        if (_runtimeWC.getLocation() != null)
+            _installDir.setText(_runtimeWC.getLocation().toOSString());
         else
-            installDir.setText("");
+            _installDir.setText("");
 
         // set selection
-        if (runtime.isUsingDefaultJRE())
-            combo.select(0);
+        if (_jettyRuntimeWC.isUsingDefaultJRE())
+            _combo.select(0);
         else
         {
             boolean found = false;
-            int size = installedJREs.size();
+            int size = _installedJREs.size();
             for (int i = 0; i < size; i++)
             {
-                IVMInstall vmInstall = (IVMInstall)installedJREs.get(i);
-                if (vmInstall.equals(runtime.getVMInstall()))
+                IVMInstall vmInstall = (IVMInstall)_installedJREs.get(i);
+                if (vmInstall.equals(_jettyRuntimeWC.getVMInstall()))
                 {
-                    combo.select(i + 1);
+                    _combo.select(i + 1);
                     found = true;
                 }
             }
             if (!found)
-                combo.select(0);
+                _combo.select(0);
         }
     }
 
     protected void validate()
     {
-        if (runtime == null)
+        if (_jettyRuntimeWC == null)
         {
-            wizard.setMessage("",IMessageProvider.ERROR);
+            _wizard.setMessage("",IMessageProvider.ERROR);
             return;
         }
 
-        IStatus status = runtimeWC.validate(null);
+        IStatus status = _runtimeWC.validate(null);
         if (status == null || status.isOK())
-            wizard.setMessage(null,IMessageProvider.NONE);
+            _wizard.setMessage(null,IMessageProvider.NONE);
         else if (status.getSeverity() == IStatus.WARNING)
-            wizard.setMessage(status.getMessage(),IMessageProvider.WARNING);
+            _wizard.setMessage(status.getMessage(),IMessageProvider.WARNING);
         else
-            wizard.setMessage(status.getMessage(),IMessageProvider.ERROR);
-        wizard.update();
+            _wizard.setMessage(status.getMessage(),IMessageProvider.ERROR);
+        _wizard.update();
     }
 }
