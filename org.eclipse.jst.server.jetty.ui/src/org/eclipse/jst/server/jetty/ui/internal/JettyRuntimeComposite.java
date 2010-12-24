@@ -148,9 +148,9 @@ public class JettyRuntimeComposite extends Composite
      * Provide a wizard page to change the Jetty installation directory.
      */
     protected void createControl()
-    {
-        Trace.trace(Trace.CONFIG,"RuntimeComposite createControl()");
-        
+    {        
+        Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: createControl(): start");
+
         GridLayout layout = new GridLayout();
         layout.numColumns = 2;
         setLayout(layout);
@@ -163,6 +163,7 @@ public class JettyRuntimeComposite extends Composite
         data.horizontalSpan = 2;
         label.setLayoutData(data);
 
+        Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: createControl(): name field management");
         _name = new Text(this,SWT.BORDER);
         data = new GridData(GridData.FILL_HORIZONTAL);
         _name.setLayoutData(data);
@@ -174,6 +175,8 @@ public class JettyRuntimeComposite extends Composite
                 validate();
             }
         });
+
+        Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: createControl(): install location management");
 
         label = new Label(this,SWT.NONE);
         label.setText(Messages.installDir);
@@ -193,6 +196,8 @@ public class JettyRuntimeComposite extends Composite
             }
         });
 
+        Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: createControl(): browse for location management");
+
         Button browse = SWTUtil.createButton(this,Messages.browse);
         browse.addSelectionListener(new SelectionAdapter()
         {
@@ -206,6 +211,8 @@ public class JettyRuntimeComposite extends Composite
                     _installDir.setText(selectedDirectory);
             }
         });
+
+        Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: createControl(): installable runtime management");
 
         _installLabel = new Label(this,SWT.RIGHT);
         data = new GridData(GridData.FILL_HORIZONTAL);
@@ -221,6 +228,8 @@ public class JettyRuntimeComposite extends Composite
                 String license = null;
                 try
                 {
+                    Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: createControl(): getting license");
+
                     license = _installableRuntime.getLicense(new NullProgressMonitor());
                 }
                 catch (CoreException e)
@@ -239,8 +248,13 @@ public class JettyRuntimeComposite extends Composite
 
                 WizardDialog dialog2 = new WizardDialog(getShell(),wizard2);
                 if (dialog2.open() == Window.CANCEL)
-                    return;
+                {
+                    Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: createControl(): not accepting license");
 
+                    return;
+                }
+
+                
                 DirectoryDialog dialog = new DirectoryDialog(JettyRuntimeComposite.this.getShell());
                 dialog.setMessage(Messages.selectInstallDir);
                 dialog.setFilterPath(_installDir.getText());
@@ -260,7 +274,9 @@ public class JettyRuntimeComposite extends Composite
                         {
                             try
                             {
+                                Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: createControl(): installable runtime job start");
                                 _installableRuntime.install(installPath,monitor);
+                                Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: createControl(): installable runtime job end");
                             }
                             catch (CoreException ce)
                             {
@@ -276,6 +292,8 @@ public class JettyRuntimeComposite extends Composite
                     {
                         public void done(IJobChangeEvent event)
                         {
+                            Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: createControl(): installable runtime job done signal");
+
                             _installableRuntimeJob.removeJobChangeListener(this);
                             _installableRuntimeJob = null;
                             Display.getDefault().asyncExec(new Runnable()
@@ -353,10 +371,15 @@ public class JettyRuntimeComposite extends Composite
         Dialog.applyDialogFont(this);
 
         _name.forceFocus();
+        
+        Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: createControl(): end");
+
     }
 
     protected void updateJREs()
     {
+        Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: updateJRE(): start");
+
         // get all installed JVMs
         _installedJREs = new ArrayList<IVMInstall>();
         IVMInstallType[] vmInstallTypes = JavaRuntime.getVMInstallTypes();
@@ -380,10 +403,14 @@ public class JettyRuntimeComposite extends Composite
             IVMInstall vmInstall = (IVMInstall)_installedJREs.get(i);
             _jreNames[i + 1] = vmInstall.getName();
         }
+        
+        Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: updateJRE(): end");
     }
 
     protected boolean showPreferencePage()
     {
+        Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: showPreferencePage()");
+
         String id = "org.eclipse.jdt.debug.ui.preferences.VMPreferencePage";
 
         // should be using the following API, but it only allows a single
@@ -405,22 +432,38 @@ public class JettyRuntimeComposite extends Composite
 
     protected void init()
     {
+        Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: init(): start");
+
         if (_name == null || _jettyRuntimeWC == null)
+        {
+            Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: init(): name or jetty runtime working copy is null");
+            
             return;
+        }
 
         if (_runtimeWC.getName() != null)
+        {
             _name.setText(_runtimeWC.getName());
+        }
         else
+        {
             _name.setText("");
+        }
 
         if (_runtimeWC.getLocation() != null)
+        {
             _installDir.setText(_runtimeWC.getLocation().toOSString());
+        }
         else
+        {
             _installDir.setText("");
+        }
 
-        // set selection
+        Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: init(): choosing initial jre");
         if (_jettyRuntimeWC.isUsingDefaultJRE())
+        {
             _combo.select(0);
+        }
         else
         {
             boolean found = false;
@@ -434,26 +477,51 @@ public class JettyRuntimeComposite extends Composite
                     found = true;
                 }
             }
+            
             if (!found)
+            {
                 _combo.select(0);
+            }
         }
+        
+        Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: init(): end");
+
     }
 
     protected void validate()
     {
+        Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: validate(): start");
+        
         if (_jettyRuntimeWC == null)
         {
             _wizard.setMessage("",IMessageProvider.ERROR);
+            Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: validate(): jetty runtime working copy null");
+
             return;
         }
 
+        Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: validate(): runtime working copy");
+
         IStatus status = _runtimeWC.validate(null);
+        
+        Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: validate(): runtime working status was " + status.getMessage());
+
         if (status == null || status.isOK())
+        {
             _wizard.setMessage(null,IMessageProvider.NONE);
+        }
         else if (status.getSeverity() == IStatus.WARNING)
+        {
             _wizard.setMessage(status.getMessage(),IMessageProvider.WARNING);
+        }
         else
+        {
             _wizard.setMessage(status.getMessage(),IMessageProvider.ERROR);
+        }
+            
         _wizard.update();
+        
+        Trace.trace(Trace.CONFIG, "JettyRuntimeComposite: validate(): end");
+
     }
 }

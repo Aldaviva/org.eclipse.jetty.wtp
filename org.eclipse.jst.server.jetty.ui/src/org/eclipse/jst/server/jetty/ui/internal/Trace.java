@@ -42,9 +42,9 @@ public class Trace
      */
     public static void trace(byte level, String s)
     {
-        Trace.trace(level,s,null);
+        Trace.trace(level,s,(Throwable)null);
     }
-
+    
     /**
      * Trace the given message and exception.
      * 
