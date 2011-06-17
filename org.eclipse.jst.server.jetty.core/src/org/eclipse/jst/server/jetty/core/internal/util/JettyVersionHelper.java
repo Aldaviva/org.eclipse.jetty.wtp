@@ -86,11 +86,15 @@ public class JettyVersionHelper implements JettyConstants
      *            instance path for the server
      * @param deployPath
      *            deploy path for the server
+     * @param adminPort 
+     * 			  port that jetty listens to for admin operations like shutdown
+     * @param mainPort 
+     * 			  main jetty port (passed as jetty.port)
      * @param isTestEnv
      *            test environment flag
      * @return array of strings containing VM arguments
      */
-    public static String[] getJettyVMArguments(IPath installPath, IPath instancePath, IPath deployPath, String endorsedDirs, boolean isTestEnv)
+    public static String[] getJettyVMArguments(IPath installPath, IPath instancePath, IPath deployPath, String endorsedDirs, int mainPort, int adminPort, boolean isTestEnv)
     {
         List<String> list = new ArrayList<String>();
         if (isTestEnv)
@@ -111,9 +115,8 @@ public class JettyVersionHelper implements JettyConstants
         // list.add("-Djava.endorsed.dirs=\"" + endorsedDirs + "\"");
 
         list.add("-DVERBOSE");
-        // list.add("-Djetty.port=8081");
-        // list.add("-Djetty.port=8081");
-        list.add("-DSTOP.PORT=8082");
+        list.add("-Djetty.port=" + Integer.toString(mainPort));
+        list.add("-DSTOP.PORT=" + Integer.toString(adminPort));
         list.add("-DSTOP.KEY=secret");
 
         String[] s = new String[list.size()];

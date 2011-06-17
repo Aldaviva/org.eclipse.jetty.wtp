@@ -37,6 +37,7 @@ public class StartIni implements JettyConstants
     private List<PathFileConfig> _otherConfigs = new ArrayList<PathFileConfig>();
     private PathFileConfig _startConfig = null;
     private PathFileConfig _webdefaultXMLConfig = null;
+    private File _adminPortFile = null;
     private File _startIniFile;
 
     private boolean _isStartIniDirty;
@@ -45,12 +46,14 @@ public class StartIni implements JettyConstants
     {
         loadStartIni(baseDirPath,null);
         loadOtherConfigs(baseDirPath);
+        loadAdminPortFile (baseDirPath,null);
     }
 
     public StartIni(IFolder baseDirFolder)
     {
         loadStartIni(null,baseDirFolder);
         // loadOtherConfigs(null, baseDirFolder);
+        loadAdminPortFile (null,baseDirFolder);
     }
 
     private List<String> loadStartIni(IPath baseDirPath, IFolder baseDirFolder)
@@ -159,12 +162,32 @@ public class StartIni implements JettyConstants
         {
             _webdefaultXMLConfig = new PathFileConfig(webdefaultFile,new Path("etc/webdefault.xml"));
         }
-
+        
         IPath startJARPath = baseDirPath.append(__START_JAR);
         File startConfigFile = startJARPath.toFile();
         if (startConfigFile.exists())
         {
             _startConfig = new PathFileConfig(startConfigFile,new Path(__START_JAR));
+        }
+    }
+    
+    private void loadAdminPortFile (IPath baseDirPath, IFolder baseDirFolder) 
+    {
+        if (baseDirPath != null)
+        {
+            IPath adminPortPath = baseDirPath.append("adminPort");
+            this._adminPortFile = adminPortPath.toFile();
+        }
+        else
+        {
+            try
+            {
+                this._adminPortFile = IOUtils.toLocalFile(baseDirFolder.getFile("adminPort"),null);
+            }
+            catch (CoreException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -176,6 +199,11 @@ public class StartIni implements JettyConstants
     public PathFileConfig getWebdefaultXMLConfig()
     {
         return _webdefaultXMLConfig;
+    }
+    
+    public File getAdminPortFile()
+    {
+    	return _adminPortFile;
     }
 
     /**

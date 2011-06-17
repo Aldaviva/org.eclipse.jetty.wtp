@@ -12,9 +12,11 @@ package org.eclipse.jst.server.jetty.core.internal.jetty7;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -73,13 +75,12 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
         List<ServerPort> ports = new ArrayList<ServerPort>();
 
         // first add server port
-        // try {
-        // int port = Integer.parseInt(server.getPort());
-        // ports.add(new ServerPort("server", Messages.portServer, port,
-        // "TCPIP"));
-        // } catch (Exception e) {
-        // // ignore
-        // }
+        try {
+        	int port = Integer.parseInt(_serverInstance.getAdminPort());
+        	ports.add(new ServerPort("server", Messages.portServer, port, "TCPIP"));
+        } catch (Exception e) {
+        	// ignore
+        }
 
         // add connectors
         try
@@ -88,6 +89,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
             Collection<Connector> connectors = _serverInstance.getConnectors();
             if (connectors != null)
             {
+            	int portId = 0;
                 for (Connector connector : connectors)
                 {
                     int port = -1;
@@ -99,7 +101,22 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
                     {
                         // ignore
                     }
-                    ports.add(new ServerPort("server",Messages.portServer,port,__HTTP));
+                    
+                    String id = Integer.toString(portId++);
+                    String type = connector.getType();
+                    String name = "HTTP";
+                    String className = type.substring(type.lastIndexOf('.')+1); 
+                    if ("SelectChannelConnector".equals(className) || 
+                    		"SocketConnector".equals(className)) {
+                    	name = "HTTP";
+                    } else if ("SslSelectChannelConnector".equals(className) ||
+                    		"SslSocketConnector".equals(className)) {
+                    	name = "SSL";
+                    } else if ("Ajp13SocketConnector".equals(className)) {
+                    	name = "AJP";
+                    }
+                    	
+                    ports.add(new ServerPort(id,name,port,name));
                     // TODO : how get HTTP type port???
 
                     // ports.add(new ServerPort(portId, name, port, protocol2,
@@ -112,10 +129,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
         {
             Trace.trace(Trace.SEVERE,"Error getting server ports",e);
         }
-        if (ports.size() < 1)
-        {
-            ports.add(new ServerPort("server",Messages.portServer,8080,__HTTP));
-        }
+
         return ports;
 
         // String instanceServiceName = serverInstance.getService().getName();
@@ -181,6 +195,28 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
         // }
 
     }
+    
+    /**
+     * Return the port number.
+     * 
+     * @return int
+     */
+    public ServerPort getAdminPort()
+    {
+        Collection<ServerPort> serverPorts = getServerPorts();
+        
+        for (ServerPort serverPort : serverPorts)
+        {
+            // Return only an HTTP port from the selected Service
+            if (serverPort.getId().equals("server"))
+            {
+                return serverPort;
+            }
+        }
+        
+        return null;
+    }
+
 
     /**
      * Return a list of the web modules in this server.
@@ -361,6 +397,15 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
                 webApp.setFile(webAppFile);
                 webApp.setPath(webAppPath);
             }
+            
+            File adminPortFile = _startIniConfig.getAdminPortFile();
+            String adminPort = null;
+            if (adminPortFile != null && adminPortFile.exists()) 
+            {
+            	BufferedReader reader = new BufferedReader(new FileReader(adminPortFile));
+            	adminPort = reader.readLine();
+            	reader.close();
+            }
             // check for catalina.policy to verify that this is a v4.0 config
             // InputStream in = new
             // FileInputStream(path.append("catalina.policy").toFile());
@@ -371,6 +416,10 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
             // server = (Server) serverFactory.loadDocument(new FileInputStream(
             // path.append("jetty.xml").toFile()));
             _serverInstance = new ServerInstance(servers,webApp,runtimeBaseDirectory);
+            if (adminPort != null)
+            {
+            	_serverInstance.setAdminPort(adminPort);
+            }
             // monitor.worked(1);
             //
             // webAppDocument = new
@@ -450,9 +499,21 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
                 webApp.setFile(webAppFile);
                 webApp.setPath(webAppPath);
             }
+            File adminPortFile = _startIniConfig.getAdminPortFile();
+            String adminPort = null;
+            if (adminPortFile != null && adminPortFile.exists()) 
+            {
+            	BufferedReader reader = new BufferedReader(new FileReader(adminPortFile));
+            	adminPort = reader.readLine();
+            	reader.close();
+            }
             // server = (Server) serverFactory.loadDocument(new FileInputStream(
             // path.append("jetty.xml").toFile()));
             _serverInstance = new ServerInstance(servers,webApp,runtimeBaseDirectory);
+            if (adminPort != null) 
+            {
+            	_serverInstance.setAdminPort(adminPort);
+            }
             // check for catalina.policy to verify that this is a v4.0 config
             // IFile file = folder.getFile("catalina.policy");
             // if (!file.exists())
@@ -611,36 +672,18 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
         {
             if ("server".equals(id))
             {
-                _serverInstance.setPort(port + "");
+            	_serverInstance.setAdminPort(port+"");
                 _isServerDirty = true;
                 firePropertyChangeEvent(__MODIFY_PORT_PROPERTY,id, Integer.valueOf(port));
                 return;
             }
 
-            // int i = id.indexOf("/");
-            // // If a connector in the instance Service
-            // if (i < 0) {
-            // int connNum = Integer.parseInt(id);
-            // Connector connector = serverInstance.getConnector(connNum);
-            // if (connector != null) {
-            // connector.setPort(port + "");
-            // isServerDirty = true;
-            // firePropertyChangeEvent(MODIFY_PORT_PROPERTY, id, new
-            // Integer(port));
-            // }
-            // }
-            // // Else a connector in another Service
-            // else {
-            // int servNum = Integer.parseInt(id.substring(0, i));
-            // int connNum = Integer.parseInt(id.substring(i + 1));
-            //
-            // Service service = server.getService(servNum);
-            // Connector connector = service.getConnector(connNum);
-            // connector.setPort(port + "");
-            // isServerDirty = true;
-            // firePropertyChangeEvent(MODIFY_PORT_PROPERTY, id, new
-            // Integer(port));
-            // }
+			int connNum = Integer.parseInt(id);
+			List<Connector> connectors = _serverInstance.getConnectors();
+			Connector connector = connectors.get(connNum);
+			connector.setPort(port + "");
+			_isServerDirty = true;
+			firePropertyChangeEvent(__MODIFY_PORT_PROPERTY, id, new Integer(port));            
         }
         catch (Exception e)
         {

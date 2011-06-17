@@ -17,10 +17,12 @@ public class Connector
 {
 
     private Element _portElement;
+    private Element _typeElement;
 
-    public Connector(Element portElement)
+    public Connector(Element portElement, Element typeElement)
     {
         this._portElement = portElement;
+        this._typeElement = typeElement;
     }
 
     public String getPort()
@@ -36,6 +38,11 @@ public class Connector
         {
             return _portElement.getTextContent();
         }
+    }
+    
+    public String getType()
+    {
+    	return _typeElement.getAttribute("class");
     }
 
     public void setPort(String port)

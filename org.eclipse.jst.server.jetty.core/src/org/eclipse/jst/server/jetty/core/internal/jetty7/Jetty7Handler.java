@@ -73,9 +73,9 @@ public class Jetty7Handler extends JettyHandler
     /**
      * @see IJettyVersionHandler#getRuntimeVMArguments(IPath, IPath, IPath, boolean)
      */
-    public String[] getRuntimeVMArguments(IPath installPath, IPath configPath, IPath deployPath, boolean isTestEnv)
+    public String[] getRuntimeVMArguments(IPath installPath, IPath configPath, IPath deployPath, int mainPort, int adminPort, boolean isTestEnv)
     {
-        return JettyVersionHelper.getJettyVMArguments(installPath,configPath,deployPath,getEndorsedDirectories(installPath),isTestEnv);
+        return JettyVersionHelper.getJettyVMArguments(installPath,configPath,deployPath,getEndorsedDirectories(installPath), mainPort, adminPort, isTestEnv);
     }
 
     public String getEndorsedDirectories(IPath installPath)

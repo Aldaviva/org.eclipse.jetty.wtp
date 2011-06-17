@@ -47,6 +47,13 @@ public interface IJettyConfiguration
      * @return ServerPort
      */
     ServerPort getMainPort();
+    
+    /**
+     * Returns the admin port
+     * 
+     * @return ServerPort
+     */
+    ServerPort getAdminPort();
 
     /**
      * 

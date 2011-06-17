@@ -203,7 +203,18 @@ public class JettyServerBehaviour extends ServerBehaviourDelegate implements IJe
                 }
             }
         }
-        return getJettyVersionHandler().getRuntimeVMArguments(installPath,configPath,deployPath,getJettyServer().isTestEnvironment());
+
+        int mainPort = 8080; 
+        int adminPort = 8082;
+        try {
+        	IJettyConfiguration config = getJettyConfiguration();
+        	mainPort = config.getMainPort().getPort();
+        	adminPort = config.getAdminPort().getPort();
+        } catch (CoreException ex) {
+        	// ignore exception and use the defaults;
+        }
+        
+        return getJettyVersionHandler().getRuntimeVMArguments(installPath,configPath,deployPath,mainPort, adminPort, getJettyServer().isTestEnvironment());
     }
 
     protected String getRuntimePolicyFile()

@@ -41,6 +41,7 @@ public class ServerInstance
     private boolean _contextsLoaded = false;
     private List<WebAppContext> _webAppContexts = new ArrayList<WebAppContext>();
     private WebApp _webApp = null;
+    private String _adminPort = "8082";
 
     public ServerInstance(List<Server> jettyServers, WebApp webApp, IPath runtimeBaseDirectory)
     {
@@ -124,6 +125,16 @@ public class ServerInstance
             }
             else
                 file.create(in,true,ProgressUtil.getSubMonitorFor(monitor,200));
+        }
+        IFile adminPortFile = folder.getFile("adminPort");
+        in = new ByteArrayInputStream(_adminPort.getBytes());
+        if (adminPortFile.exists())
+        {
+        	adminPortFile.setContents(in,true,true,ProgressUtil.getSubMonitorFor(monitor,200));
+        } 
+        else
+        {
+        	adminPortFile.create(in, true, ProgressUtil.getSubMonitorFor(monitor,200));
         }
         if (_webApp != null)
         {
@@ -261,20 +272,16 @@ public class ServerInstance
         return _webAppContexts;
     }
 
-    public void setPort(String port)
-    {
-        List<Connector> connectors = getConnectors();
-        if (connectors != null && connectors.size() > 0)
-        {
-            Connector connector = connectors.get(0);
-            connector.setPort(port);
-        }
-
-    }
-
     public WebAppContext getContext(int index)
     {
         return _webAppContexts.get(index);
     }
 
+	public void setAdminPort(String port) {
+		_adminPort = port;
+	}
+	
+	public String getAdminPort () {
+		return _adminPort;
+	}
 }

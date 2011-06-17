@@ -37,9 +37,10 @@ public class Server extends XMLElement
             if (hasAttribute(node,"addConnector"))
             {
                 Element portElement = super.findElement(node,"Set","port");
+                NodeList typeElements = node.getElementsByTagName("New");
                 if (portElement != null)
                 {
-                    Connector connector = new Connector(portElement);
+                    Connector connector = new Connector(portElement, (Element)typeElements.item(0));
                     if (connectors == null)
                     {
                         connectors = new ArrayList<Connector>();
