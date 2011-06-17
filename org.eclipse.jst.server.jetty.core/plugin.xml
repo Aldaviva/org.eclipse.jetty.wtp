@@ -46,6 +46,40 @@
              versions="1.0">
        </moduleType>
     </runtimeType>
+    
+    <runtimeType
+          class="org.eclipse.jst.server.jetty.core.internal.JettyRuntime"
+          description="%runtimeTypeJetty73Description"
+          id="org.eclipse.jst.server.jetty.runtime.73"
+          name="%runtimeTypeJetty73Label"
+          vendor="%jetty"
+          version="7.3">
+       <moduleType
+             types="jst.web"
+             versions="2.2, 2.3, 2.4, 2.5">
+       </moduleType>
+       <moduleType
+             types="jst.utility"
+             versions="1.0">
+       </moduleType>
+    </runtimeType>
+    
+    <runtimeType
+          class="org.eclipse.jst.server.jetty.core.internal.JettyRuntime"
+          description="%runtimeTypeJetty74Description"
+          id="org.eclipse.jst.server.jetty.runtime.74"
+          name="%runtimeTypeJetty74Label"
+          vendor="%jetty"
+          version="7.4">
+       <moduleType
+             types="jst.web"
+             versions="2.2, 2.3, 2.4, 2.5">
+       </moduleType>
+       <moduleType
+             types="jst.utility"
+             versions="1.0">
+       </moduleType>
+    </runtimeType>
         
     <runtimeType
        id="org.eclipse.jst.server.jetty.runtime.80"
@@ -109,6 +143,38 @@
            name="%jetty72ServerType"
            runtime="true"
            runtimeTypeId="org.eclipse.jst.server.jetty.runtime.72"
+           startTimeout="30000"
+           stopTimeout="15000"
+           supportsRemoteHosts="false">
+     </serverType>
+     
+     <serverType
+           behaviourClass="org.eclipse.jst.server.jetty.core.internal.JettyServerBehaviour"
+           class="org.eclipse.jst.server.jetty.core.internal.JettyServer"
+           description="%jetty73ServerDescription"
+           hasConfiguration="true"
+           id="org.eclipse.jst.server.jetty.73"
+           initialState="stopped"
+           launchConfigId="org.eclipse.jst.server.jetty.core.launchConfigurationType"
+           name="%jetty73ServerType"
+           runtime="true"
+           runtimeTypeId="org.eclipse.jst.server.jetty.runtime.73"
+           startTimeout="30000"
+           stopTimeout="15000"
+           supportsRemoteHosts="false">
+     </serverType>
+     
+     <serverType
+           behaviourClass="org.eclipse.jst.server.jetty.core.internal.JettyServerBehaviour"
+           class="org.eclipse.jst.server.jetty.core.internal.JettyServer"
+           description="%jetty74ServerDescription"
+           hasConfiguration="true"
+           id="org.eclipse.jst.server.jetty.74"
+           initialState="stopped"
+           launchConfigId="org.eclipse.jst.server.jetty.core.launchConfigurationType"
+           name="%jetty74ServerType"
+           runtime="true"
+           runtimeTypeId="org.eclipse.jst.server.jetty.runtime.74"
            startTimeout="30000"
            stopTimeout="15000"
            supportsRemoteHosts="false">
@@ -180,6 +246,12 @@
     <runtime-component-version
        type="org.eclipse.jst.server.jetty"
        version="7.2"/>
+    <runtime-component-version
+       type="org.eclipse.jst.server.jetty"
+       version="7.3"/>
+    <runtime-component-version
+       type="org.eclipse.jst.server.jetty"
+       version="7.4"/>
        
     <runtime-component-version
        type="org.eclipse.jst.server.jetty"
@@ -248,13 +320,19 @@
     <runtimeFacetMapping
       runtime-component="org.eclipse.jst.server.jetty"
       runtimeTypeId="org.eclipse.jst.server.jetty.runtime.72"
-      version="7.2">
+      version="7.2"/>
+    <runtimeFacetMapping
+      runtime-component="org.eclipse.jst.server.jetty"
+      runtimeTypeId="org.eclipse.jst.server.jetty.runtime.73"
+      version="7.3"/>
+    <runtimeFacetMapping
+      runtime-component="org.eclipse.jst.server.jetty"
+      runtimeTypeId="org.eclipse.jst.server.jetty.runtime.74"
+      version="7.4"/>
     <runtimeFacetMapping
       runtimeTypeId="org.eclipse.jst.server.jetty.runtime.80"
       runtime-component="org.eclipse.jst.server.jetty"
       version="8.0"/>
-    
-    </runtimeFacetMapping>
   </extension>
           
   <extension point="org.eclipse.wst.server.core.installableRuntimes">
@@ -268,12 +346,24 @@
          archiveUrl="http://download.eclipse.org/jetty/7.2.1.v20101111/dist/jetty-distribution-7.2.1.v20101111.zip"
          id="org.eclipse.jst.server.jetty.runtime.72"
          licenseUrl="http://www.apache.org/licenses/LICENSE-2.0.txt">
+   </runtime>
+   <runtime
+         archivePath="jetty-distribution-7.3.1.v20110307"
+         archiveUrl="http://download.eclipse.org/jetty/7.3.1.v20110307/dist/jetty-distribution-7.3.1.v20110307.zip"
+         id="org.eclipse.jst.server.jetty.runtime.73"
+         licenseUrl="http://www.apache.org/licenses/LICENSE-2.0.txt">
+   </runtime>
+   <runtime
+         archivePath="jetty-distribution-7.4.2.v20110526"
+         archiveUrl="http://download.eclipse.org/jetty/7.4.2.v20110526/dist/jetty-distribution-7.4.2.v20110526.zip"
+         id="org.eclipse.jst.server.jetty.runtime.74"
+         licenseUrl="http://www.apache.org/licenses/LICENSE-2.0.txt">
    </runtime>      
 	 <runtime
       id="org.eclipse.jst.server.jetty.runtime.80"
       licenseUrl="http://www.apache.org/licenses/LICENSE-2.0.txt"
-      archiveUrl="http://download.eclipse.org/jetty/8.0.0.M2/dist/jetty-distribution-8.0.0.M2.zip"
-      archivePath="jetty-distribution-8.0.0.M2" />
+      archiveUrl="http://download.eclipse.org/jetty/8.0.0.M3/dist/jetty-distribution-8.0.0.M3.zip"
+      archivePath="jetty-distribution-8.0.0.M3" />
 
   </extension>          
           
