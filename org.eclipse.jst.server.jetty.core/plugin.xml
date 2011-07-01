@@ -354,8 +354,8 @@
          licenseUrl="http://www.apache.org/licenses/LICENSE-2.0.txt">
    </runtime>
    <runtime
-         archivePath="jetty-distribution-7.4.2.v20110526"
-         archiveUrl="http://download.eclipse.org/jetty/7.4.2.v20110526/dist/jetty-distribution-7.4.2.v20110526.zip"
+         archivePath="jetty-distribution-7.4.3.v20110701"
+         archiveUrl="http://download.eclipse.org/jetty/7.4.3.v20110701/dist/jetty-distribution-7.4.3.v20110701.zip"
          id="org.eclipse.jst.server.jetty.runtime.74"
          licenseUrl="http://www.apache.org/licenses/LICENSE-2.0.txt">
    </runtime>      
