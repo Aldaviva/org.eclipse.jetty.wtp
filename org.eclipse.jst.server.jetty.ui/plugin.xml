@@ -13,23 +13,25 @@
 
 <plugin>
 <extension point="org.eclipse.wst.server.ui.serverImages">
+      
       <image
          id="org.eclipse.jst.server.jetty.71"
          icon="icons/obj16/jetty.gif"
          typeIds="org.eclipse.jst.server.jetty.runtime.71"/>
       <image
-         id="org.eclipse.jst.server.jetty.80"
-         icon="icons/obj16/jetty.gif"
-         typeIds="org.eclipse.jst.server.jetty.runtime.80"/>
-
-      <image
          id="org.eclipse.jst.server.jetty.71"
          icon="icons/obj16/jetty.gif"
          typeIds="org.eclipse.jst.server.jetty.71"/>
+         
+      <image
+         id="org.eclipse.jst.server.jetty.80"
+         icon="icons/obj16/jetty.gif"
+         typeIds="org.eclipse.jst.server.jetty.runtime.80"/>
       <image
          id="org.eclipse.jst.server.jetty.80"
          icon="icons/obj16/jetty.gif"
          typeIds="org.eclipse.jst.server.jetty.80"/>
+      
       <image
             icon="icons/obj16/jetty.gif"
             id="org.eclipse.jst.server.jetty.72"
@@ -39,6 +41,28 @@
             icon="icons/obj16/jetty.gif"
             id="org.eclipse.jst.server.jetty.72"
             typeIds="org.eclipse.jst.server.jetty.72">
+      </image>
+      
+      <image
+            icon="icons/obj16/jetty.gif"
+            id="org.eclipse.jst.server.jetty.73"
+            typeIds="org.eclipse.jst.server.jetty.runtime.73">
+      </image>
+      <image
+            icon="icons/obj16/jetty.gif"
+            id="org.eclipse.jst.server.jetty.73"
+            typeIds="org.eclipse.jst.server.jetty.73">
+      </image>
+      
+      <image
+            icon="icons/obj16/jetty.gif"
+            id="org.eclipse.jst.server.jetty.74"
+            typeIds="org.eclipse.jst.server.jetty.runtime.74">
+      </image>
+      <image
+            icon="icons/obj16/jetty.gif"
+            id="org.eclipse.jst.server.jetty.74"
+            typeIds="org.eclipse.jst.server.jetty.74">
       </image>
    </extension>
    
@@ -91,6 +115,14 @@
             class="org.eclipse.jst.server.jetty.ui.internal.JettyRuntimeWizardFragment"
             id="org.eclipse.jst.server.jetty.runtime.72"
             typeIds="org.eclipse.jst.server.jetty.runtime.72">
+      <fragment
+            class="org.eclipse.jst.server.jetty.ui.internal.JettyRuntimeWizardFragment"
+            id="org.eclipse.jst.server.jetty.runtime.73"
+            typeIds="org.eclipse.jst.server.jetty.runtime.73">
+      <fragment
+            class="org.eclipse.jst.server.jetty.ui.internal.JettyRuntimeWizardFragment"
+            id="org.eclipse.jst.server.jetty.runtime.74"
+            typeIds="org.eclipse.jst.server.jetty.runtime.74">
       </fragment>         
    </extension>   
    
