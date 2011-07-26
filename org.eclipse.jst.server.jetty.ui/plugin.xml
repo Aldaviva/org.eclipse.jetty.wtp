@@ -114,16 +114,15 @@
       <fragment
             class="org.eclipse.jst.server.jetty.ui.internal.JettyRuntimeWizardFragment"
             id="org.eclipse.jst.server.jetty.runtime.72"
-            typeIds="org.eclipse.jst.server.jetty.runtime.72">
+            typeIds="org.eclipse.jst.server.jetty.runtime.72"/>
       <fragment
             class="org.eclipse.jst.server.jetty.ui.internal.JettyRuntimeWizardFragment"
             id="org.eclipse.jst.server.jetty.runtime.73"
-            typeIds="org.eclipse.jst.server.jetty.runtime.73">
+            typeIds="org.eclipse.jst.server.jetty.runtime.73"/>
       <fragment
             class="org.eclipse.jst.server.jetty.ui.internal.JettyRuntimeWizardFragment"
             id="org.eclipse.jst.server.jetty.runtime.74"
-            typeIds="org.eclipse.jst.server.jetty.runtime.74">
-      </fragment>         
+            typeIds="org.eclipse.jst.server.jetty.runtime.74"/>
    </extension>   
    
   <extension point="org.eclipse.debug.ui.launchConfigurationTypeImages">
