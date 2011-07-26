@@ -360,11 +360,9 @@
          licenseUrl="http://www.apache.org/licenses/LICENSE-2.0.txt">
    </runtime>      
 	 <runtime
-      id="org.eclipse.jst.server.jetty.runtime.80"
-      licenseUrl="http://www.apache.org/licenses/LICENSE-2.0.txt"
-      archiveUrl="http://download.eclipse.org/jetty/8.0.0.M3/dist/jetty-distribution-8.0.0.M3.zip"
-      archivePath="jetty-distribution-8.0.0.M3" />
-
+         id="org.eclipse.jst.server.jetty.runtime.80"
+         licenseUrl="http://www.apache.org/licenses/LICENSE-2.0.txt"
+         archiveUrl="http://download.eclipse.org/jetty/8.0.0.M3/dist/jetty-distribution-8.0.0.M3.zip"
+         archivePath="jetty-distribution-8.0.0.M3" />
   </extension>          
-          
 </plugin>    
