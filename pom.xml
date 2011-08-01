@@ -168,5 +168,11 @@
       <url>https://oss.sonatype.org/content/groups/jetty</url>
       <snapshots><enabled>true</enabled></snapshots>
     </pluginRepository>
+    <pluginRepository>
+       <id>eclipse-milestone</id>
+       <name>Eclipse Indigo Milestone Repository</name>
+        <url>http://maven.eclipse.org/nexus/content/repositories/milestone/</url>
+        <layout>default</layout>
+    </pluginRepository>
   </pluginRepositories>
 </project>
