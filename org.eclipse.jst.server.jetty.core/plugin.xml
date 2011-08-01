@@ -238,11 +238,10 @@
   <extension point="org.eclipse.wst.common.project.facet.core.runtimes">
     <runtime-component-type
        id="org.eclipse.jst.server.jetty"/>
-
+       
     <runtime-component-version
        type="org.eclipse.jst.server.jetty"
        version="7.1"/>
-
     <runtime-component-version
        type="org.eclipse.jst.server.jetty"
        version="7.2"/>
@@ -281,6 +280,30 @@
       <runtime-component
          id="org.eclipse.jst.server.jetty"
          version="7.2"/>
+      <facet
+         id="jst.web"
+         version="2.2,2.3,2.4,2.5"/>
+      <facet
+         id="jst.utility"
+         version="1.0"/>
+    </supported>
+    
+    <supported>
+      <runtime-component
+         id="org.eclipse.jst.server.jetty"
+         version="7.3"/>
+      <facet
+         id="jst.web"
+         version="2.2,2.3,2.4,2.5"/>
+      <facet
+         id="jst.utility"
+         version="1.0"/>
+    </supported>
+    
+    <supported>
+      <runtime-component
+         id="org.eclipse.jst.server.jetty"
+         version="7.4"/>
       <facet
          id="jst.web"
          version="2.2,2.3,2.4,2.5"/>
