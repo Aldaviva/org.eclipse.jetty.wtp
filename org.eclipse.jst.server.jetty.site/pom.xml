@@ -106,7 +106,7 @@
   <pluginRepositories>
     <pluginRepository>
       <id>maven.eclipse.org</id>
-      <url>http://maven.eclipse.org/nexus/content/repositories/milestone-indigo</url>
+      <url>http://maven.eclipse.org/nexus/content/groups/nightly</url>
     </pluginRepository>
   </pluginRepositories>
 </project>
