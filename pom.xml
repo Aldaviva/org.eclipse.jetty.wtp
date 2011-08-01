@@ -22,7 +22,7 @@
   </modules>
   <properties>
     <tycho-version>0.10.0</tycho-version>
-    <eclipse-site>http://download.eclipse.org/releases/helios</eclipse-site>
+    <eclipse-site>http://maven.eclipse.org/nexus/context/repositories/release-helios</eclipse-site>
     <orbit-site>http://download.eclipse.org/tools/orbit/downloads/drops/R20100114021427/updateSite</orbit-site>
   </properties>
   <build>
