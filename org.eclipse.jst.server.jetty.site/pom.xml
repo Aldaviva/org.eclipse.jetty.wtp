@@ -45,7 +45,7 @@
               <execution>
                 <id>sign</id>
                 <configuration>
-                 <signerInputDirectory>/home/data/httpd/download-staging.priv/jetty</signerInputDirectory>
+                  <signerInputDirectory>/home/data/httpd/download-staging.priv/jetty</signerInputDirectory>
                 </configuration>
                 <phase>package</phase>
                 <goals>
@@ -55,9 +55,12 @@
               <!-- example of remote pack -->
               <execution>
                 <id>repack</id>
+                <configuration>
+                  <inputDirectory>${project.build.directory}/signed/site_assembly.zip</inputDirectory>
+                </configuration>
                 <phase>package</phase>
                 <goals>
-                  <goal>repack</goal>
+                  <goal>pack</goal>
                 </goals>
               </execution>
               <!-- signing and pack alters tycho checksums so fix them -->
