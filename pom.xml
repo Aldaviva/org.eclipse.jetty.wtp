@@ -22,7 +22,7 @@
   </modules>
   <properties>
     <tycho-version>0.10.0</tycho-version>
-    <eclipse-site>http://maven.eclipse.org/nexus/context/repositories/release-helios</eclipse-site>
+    <eclipse-site>http://download.eclipse.org/releases/helios</eclipse-site>
     <orbit-site>http://download.eclipse.org/tools/orbit/downloads/drops/R20100114021427/updateSite</orbit-site>
   </properties>
   <build>
@@ -147,6 +147,12 @@
       <id>orbit</id>
       <layout>p2</layout>
       <url>${orbit-site}</url>
+    </repository>
+    <repository>
+       <id>eclipse-milestone</id>
+       <name>Eclipse Indigo Milestone Repository</name>
+        <url>http://maven.eclipse.org/nexus/content/repositories/milestone/</url>
+        <layout>default</layout>
     </repository>
   </repositories>
   <pluginRepositories>
