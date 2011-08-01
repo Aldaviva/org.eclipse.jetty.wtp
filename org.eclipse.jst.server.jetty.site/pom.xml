@@ -56,7 +56,7 @@
               <execution>
                 <id>repack</id>
                 <configuration>
-                  <inputDirectory>${project.build.directory}/signed/site_assembly.zip</inputDirectory>
+                  <inputFile>${project.build.directory}/signed/site_assembly.zip</inputFile>
                 </configuration>
                 <phase>package</phase>
                 <goals>
