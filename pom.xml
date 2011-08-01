@@ -157,12 +157,6 @@
   </repositories>
   <pluginRepositories>
     <pluginRepository>
-      <id>mojo-snapshots</id>
-      <layout>default</layout>
-      <url>http://snapshots.repository.codehaus.org</url>
-      <snapshots><enabled>true</enabled></snapshots>
-    </pluginRepository>
-    <pluginRepository>
       <id>jetty-snapshots</id>
       <layout>default</layout>
       <url>https://oss.sonatype.org/content/groups/jetty</url>
@@ -172,7 +166,7 @@
        <id>eclipse-milestone</id>
        <name>Eclipse Indigo Milestone Repository</name>
         <url>http://maven.eclipse.org/nexus/content/repositories/milestone/</url>
-        <layout>default</layout>
+        <snapshots><enabled>true</enabled></snapshots>
     </pluginRepository>
   </pluginRepositories>
 </project>
