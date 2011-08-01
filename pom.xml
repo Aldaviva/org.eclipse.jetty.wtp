@@ -165,7 +165,7 @@
     <pluginRepository>
        <id>eclipse-milestone</id>
        <name>Eclipse Indigo Milestone Repository</name>
-        <url>http://maven.eclipse.org/nexus/content/repositories/milestone/</url>
+        <url>http://maven.eclipse.org/nexus/content/repositories/nightly/</url>
         <snapshots><enabled>true</enabled></snapshots>
     </pluginRepository>
   </pluginRepositories>
