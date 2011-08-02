@@ -84,13 +84,16 @@
                   </goals>
                   <configuration>
                     <tasks>
-                      <delete includeemptydirs="false"
-                        verbose="true">
+                      <delete failonerror="false">
                         <fileset
                           dir="/home/data/httpd/download.eclipse.org/jetty/updates/jetty-wtp/development">
                           <include name="**" />
                         </fileset>
                       </delete>
+                      <mkdir dir="/home/data/httpd/download.eclipse.org/jetty/updates/jetty-wtp/development"/>
+                      <mkdir dir="/home/data/httpd/download.eclipse.org/jetty/updates/jetty-wtp/development/plugins"/>
+                      <mkdir dir="/home/data/httpd/download.eclipse.org/jetty/updates/jetty-wtp/development/features"/>
+                      <mkdir dir="/home/data/httpd/download.eclipse.org/jetty/updates/jetty-wtp/development/META-INF"/>                     
                       <copy includeemptydirs="false"
                         overwrite="true"
                         verbose="true"
