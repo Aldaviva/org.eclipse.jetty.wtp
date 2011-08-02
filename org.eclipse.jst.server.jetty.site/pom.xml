@@ -84,13 +84,17 @@
                   </goals>
                   <configuration>
                     <tasks>
-                      <delete includeemptydirs="false">
+                      <delete includeemptydirs="false"
+                        verbose="true">
                         <fileset
                           dir="/home/data/httpd/download.eclipse.org/jetty/updates/jetty-wtp/development">
                           <include name="**" />
                         </fileset>
                       </delete>
                       <copy includeemptydirs="false"
+                        overwrite="true"
+                        force="true"
+                        verbose="true"
                         todir="/home/data/httpd/download.eclipse.org/jetty/updates/jetty-wtp/development">
                         <fileset dir="target/checksumFix">
                           <include name="**" />
