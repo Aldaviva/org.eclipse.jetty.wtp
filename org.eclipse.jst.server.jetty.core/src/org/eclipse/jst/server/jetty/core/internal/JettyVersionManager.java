@@ -34,7 +34,7 @@ public class JettyVersionManager
 
     public enum JettyVersion
     {
-        V71, V72, V73, V74, V80
+        V71, V72, V73, V74, V75, V76, V80
     }
 
     private JettyVersionManager()
@@ -43,6 +43,8 @@ public class JettyVersionManager
         register(JettyVersion.V72, Jetty7Provider.__INSTANCE);
         register(JettyVersion.V73, Jetty7Provider.__INSTANCE);
         register(JettyVersion.V74, Jetty7Provider.__INSTANCE);
+        register(JettyVersion.V75, Jetty7Provider.__INSTANCE);
+        register(JettyVersion.V76, Jetty7Provider.__INSTANCE);
         register(JettyVersion.V80, Jetty8Provider.__INSTANCE);
     }
 

@@ -52,6 +52,26 @@
             typeIds="org.eclipse.jst.server.jetty.74">
       </image>
       <image
+            icon="icons/obj16/jetty.gif"
+            id="org.eclipse.jst.server.jetty.75"
+            typeIds="org.eclipse.jst.server.jetty.runtime.75">
+      </image>
+      <image
+            icon="icons/obj16/jetty.gif"
+            id="org.eclipse.jst.server.jetty.75"
+            typeIds="org.eclipse.jst.server.jetty.75">
+      </image>
+      <image
+            icon="icons/obj16/jetty.gif"
+            id="org.eclipse.jst.server.jetty.76"
+            typeIds="org.eclipse.jst.server.jetty.runtime.76">
+      </image>
+      <image
+            icon="icons/obj16/jetty.gif"
+            id="org.eclipse.jst.server.jetty.76"
+            typeIds="org.eclipse.jst.server.jetty.76">
+      </image>
+      <image
          id="org.eclipse.jst.server.jetty.80"
          icon="icons/obj16/jetty.gif"
          typeIds="org.eclipse.jst.server.jetty.runtime.80"/>
@@ -114,6 +134,14 @@
             class="org.eclipse.jst.server.jetty.ui.internal.JettyRuntimeWizardFragment"
             id="org.eclipse.jst.server.jetty.runtime.74"
             typeIds="org.eclipse.jst.server.jetty.runtime.74"/>
+      <fragment
+            class="org.eclipse.jst.server.jetty.ui.internal.JettyRuntimeWizardFragment"
+            id="org.eclipse.jst.server.jetty.runtime.75"
+            typeIds="org.eclipse.jst.server.jetty.runtime.75"/>
+      <fragment
+            class="org.eclipse.jst.server.jetty.ui.internal.JettyRuntimeWizardFragment"
+            id="org.eclipse.jst.server.jetty.runtime.76"
+            typeIds="org.eclipse.jst.server.jetty.runtime.76"/>
       <fragment
          id="org.eclipse.jst.server.jetty.runtime.80"
          typeIds="org.eclipse.jst.server.jetty.runtime.80"
