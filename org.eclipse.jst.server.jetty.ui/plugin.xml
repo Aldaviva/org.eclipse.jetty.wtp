@@ -79,6 +79,14 @@
          id="org.eclipse.jst.server.jetty.80"
          icon="icons/obj16/jetty.gif"
          typeIds="org.eclipse.jst.server.jetty.80"/>
+      <image
+         id="org.eclipse.jst.server.jetty.81"
+         icon="icons/obj16/jetty.gif"
+         typeIds="org.eclipse.jst.server.jetty.runtime.81"/>
+      <image
+         id="org.eclipse.jst.server.jetty.81"
+         icon="icons/obj16/jetty.gif"
+         typeIds="org.eclipse.jst.server.jetty.81"/>
    </extension>
    
    <extension point="org.eclipse.core.expressions.propertyTesters">
@@ -145,6 +153,10 @@
       <fragment
          id="org.eclipse.jst.server.jetty.runtime.80"
          typeIds="org.eclipse.jst.server.jetty.runtime.80"
+         class="org.eclipse.jst.server.jetty.ui.internal.JettyRuntimeWizardFragment"/>
+      <fragment
+         id="org.eclipse.jst.server.jetty.runtime.81"
+         typeIds="org.eclipse.jst.server.jetty.runtime.81"
          class="org.eclipse.jst.server.jetty.ui.internal.JettyRuntimeWizardFragment"/>
    </extension>   
    
