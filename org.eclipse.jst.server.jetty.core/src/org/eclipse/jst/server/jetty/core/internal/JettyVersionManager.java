@@ -22,6 +22,7 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.jst.server.jetty.core.IJettyConfiguration;
 import org.eclipse.jst.server.jetty.core.internal.jetty7.Jetty7Provider;
 import org.eclipse.jst.server.jetty.core.internal.jetty8.Jetty8Provider;
+import org.eclipse.jst.server.jetty.core.internal.jetty9.Jetty9Provider;
 
 public class JettyVersionManager
 {
@@ -34,7 +35,7 @@ public class JettyVersionManager
 
     public enum JettyVersion
     {
-        V71, V72, V73, V74, V75, V76, V80, V81
+        V71, V72, V73, V74, V75, V76, V80, V81, V94
     }
 
     private JettyVersionManager()
@@ -47,6 +48,7 @@ public class JettyVersionManager
         register(JettyVersion.V76, Jetty7Provider.__INSTANCE);
         register(JettyVersion.V80, Jetty8Provider.__INSTANCE);
         register(JettyVersion.V81, Jetty8Provider.__INSTANCE);
+        register(JettyVersion.V94, Jetty9Provider.__INSTANCE);
     }
 
     public void register(JettyVersion version, IJettyVersionProvider versionProvider)
