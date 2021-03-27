@@ -13,6 +13,7 @@ package org.eclipse.jst.server.jetty.core.internal;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
@@ -83,5 +84,19 @@ public abstract class JettyHandler implements IJettyVersionHandler, JettyConstan
     public IStatus prepareRuntimeDirectory(IPath baseDir)
     {
         return JettyVersionHelper.createJettyInstanceDirectory(baseDir);
+    }
+    
+    /**
+     * Runtime VM arguments that are common to all versions of Jetty. Overridden by subclasses for specific Jetty versions.
+     */
+    protected final List<String> getCommonRuntimeVMArguments(IPath installPath, IPath configPath, IPath deployPath, int mainPort, int adminPort, boolean isTestEnv){
+    	List<String> vmArguments = new ArrayList<String>();
+        
+        vmArguments.add("-DVERBOSE");
+        vmArguments.add("-Djetty.port=" + Integer.toString(mainPort));
+        vmArguments.add("-DSTOP.PORT=" + Integer.toString(adminPort));
+        vmArguments.add("-DSTOP.KEY=secret");
+        
+        return vmArguments;
     }
 }

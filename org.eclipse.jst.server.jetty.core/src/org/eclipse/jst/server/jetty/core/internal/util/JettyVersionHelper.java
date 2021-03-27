@@ -77,53 +77,6 @@ public class JettyVersionHelper implements JettyConstants
         return ts.getServer().getRuntime().getLocation();
     }
 
-    /**
-     * Gets the startup VM arguments for the Jetty server.
-     * 
-     * @param installPath
-     *            installation path for the server
-     * @param instancePath
-     *            instance path for the server
-     * @param deployPath
-     *            deploy path for the server
-     * @param adminPort 
-     * 			  port that jetty listens to for admin operations like shutdown
-     * @param mainPort 
-     * 			  main jetty port (passed as jetty.port)
-     * @param isTestEnv
-     *            test environment flag
-     * @return array of strings containing VM arguments
-     */
-    public static String[] getJettyVMArguments(IPath installPath, IPath instancePath, IPath deployPath, String endorsedDirs, int mainPort, int adminPort, boolean isTestEnv)
-    {
-        List<String> list = new ArrayList<String>();
-        if (isTestEnv)
-        {
-            list.add("-Djetty.home=\"" + instancePath.toOSString() + "\"");
-            list.add("-DSTART=\"" + instancePath.toOSString() + "/start.config\"");
-            list.add("-Dinstall.jetty.home=\"" + installPath.toOSString() + "\"");
-        }
-        else
-            list.add("-Djetty.home=\"" + installPath.toOSString() + "\"");
-        // if (isTestEnv)
-        // list.add("-Djetty.base=\"" + instancePath.toOSString() + "\"");
-        // else
-        // list.add("-Djetty.base=\"" + installPath.toOSString() + "\"");
-        // list.add("-Djetty.home=\"" + installPath.toOSString() + "\"");
-        // Include a system property for the configurable deploy location
-        // list.add("-Dwtp.deploy=\"" + deployPath.toOSString() + "\"");
-        // list.add("-Djava.endorsed.dirs=\"" + endorsedDirs + "\"");
-
-        list.add("-DVERBOSE");
-        list.add("-Djetty.port=" + Integer.toString(mainPort));
-        list.add("-DSTOP.PORT=" + Integer.toString(adminPort));
-        list.add("-DSTOP.KEY=secret");
-
-        String[] s = new String[list.size()];
-        list.toArray(s);
-        return s;
-    }
-
     public static String[] getJettyProgramArguments(IPath configPath, boolean debug, boolean starting)
     {
         List<String> list = new ArrayList<String>();

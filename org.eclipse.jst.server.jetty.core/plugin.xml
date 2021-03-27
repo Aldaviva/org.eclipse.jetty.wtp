@@ -399,13 +399,13 @@
 
 		<runtime id="org.eclipse.jst.server.jetty.runtime.81"
 			licenseUrl="http://www.apache.org/licenses/LICENSE-2.0.txt"
-			archiveUrl="https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/8.1.21.v20160908/jetty-distribution-8.1.21.v20160908.zip"
-			archivePath="jetty-distribution-8.1.21.v20160908" />
+			archiveUrl="https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/8.1.22.v20160922/jetty-distribution-8.1.22.v20160922.zip"
+			archivePath="jetty-distribution-8.1.22.v20160922" />
 
 		<runtime id="org.eclipse.jst.server.jetty.runtime.94"
 			licenseUrl="http://www.apache.org/licenses/LICENSE-2.0.txt"
-			archiveUrl="https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.11.v20180605/jetty-distribution-9.4.11.v20180605.zip"
-			archivePath="jetty-distribution-9.4.11.v20180605" />
+			archiveUrl="https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.38.v20210224/jetty-distribution-9.4.38.v20210224.zip"
+			archivePath="jetty-distribution-9.4.38.v20210224" />
 			
 		<!-- TODO add new Jetty versions here -->
 	</extension>

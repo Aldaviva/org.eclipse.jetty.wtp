@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jst.server.core.internal.ProgressUtil;
+import org.eclipse.jst.server.jetty.core.internal.JettyServer;
 import org.eclipse.jst.server.jetty.core.internal.util.IOUtils;
 import org.eclipse.jst.server.jetty.core.internal.xml.Factory;
 import org.eclipse.jst.server.jetty.core.internal.xml.jetty7.server.Connector;
@@ -37,7 +38,7 @@ public class ServerInstance
 {
 
     private List<Server> _jettyServers;
-    private IPath _runtimeBaseDirectory;
+    protected IPath _runtimeBaseDirectory;
     private boolean _contextsLoaded = false;
     private List<WebAppContext> _webAppContexts = new ArrayList<WebAppContext>();
     private WebApp _webApp = null;
@@ -180,7 +181,7 @@ public class ServerInstance
         }
         else
         {
-            context.setWar("/wtpwebapps/" + pathWithoutSlash,false);
+            context.setWar("/" + JettyServer.DEFAULT_DEPLOYDIR + "/" + pathWithoutSlash,false);
         }
 
         IPath contextFilePath = getXMLContextFilePath(pathWithoutSlash);
@@ -198,7 +199,7 @@ public class ServerInstance
         }
         // Save it as file in the WTP /contexts
         String fileName = pathWithoutSlash + ".xml";
-        IPath contextFolderPath = _runtimeBaseDirectory.append("contexts");
+        IPath contextFolderPath = getXMLContextFolderPath();
         File folder = contextFolderPath.toFile();
         if (!folder.exists())
         {
@@ -223,7 +224,7 @@ public class ServerInstance
         try
         {
             WebAppContext context = null;
-            IPath contexts = _runtimeBaseDirectory.append("contexts");
+            IPath contexts = getXMLContextFolderPath();
             File contextsFolder = contexts.toFile();
             if (contextsFolder.exists())
             {
@@ -283,5 +284,9 @@ public class ServerInstance
 	
 	public String getAdminPort () {
 		return _adminPort;
+	}
+	
+	protected IPath getXMLContextFolderPath() {
+		return _runtimeBaseDirectory.append("contexts");
 	}
 }

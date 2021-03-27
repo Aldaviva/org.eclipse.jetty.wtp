@@ -11,6 +11,7 @@
 package org.eclipse.jst.server.jetty.core.internal;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
@@ -83,7 +84,7 @@ public interface IJettyVersionHandler
      *            test environment flag
      * @return array of VM arguments for starting the server
      */
-    public String[] getRuntimeVMArguments(IPath installPath, IPath configPath, IPath deployPath, int mainPort, int adminPort, boolean isTestEnv);
+    public List<String> getRuntimeVMArguments(IPath installPath, IPath configPath, IPath deployPath, int mainPort, int adminPort, boolean isTestEnv);
 
     /**
      * Gets the contents of the Java policy file for the Jetty server.

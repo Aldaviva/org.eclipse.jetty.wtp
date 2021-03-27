@@ -4,8 +4,6 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.jst.server.jetty.core.IJettyConfiguration;
 import org.eclipse.jst.server.jetty.core.internal.IJettyVersionHandler;
 import org.eclipse.jst.server.jetty.core.internal.IJettyVersionProvider;
-import org.eclipse.jst.server.jetty.core.internal.jetty7.Jetty7Configuration;
-import org.eclipse.jst.server.jetty.core.internal.jetty8.Jetty8Handler;
 import org.eclipse.jst.server.jetty.core.internal.jetty8.Jetty8Provider;
 
 public class Jetty9Provider extends Jetty8Provider {

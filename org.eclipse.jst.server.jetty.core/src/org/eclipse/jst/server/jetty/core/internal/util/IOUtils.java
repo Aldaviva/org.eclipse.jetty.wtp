@@ -29,6 +29,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jst.server.jetty.core.internal.Trace;
 
 /**
  * I/O Utilities.
@@ -97,6 +98,7 @@ public class IOUtils
 
     public static InputStream getInputStream(File jarFile, String fileName) throws ZipException, IOException
     {
+    	Trace.trace(Trace.FINER, "Reading file " + fileName + " from inside ZIP file " + jarFile);
         ZipFile zipFile = new ZipFile(jarFile);
         ZipEntry zipEntry = zipFile.getEntry(fileName);
         return zipFile.getInputStream(zipEntry);
