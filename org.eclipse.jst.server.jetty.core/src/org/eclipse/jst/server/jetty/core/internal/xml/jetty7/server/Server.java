@@ -13,63 +13,57 @@ package org.eclipse.jst.server.jetty.core.internal.xml.jetty7.server;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jst.server.jetty.core.internal.xml.XMLElement;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-public class Server extends XMLElement
-{
+public class Server extends XMLElement {
 
-    private File _file;
-    private IPath _path;
+	private File _file;
+	private IPath _path;
 
-    public List<Connector> getConnectors()
-    {
-        List<Connector> connectors = null;
-        NodeList callNodes = getElementNode().getElementsByTagName("Call");
-        int length = callNodes.getLength();
-        Element node = null;
-        for (int i = 0; i < length; i++)
-        {
-            node = (Element)callNodes.item(i);
-            if (hasAttribute(node,"addConnector"))
-            {
-                Element portElement = super.findElement(node,"Set","port");
-                NodeList typeElements = node.getElementsByTagName("New");
-                if (portElement != null)
-                {
-                    Connector connector = new Connector(portElement, (Element)typeElements.item(0));
-                    if (connectors == null)
-                    {
-                        connectors = new ArrayList<Connector>();
-                    }
-                    connectors.add(connector);
-                }
-            }
-        }
-        return connectors;
-    }
+	public List<Connector> getConnectors() {
+		List<Connector> connectors = null;
+		final NodeList callNodes = getElementNode().getElementsByTagName("Call");
+		final int length = callNodes.getLength();
+		Element node = null;
+		for (int i = 0; i < length; i++) {
+			node = (Element) callNodes.item(i);
+			if (hasAttribute(node, "addConnector")) {
+				final Element portElement = super.findElement(node, "Set", "port");
+				final NodeList typeElements = node.getElementsByTagName("New");
+				if (portElement != null) {
+					final Connector connector = new Connector(portElement, (Element) typeElements.item(0));
+					if (connectors == null) {
+						connectors = new ArrayList<Connector>();
+					}
+					connectors.add(connector);
+				}
+			}
+		}
+		return connectors;
+	}
 
-    public void setFile(File jettyXMLFile)
-    {
-        this._file = jettyXMLFile;
-    }
+	public void setFile(final File jettyXMLFile) {
+		this._file = jettyXMLFile;
+	}
 
-    public File getFile()
-    {
-        return _file;
-    }
+	public File getFile() {
+		return _file;
+	}
 
-    public IPath getPath()
-    {
-        return _path;
-    }
+	public IPath getPath() {
+		return _path;
+	}
 
-    public void setPath(IPath path)
-    {
-        this._path = path;
-    }
+	public void setPath(final IPath path) {
+		this._path = path;
+	}
+
+	@Override
+	public String toString() {
+		return "Server [_file=" + _file + "]";
+	}
 
 }

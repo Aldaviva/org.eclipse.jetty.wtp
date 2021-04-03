@@ -30,7 +30,7 @@ public class JettyVersionHelper implements JettyConstants
     public static IStatus checkJettyVersion(IPath installPath)
     {
         // Search start.jar
-        IPath startJarPath = installPath.append(__START_JAR);
+        IPath startJarPath = installPath.append(START_JAR);
         File jarFile = null;
         jarFile = startJarPath.toFile();
         // If jar is not at expected location, try alternate location

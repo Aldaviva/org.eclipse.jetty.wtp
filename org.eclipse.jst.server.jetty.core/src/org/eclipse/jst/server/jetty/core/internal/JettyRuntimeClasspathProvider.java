@@ -31,13 +31,13 @@ public class JettyRuntimeClasspathProvider extends RuntimeClasspathProviderDeleg
 		}
 
 		final List<IClasspathEntry> entries = new ArrayList<IClasspathEntry>();
-		final IPath libPath = installPath.append(__LIB_FOLDER);
+		final IPath libPath = installPath.append(LIB_FOLDER);
 		final File libDir = libPath.toFile();
 		if (libDir.exists()) {
 			// add all jars from the Jetty ${jetty.home}/lib
 			RuntimeClasspathProviderDelegate.addLibraryEntries(entries, libDir, true);
 			// add all jars from the Jetty ${jetty.home}/lib/jsp directory
-			final IPath jspLibPath = libPath.append(__JSP_FOLDER);
+			final IPath jspLibPath = libPath.append(JSP_FOLDER);
 			final File jspLibDir = jspLibPath.toFile();
 			if (jspLibDir.exists()) {
 				RuntimeClasspathProviderDelegate.addLibraryEntries(entries, jspLibDir, true);

@@ -10,14 +10,27 @@
  *******************************************************************************/
 package org.eclipse.jst.server.jetty.core.internal.util;
 
-public class StringUtils
-{
+import java.util.Collection;
 
-    public static final String TRUE = "true";
-    public static final String FALSE = "false";
+public class StringUtils {
 
-    public static boolean isTrue(String s)
-    {
-        return TRUE.equals(s);
-    }
+	public static final String TRUE = "true";
+	public static final String FALSE = "false";
+
+	public static boolean isTrue(final String s) {
+		return TRUE.equals(s);
+	}
+
+	public static String join(final Collection<?> collection, final String separator) {
+		final StringBuilder stringBuilder = new StringBuilder();
+		if (collection != null) {
+			for (final Object item : collection) {
+				if (stringBuilder.length() > 0) {
+					stringBuilder.append(separator);
+				}
+				stringBuilder.append(item);
+			}
+		}
+		return stringBuilder.toString();
+	}
 }

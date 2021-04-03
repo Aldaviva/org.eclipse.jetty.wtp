@@ -40,11 +40,11 @@ public abstract class JettyHandler implements IJettyVersionHandler, JettyConstan
         Collection<IRuntimeClasspathEntry> cp = new ArrayList<IRuntimeClasspathEntry>();
 
         // Add ${jetty.home}/start.jar
-        IPath startJAR = installPath.append(__START_JAR);
+        IPath startJAR = installPath.append(START_JAR);
         cp.add(JavaRuntime.newArchiveRuntimeClasspathEntry(startJAR));
 
         // add all jars from the Jetty ${jetty.home}/lib directory
-        IPath libPath = installPath.append(__LIB_FOLDER);
+        IPath libPath = installPath.append(LIB_FOLDER);
         File libDir = libPath.toFile();
         if (libDir.exists())
         {
@@ -52,22 +52,22 @@ public abstract class JettyHandler implements IJettyVersionHandler, JettyConstan
             String[] libs = libDir.list();
             for (int i = 0; i < libs.length; i++)
             {
-                if (libs[i].endsWith(__JAR_EXT))
+                if (libs[i].endsWith(JAR_EXT))
                 {
-                    IPath path = installPath.append(__LIB_FOLDER).append(libs[i]);
+                    IPath path = installPath.append(LIB_FOLDER).append(libs[i]);
                     cp.add(JavaRuntime.newArchiveRuntimeClasspathEntry(path));
                 }
             }
 
             // add all jars from the Jetty ${jetty.home}/lib/jsp directory
-            IPath jspLibPath = libPath.append(__JSP_FOLDER);
+            IPath jspLibPath = libPath.append(JSP_FOLDER);
             File jspLibDir = jspLibPath.toFile();
             if (jspLibDir.exists())
             {
                 libs = jspLibDir.list();
                 for (int i = 0; i < libs.length; i++)
                 {
-                    if (libs[i].endsWith(__JAR_EXT))
+                    if (libs[i].endsWith(JAR_EXT))
                     {
                         IPath path = jspLibPath.append(libs[i]);
                         cp.add(JavaRuntime.newArchiveRuntimeClasspathEntry(path));

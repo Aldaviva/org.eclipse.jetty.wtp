@@ -10,16 +10,16 @@ public class Jetty9Provider extends Jetty8Provider {
 
 	public static final IJettyVersionProvider __INSTANCE = new Jetty9Provider();
 
-    private IJettyVersionHandler _versionHandler = new Jetty9Handler();
+	private final IJettyVersionHandler _versionHandler = new Jetty9Handler();
 
-    public IJettyVersionHandler getJettyVersionHandler()
-    {
-        return _versionHandler;
-    }
+	@Override
+	public IJettyVersionHandler getJettyVersionHandler() {
+		return _versionHandler;
+	}
 
-    public IJettyConfiguration createJettyConfiguration(IFolder path)
-    {
-        return new Jetty9Configuration(path);
-    }
-    
+	@Override
+	public IJettyConfiguration createJettyConfiguration(final IFolder path) {
+		return new Jetty9Configuration(path);
+	}
+
 }

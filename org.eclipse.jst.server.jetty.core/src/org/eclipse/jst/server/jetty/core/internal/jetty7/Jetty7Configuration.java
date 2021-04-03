@@ -44,6 +44,7 @@ import org.eclipse.jst.server.jetty.core.internal.config.StartConfig;
 import org.eclipse.jst.server.jetty.core.internal.config.StartIni;
 import org.eclipse.jst.server.jetty.core.internal.config.WebdefaultXMLConfig;
 import org.eclipse.jst.server.jetty.core.internal.util.IOUtils;
+import org.eclipse.jst.server.jetty.core.internal.util.StringUtils;
 import org.eclipse.jst.server.jetty.core.internal.xml.Factory;
 import org.eclipse.jst.server.jetty.core.internal.xml.jetty7.ServerInstance;
 import org.eclipse.jst.server.jetty.core.internal.xml.jetty7.server.Connector;
@@ -65,6 +66,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
 
 	public Jetty7Configuration(final IFolder path) {
 		super(path);
+		Trace.trace(Trace.CONFIG, "Created Jetty7Configuration with path " + path.getFullPath());
 	}
 
 	public Collection<ServerPort> getServerPorts() {
@@ -72,7 +74,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
 
 		// first add server port
 		try {
-			final int port = Integer.parseInt(_serverInstance.getAdminPort());
+			final int port = _serverInstance.getAdminPort();
 			ports.add(new ServerPort("server", Messages.portServer, port, "TCPIP"));
 		} catch (final Exception e) {
 			// ignore
@@ -85,6 +87,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
 			if (connectors != null) {
 				int portId = 0;
 				for (final Connector connector : connectors) {
+					Trace.trace(Trace.FINEST, "Found server connector with port=" + connector.getPort() + " and class=" + connector.getType());
 					int port = -1;
 					try {
 						port = Integer.parseInt(connector.getPort());
@@ -312,6 +315,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
 	 * @see JettyConfiguration#load(IPath, IProgressMonitor)
 	 */
 	public void load(final IPath path, final IPath runtimeBaseDirectory, IProgressMonitor monitor) throws CoreException {
+		Trace.trace(Trace.CONFIG, "Loading Jetty 7 configuration from path " + path + " and runtime directory " + runtimeBaseDirectory);
 		try {
 			monitor = ProgressUtil.getMonitorFor(monitor);
 			monitor.beginTask(Messages.loadingTask, 5);
@@ -372,7 +376,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
 			// path.append("jetty.xml").toFile()));
 			_serverInstance = createServerInstance(runtimeBaseDirectory, servers, webApp);
 			if (adminPort != null) {
-				_serverInstance.setAdminPort(adminPort);
+				_serverInstance.setAdminPort(Integer.parseInt(adminPort));
 			}
 			// monitor.worked(1);
 			//
@@ -402,6 +406,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
 	}
 
 	public void load(final IFolder folder, final IPath runtimeBaseDirectory, IProgressMonitor monitor) throws CoreException {
+		Trace.trace(Trace.CONFIG, "Loading Jetty 7 configuration from folder " + folder + " and runtime directory " + runtimeBaseDirectory);
 		try {
 			monitor = ProgressUtil.getMonitorFor(monitor);
 			monitor.beginTask(Messages.loadingTask, 800);
@@ -459,7 +464,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
 			// path.append("jetty.xml").toFile()));
 			_serverInstance = createServerInstance(runtimeBaseDirectory, servers, webApp);
 			if (adminPort != null) {
-				_serverInstance.setAdminPort(adminPort);
+				_serverInstance.setAdminPort(Integer.parseInt(adminPort));
 			}
 			// check for catalina.policy to verify that this is a v4.0 config
 			// IFile file = folder.getFile("catalina.policy");
@@ -510,6 +515,8 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
 	}
 
 	protected ServerInstance createServerInstance(final IPath runtimeBaseDirectory, final List<Server> servers, final WebApp webApp) {
+		Trace.trace(Trace.CONFIG, "Created new Jetty 7 server instance for runtime directory " + runtimeBaseDirectory + ", servers "
+		    + StringUtils.join(servers, ", ") + ", and webapp " + (webApp != null ? webApp.getFile() : null));
 		return new ServerInstance(servers, webApp, runtimeBaseDirectory);
 	}
 
@@ -523,6 +530,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
 	 * @throws CoreException
 	 */
 	public void save(final IFolder folder, IProgressMonitor monitor) throws CoreException {
+		Trace.trace(Trace.CONFIG, "Saving Jetty 7 configuration to folder " + folder);
 		try {
 			monitor = ProgressUtil.getMonitorFor(monitor);
 			monitor.beginTask(Messages.savingTask, 1200);
@@ -530,7 +538,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
 				return;
 			}
 
-			_startIniConfig.save(folder.getFile(__START_INI), monitor);
+			_startIniConfig.save(folder.getFile(START_INI), monitor);
 			_serverInstance.save(folder, monitor);
 
 			// get etc/realm.properties
@@ -558,6 +566,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
 				} else {
 					file.create(in, true, ProgressUtil.getSubMonitorFor(monitor, 200));
 				}
+				Trace.trace(Trace.FINER, "Jetty7Configuration.save() copied " + pathFileConfig.getFile().getAbsolutePath() + " to " + file.getLocation());
 			}
 
 			writeStartConfigFile(folder, monitor);
@@ -585,7 +594,7 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
 			} else {
 				file.create(stream, true, ProgressUtil.getSubMonitorFor(monitor, 200));
 			}
-
+			Trace.trace(Trace.FINER, "Jetty7Configuration.writeStartConfigFile() wrote " + file.getLocation());
 		}
 	}
 
@@ -611,9 +620,10 @@ public class Jetty7Configuration extends JettyConfiguration implements JettyCons
 	 *            int
 	 */
 	public void modifyServerPort(final String id, final int port) {
+		Trace.trace(Trace.CONFIG, "Setting Jetty 7 service " + id + " to use port " + port);
 		try {
 			if ("server".equals(id)) {
-				_serverInstance.setAdminPort(port + "");
+				_serverInstance.setAdminPort(port);
 				_isServerDirty = true;
 				firePropertyChangeEvent(__MODIFY_PORT_PROPERTY, id, Integer.valueOf(port));
 				return;

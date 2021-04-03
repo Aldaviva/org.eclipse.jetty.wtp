@@ -186,7 +186,7 @@ public class JettyServerBehaviour extends ServerBehaviourDelegate implements IJe
 		int adminPort = 8082;
 		try {
 			final IJettyConfiguration config = getJettyConfiguration();
-			mainPort = config.getMainPort().getPort(); //FIXME either getJettyConfiguration() or getMainPort() returns null, probably because Jetty 9 does not have a start.config file from which to parse the port numbers. New, Jetty 9 specific behavior should probably be added to Jetty9Configuration
+			mainPort = config.getMainPort().getPort(); //FIXME getMainPort() returns null, probably because Jetty 9 does not have a start.config file from which to parse the port numbers. New, Jetty 9 specific behavior should probably be added to Jetty9Configuration
 			adminPort = config.getAdminPort().getPort();
 		} catch (final CoreException ex) {
 			// ignore exception and use the defaults;

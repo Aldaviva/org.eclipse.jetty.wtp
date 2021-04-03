@@ -60,6 +60,7 @@ public abstract class JettyConfiguration implements IJettyConfiguration, IJettyC
 	 * @return int
 	 */
 	public ServerPort getMainPort() {
+		Trace.trace(Trace.CONFIG, "Getting main Jetty port");
 		final Collection<ServerPort> serverPorts = getServerPorts();
 
 		for (final ServerPort serverPort : serverPorts) {
@@ -138,6 +139,7 @@ public abstract class JettyConfiguration implements IJettyConfiguration, IJettyC
 	 * @return result of operation
 	 */
 	public IStatus backupAndPublish(final IPath jettyDir, final boolean doBackup, IProgressMonitor monitor) {
+		Trace.trace(Trace.CONFIG, "Publishing to Jetty path " + jettyDir + ", backup = " + doBackup);
 		final MultiStatus ms = new MultiStatus(JettyPlugin.PLUGIN_ID, 0, Messages.publishConfigurationTask, null);
 
 		if (Trace.isTraceEnabled()) {
@@ -167,6 +169,7 @@ public abstract class JettyConfiguration implements IJettyConfiguration, IJettyC
 		return ms;
 	}
 
+	//contrary to its name, this mostly does publishing, which means copying files and folders from the workspace server dir (workspace/Servers/MyServer/) to the deploy dir (workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/)
 	protected void backupFolder(final IFolder folder, final IPath confDir, final IPath backup, final MultiStatus ms, final IProgressMonitor monitor)
 	    throws CoreException {
 		final IResource[] children = folder.members();
@@ -233,6 +236,7 @@ public abstract class JettyConfiguration implements IJettyConfiguration, IJettyC
 		}
 	}
 
+	//unused
 	protected void backupPath(final IPath path, final IPath confDir, final IPath backup, final MultiStatus ms, final IProgressMonitor monitor) {
 		final File[] files = path.toFile().listFiles();
 		if (files == null) {

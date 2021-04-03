@@ -11,34 +11,33 @@
 package org.eclipse.jst.server.jetty.core.internal.xml.jetty7.server;
 
 import java.io.File;
-
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jst.server.jetty.core.internal.xml.XMLElement;
 
-public class WebApp extends XMLElement
-{
+public class WebApp extends XMLElement {
 
-    private File _file;
-    private IPath _path;
+	private File _file;
+	private IPath _path;
 
-    public File getFile()
-    {
-        return _file;
-    }
+	public File getFile() {
+		return _file;
+	}
 
-    public void setFile(File file)
-    {
-        this._file = file;
-    }
+	public void setFile(final File file) {
+		this._file = file;
+	}
 
-    public IPath getPath()
-    {
-        return _path;
-    }
+	public IPath getPath() {
+		return _path;
+	}
 
-    public void setPath(IPath path)
-    {
-        this._path = path;
-    }
+	public void setPath(final IPath path) {
+		this._path = path;
+	}
+
+	@Override
+	public String toString() {
+		return "WebApp [_file=" + _file + "]";
+	}
 
 }
